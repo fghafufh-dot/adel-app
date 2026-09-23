@@ -1,4 +1,48 @@
-/* شعار المملكة */
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نظام حساب النقاط</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+    color:#111;
+    min-height:100vh;
+}
+
+header{
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.header-left{
+    font-size:24px;
+    font-weight:900;
+    direction:ltr;
+}
 
 .saudi-logo{
     width:82px;
@@ -7,27 +51,437 @@
     align-items:center;
     justify-content:center;
     flex-shrink:0;
+    font-size:42px;
 }
 
-.saudi-logo img{
-    width:82px;
-    height:82px;
+.saudi-logo span{
     display:block;
-    object-fit:contain;
 }
 
-/* الجوال */
+.container{
+    width:min(900px,92%);
+    margin:30px auto;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+}
+
+.card h2{
+    margin-bottom:18px;
+    font-size:21px;
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr 140px;
+    gap:12px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#222;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:14px 18px;
+    background:#111;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.88;
+}
+
+.total{
+    text-align:center;
+    background:#111;
+    color:#fff;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.total p{
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.total strong{
+    font-size:40px;
+}
+
+.activity{
+    border:1px solid #e1e1e1;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.activity-info{
+    flex:1;
+}
+
+.activity-name{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.activity-user{
+    color:#666;
+    font-size:14px;
+}
+
+.points{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.delete{
+    background:#c62828;
+    padding:9px 12px;
+    font-size:14px;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:25px;
+}
+
+footer{
+    text-align:center;
+    color:#666;
+    padding:25px;
+    font-size:14px;
+}
 
 @media(max-width:600px){
+
+    header{
+        padding:10px 14px;
+    }
+
+    .header-right{
+        font-size:16px;
+    }
+
+    .header-left{
+        font-size:20px;
+    }
 
     .saudi-logo{
         width:58px;
         height:58px;
+        font-size:30px;
     }
 
-    .saudi-logo img{
-        width:58px;
-        height:58px;
+    .container{
+        width:94%;
+        margin:20px auto;
     }
+
+    .title h1{
+        font-size:25px;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .activity{
+        align-items:flex-start;
+        flex-wrap:wrap;
+    }
+
+    .points{
+        width:100%;
+    }
+
+    .delete{
+        margin-right:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-right">
+        <div class="saudi-logo">
+            <span>⚔️🌴</span>
+        </div>
+
+        <div>
+            وزارة الداخلية
+        </div>
+    </div>
+
+    <div class="header-left">
+        KR
+    </div>
+
+</header>
+
+<div class="container">
+
+    <div class="title">
+        <h1>نظام حساب النقاط</h1>
+        <p>إضافة الأنشطة وحساب مجموع النقاط</p>
+    </div>
+
+    <div class="card">
+
+        <h2>إضافة نشاط</h2>
+
+        <div class="form">
+
+            <input
+                id="username"
+                type="text"
+                placeholder="اسم المستخدم"
+            >
+
+            <input
+                id="activityName"
+                type="text"
+                placeholder="اسم النشاط"
+            >
+
+            <input
+                id="points"
+                type="number"
+                placeholder="النقاط"
+                min="0"
+            >
+
+            <button onclick="addActivity()">
+                إضافة النشاط
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="total">
+
+        <p>إجمالي النقاط</p>
+
+        <strong id="totalPoints">
+            0
+        </strong>
+
+    </div>
+
+    <div class="card">
+
+        <h2>الأنشطة</h2>
+
+        <div id="activitiesList">
+            <div class="empty">
+                لا توجد أنشطة حتى الآن
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    المصمم: عادل الشمري
+</footer>
+
+<script>
+
+let activities = JSON.parse(
+    localStorage.getItem("adelActivities") || "[]"
+);
+
+function saveActivities(){
+
+    localStorage.setItem(
+        "adelActivities",
+        JSON.stringify(activities)
+    );
 
 }
+
+function addActivity(){
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const activityName =
+        document.getElementById("activityName").value.trim();
+
+    const points =
+        Number(document.getElementById("points").value);
+
+    if(!username){
+        alert("اكتب اسم المستخدم");
+        return;
+    }
+
+    if(!activityName){
+        alert("اكتب اسم النشاط");
+        return;
+    }
+
+    if(!points || points < 0){
+        alert("اكتب عدد النقاط");
+        return;
+    }
+
+    activities.push({
+
+        username: username,
+
+        activityName: activityName,
+
+        points: points
+
+    });
+
+    saveActivities();
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("activityName").value = "";
+
+    document.getElementById("points").value = "";
+
+    renderActivities();
+
+}
+
+function deleteActivity(index){
+
+    activities.splice(index,1);
+
+    saveActivities();
+
+    renderActivities();
+
+}
+
+function renderActivities(){
+
+    const list =
+        document.getElementById("activitiesList");
+
+    const total =
+        document.getElementById("totalPoints");
+
+    if(activities.length === 0){
+
+        list.innerHTML =
+            '<div class="empty">لا توجد أنشطة حتى الآن</div>';
+
+        total.textContent = "0";
+
+        return;
+
+    }
+
+    let totalPoints = 0;
+
+    list.innerHTML = "";
+
+    activities.forEach((activity,index)=>{
+
+        totalPoints += Number(activity.points);
+
+        const item =
+            document.createElement("div");
+
+        item.className = "activity";
+
+        item.innerHTML = `
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    ${escapeHtml(activity.activityName)}
+                </div>
+
+                <div class="activity-user">
+                    المستخدم:
+                    ${escapeHtml(activity.username)}
+                </div>
+
+            </div>
+
+            <div class="points">
+                ${activity.points} نقطة
+            </div>
+
+            <button
+                class="delete"
+                onclick="deleteActivity(${index})"
+            >
+                حذف
+            </button>
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+    total.textContent = totalPoints;
+
+}
+
+function escapeHtml(text){
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+renderActivities();
+
+</script>
+
+</body>
+</html>
