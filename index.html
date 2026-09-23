@@ -55,21 +55,29 @@ button{
     color:white;
     font-size:17px;
     font-weight:bold;
+    cursor:pointer;
+}
+.delete-button{
+    background:#dc2626;
+    font-size:15px;
+    padding:10px;
 }
 .instructions{
     text-align:left;
+    direction:rtl;
     font-size:18px;
     font-weight:bold;
-    margin-top:25px;
+    margin-bottom:3px;
 }
 .arrow{
     text-align:left;
     font-size:35px;
-    margin:5px 0;
+    line-height:1;
+    margin:0 0 5px;
 }
 .activities-list{
-    text-align:left;
-    direction:ltr;
+    text-align:right;
+    direction:rtl;
     font-size:17px;
     line-height:2;
     background:white;
@@ -83,12 +91,15 @@ button{
     border-radius:12px;
     border:1px solid #eee;
 }
+/* تصميم: عادل الشمري */
 #designer{
-    position:absolute;
+    position:fixed;
     left:10px;
-    bottom:10px;
-    color:#555;
+    bottom:15px;
     font-size:13px;
+    color:#555;
+    z-index:9999;
+    transition:transform .08s linear;
 }
 </style>
 </head>
@@ -103,23 +114,11 @@ button{
 </div>
 <div class="card">
 <h2>إضافة نشاط</h2>
-<input
-id="activityName"
-type="text"
-placeholder="اسم النشاط">
-<input
-id="activityPoints"
-type="number"
-placeholder="نقاط النشاط">
-<input
-id="activityCount"
-type="number"
-placeholder="عدد المشاركات">
 <button onclick="addActivity()">
 إضافة النشاط
 </button>
 </div>
-<!-- الكلام المطلوب -->
+<div class="card">
 <div class="instructions">
 هنا اكتب عدد الأعمال وانسخها
 </div>
@@ -139,43 +138,161 @@ placeholder="عدد المشاركات">
 <div>إعتقال احد رؤساء العصابات ملاحظة:</div>
 <div>إعتقال احد مسؤولي العصابات ملاحظة:</div>
 </div>
+</div>
 <div id="activities"></div>
+</div>
 <div id="designer">
 تصميم: عادل الشمري
 </div>
-</div>
 <script>
+const STORAGE_KEY = "pointsAppData";
 let total = 0;
+let activities = [];
+function saveData(){
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+            total: total,
+            activities: activities
+        })
+    );
+}
+function updateTotal(){
+    document.getElementById("total").textContent = total;
+}
+function createActivityElement(activity, index){
+    const box =
+        document.createElement("div");
+    box.className = "activity";
+    const title =
+        document.createElement("h3");
+    title.textContent = activity.name;
+    const pointsText =
+        document.createElement("p");
+    pointsText.textContent =
+        "نقاط النشاط: " + activity.points;
+    const countText =
+        document.createElement("p");
+    countText.textContent =
+        "عدد المشاركات: " + activity.count;
+    const resultText =
+        document.createElement("p");
+    const resultBold =
+        document.createElement("b");
+    resultBold.textContent =
+        "النقاط المكتسبة: " + activity.result;
+    resultText.appendChild(resultBold);
+    const deleteButton =
+        document.createElement("button");
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "حذف النشاط";
+    deleteButton.addEventListener("click", function(){
+        deleteActivity(index);
+    });
+    box.appendChild(title);
+    box.appendChild(pointsText);
+    box.appendChild(countText);
+    box.appendChild(resultText);
+    box.appendChild(deleteButton);
+    return box;
+}
+function renderActivities(){
+    const activitiesContainer =
+        document.getElementById("activities");
+    activitiesContainer.innerHTML = "";
+    activities.forEach(function(activity, index){
+        activitiesContainer.appendChild(
+            createActivityElement(activity, index)
+        );
+    });
+    updateTotal();
+}
 function addActivity(){
-const name =
-document.getElementById("activityName").value.trim();
-const points =
-Number(document.getElementById("activityPoints").value);
-const count =
-Number(document.getElementById("activityCount").value);
-if(!name || points <= 0 || count <= 0){
-alert("عبّ كل الخانات");
-return;
+    const name =
+        document.getElementById("activityName").value.trim();
+    const points =
+        Number(
+            document.getElementById("activityPoints").value
+        );
+    const count =
+        Number(
+            document.getElementById("activityCount").value
+        );
+    if(!name || points <= 0 || count <= 0){
+        alert("عبّ كل الخانات");
+        return;
+    }
+    const result = points * count;
+    const activity = {
+        name: name,
+        points: points,
+        count: count,
+        result: result
+    };
+    activities.push(activity);
+    total += result;
+    saveData();
+    renderActivities();
+    document.getElementById("activityName").value = "";
+    document.getElementById("activityPoints").value = "";
+    document.getElementById("activityCount").value = "";
 }
-const result = points * count;
-total += result;
-document.getElementById("total").textContent = total;
-const box =
-document.createElement("div");
-box.className = "activity";
-box.innerHTML = `
-<h3>${name}</h3>
-<p>نقاط النشاط: ${points}</p>
-<p>عدد المشاركات: ${count}</p>
-<p><b>النقاط المكتسبة: ${result}</b></p>
-`;
-document
-.getElementById("activities")
-.appendChild(box);
-document.getElementById("activityName").value = "";
-document.getElementById("activityPoints").value = "";
-document.getElementById("activityCount").value = "";
+function deleteActivity(index){
+    const activity =
+        activities[index];
+    if(!activity){
+        return;
+    }
+    total -= activity.result;
+    activities.splice(index, 1);
+    saveData();
+    renderActivities();
 }
+function loadData(){
+    const savedData =
+        localStorage.getItem(STORAGE_KEY);
+    if(!savedData){
+        return;
+    }
+    try{
+        const data =
+            JSON.parse(savedData);
+        if(
+            data &&
+            Array.isArray(data.activities)
+        ){
+            activities = data.activities;
+            total = activities.reduce(
+                function(sum, activity){
+                    return sum + Number(activity.result || 0);
+                },
+                0
+            );
+        }
+    }catch(error){
+        activities = [];
+        total = 0;
+    }
+    renderActivities();
+}
+/* حركة تصميم: عادل الشمري مع حركة الآيباد */
+function moveDesigner(event){
+    const designer =
+        document.getElementById("designer");
+    let movement = event.beta || 0;
+    movement = Math.max(-45, Math.min(45, movement));
+    designer.style.transform =
+        "translateY(" + (movement * 2) + "px)";
+}
+/* تشغيل حساس الحركة تلقائيًا إذا كان Safari يسمح بذلك */
+if(typeof DeviceOrientationEvent !== "undefined"){
+    window.addEventListener(
+        "deviceorientation",
+        moveDesigner,
+        true
+    );
+}
+loadData();
 </script>
 </body>
 </html>
