@@ -1,27 +1,84 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>تطبيق حسب النقاط</title>
+
 <style>
+
 *{
     box-sizing:border-box;
 }
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
     background:#f3f4f6;
     color:#111827;
 }
+
 .container{
-    max-width:700px;
+    width:100%;
+    max-width:1100px;
     margin:auto;
-    padding:25px 15px 120px;
+    padding:20px 15px 120px;
 }
-h1{
+
+/* الهيدر */
+
+.top-header{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px;
+    font-size:20px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.header-center{
     text-align:center;
+    margin:0;
+    font-size:28px;
+    white-space:nowrap;
 }
+
+.header-left{
+    text-align:left;
+    font-size:20px;
+    font-weight:bold;
+    direction:ltr;
+}
+
+/* شعار السيفين والنخلة */
+
+.saudi-logo{
+    width:55px;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.saudi-logo svg{
+    width:55px;
+    height:55px;
+}
+
+/* البطاقات */
+
 .card{
     background:white;
     padding:20px;
@@ -29,14 +86,17 @@ h1{
     border-radius:15px;
     box-shadow:0 3px 12px #0001;
 }
+
 .points{
     text-align:center;
     font-size:24px;
     font-weight:bold;
 }
+
 #total{
     font-size:35px;
 }
+
 button{
     width:100%;
     padding:14px;
@@ -48,12 +108,15 @@ button{
     font-size:17px;
     font-weight:bold;
 }
+
 .save-button{
     background:#16a34a;
 }
+
 .delete-button{
     background:#dc2626;
 }
+
 .instructions{
     direction:rtl;
     text-align:right;
@@ -61,6 +124,7 @@ button{
     font-weight:bold;
     margin-bottom:3px;
 }
+
 .arrow{
     direction:rtl;
     text-align:right;
@@ -68,6 +132,7 @@ button{
     line-height:1;
     margin-bottom:8px;
 }
+
 .activities-list{
     direction:rtl;
     text-align:right;
@@ -77,6 +142,7 @@ button{
     padding:15px;
     border-radius:12px;
 }
+
 .activity-row{
     display:flex;
     align-items:center;
@@ -84,9 +150,11 @@ button{
     gap:10px;
     margin:10px 0;
 }
+
 .activity-name{
     flex:1;
 }
+
 .activity-number{
     width:85px !important;
     height:45px;
@@ -99,6 +167,9 @@ button{
     text-align:center !important;
     direction:ltr !important;
 }
+
+/* تصميم عادل الشمري */
+
 #designer{
     position:fixed;
     left:10px;
@@ -108,6 +179,7 @@ button{
     z-index:9999;
     transition:transform .08s linear;
 }
+
 #motionButton{
     position:fixed;
     right:10px;
@@ -118,341 +190,611 @@ button{
     z-index:10000;
     background:#2563eb;
 }
+
+/* للجوال */
+
+@media(max-width:600px){
+
+    .top-header{
+        gap:8px;
+    }
+
+    .header-right{
+        font-size:15px;
+        gap:5px;
+    }
+
+    .header-center{
+        font-size:20px;
+    }
+
+    .header-left{
+        font-size:15px;
+    }
+
+    .saudi-logo{
+        width:40px;
+        height:40px;
+    }
+
+    .saudi-logo svg{
+        width:40px;
+        height:40px;
+    }
+
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<h1>تطبيق حسب النقاط</h1>
+
+<!-- الهيدر -->
+
+<div class="top-header">
+
+    <!-- اليمين -->
+    <div class="header-right">
+
+        <span>وزارة الداخلية</span>
+
+        <!-- شعار السيفين والنخلة -->
+        <div class="saudi-logo">
+
+            <svg viewBox="0 0 100 100"
+                 xmlns="http://www.w3.org/2000/svg">
+
+                <!-- النخلة -->
+                <path
+                    d="M50 16
+                       C43 10 36 10 31 14
+                       C38 16 43 19 47 24
+                       C40 20 32 20 26 23
+                       C35 25 42 29 47 34
+                       C40 31 31 32 24 36
+                       C34 37 43 40 49 45
+                       C55 40 64 37 76 36
+                       C68 32 60 31 53 34
+                       C58 29 65 25 74 23
+                       C67 20 59 20 53 24
+                       C57 19 62 16 69 14
+                       C63 10 56 10 50 16Z"
+                    fill="#111827"/>
+
+                <!-- جذع النخلة -->
+                <path
+                    d="M47 42
+                       C48 52 48 59 46 67
+                       L54 67
+                       C52 59 52 52 53 42Z"
+                    fill="#111827"/>
+
+                <!-- السيف الأول -->
+                <path
+                    d="M12 69
+                       L82 83
+                       C86 84 89 82 90 79
+                       L88 77
+                       L17 63
+                       C14 62 11 64 10 67
+                       Z"
+                    fill="#111827"/>
+
+                <!-- السيف الثاني -->
+                <path
+                    d="M88 69
+                       L18 83
+                       C14 84 11 82 10 79
+                       L12 77
+                       L83 63
+                       C86 62 89 64 90 67
+                       Z"
+                    fill="#111827"/>
+
+            </svg>
+
+        </div>
+
+    </div>
+
+    <!-- الوسط -->
+    <h1 class="header-center">
+        تطبيق حسب النقاط
+    </h1>
+
+    <!-- اليسار -->
+    <div class="header-left">
+        KR
+    </div>
+
+</div>
+
+
+<!-- مجموع النقاط -->
+
 <div class="card">
-<div class="points">
-مجموع النقاط:
-<span id="total">0</span>
+
+    <div class="points">
+        مجموع النقاط:
+        <span id="total">0</span>
+    </div>
+
 </div>
-</div>
+
+
+<!-- الأعمال -->
+
 <div class="card">
-<div class="instructions">
-هنا اكتب عدد الأعمال وانسخها
+
+    <div class="instructions">
+        هنا اكتب عدد الأعمال وانسخها
+    </div>
+
+    <div class="arrow">
+        ⬇️
+    </div>
+
+    <div class="activities-list">
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                تدشين نقطة تفتيش متحركة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                إستيقاف مروري:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                تسجيل مخالفة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                حضور حملة أمنية (عامة):
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                حضور حملة أمنية (خاصة):
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                حضور تدريب (عام-خاص):
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                إسقاط رجل عصابة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                حضور تمشيط:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                إعتقال عضو عصابة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                إعتقال احد رؤساء العصابات ملاحظة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+        <div class="activity-row">
+            <div class="activity-name">
+                إعتقال احد مسؤولي العصابات ملاحظة:
+            </div>
+            <input class="activity-number"
+                   type="number"
+                   min="0"
+                   step="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   value="0">
+        </div>
+
+
+    </div>
+
 </div>
-<div class="arrow">
-⬇️
-</div>
-<div class="activities-list">
-<div class="activity-row">
-<div class="activity-name">
-تدشين نقطة تفتيش متحركة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-إستيقاف مروري:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-تسجيل مخالفة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-حضور حملة أمنية (عامة):
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-حضور حملة أمنية (خاصة):
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-حضور تدريب (عام-خاص):
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-إسقاط رجل عصابة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-حضور تمشيط:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-إعتقال عضو عصابة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-إعتقال احد رؤساء العصابات ملاحظة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-<div class="activity-row">
-<div class="activity-name">
-إعتقال احد مسؤولي العصابات ملاحظة:
-</div>
-<input
-class="activity-number"
-type="number"
-min="0"
-step="1"
-inputmode="numeric"
-pattern="[0-9]*"
-value="0">
-</div>
-</div>
-</div>
+
+
+<!-- الأزرار -->
+
 <div class="card">
-<button class="save-button" onclick="saveData()">
-حفظ البيانات
-</button>
-<button class="delete-button" onclick="deleteData()">
-حذف البيانات
-</button>
+
+    <button class="save-button"
+            onclick="saveData()">
+        حفظ البيانات
+    </button>
+
+    <button class="delete-button"
+            onclick="deleteData()">
+        حذف البيانات
+    </button>
+
 </div>
+
+
 </div>
+
+
+<!-- التصميم -->
+
 <div id="designer">
-تصميم: عادل الشمري
+    تصميم: عادل الشمري
 </div>
+
+
+<!-- زر حركة الجهاز -->
+
 <button id="motionButton">
-السماح بحركة الجهاز
+    السماح بحركة الجهاز
 </button>
+
+
 <script>
+
 /* حساب المجموع */
+
 function calculatePoints(){
+
     const inputs =
         document.querySelectorAll(".activity-number");
+
     let total = 0;
+
     inputs.forEach(function(input){
+
         let value = input.value;
-        /*
-        السماح بالأرقام فقط
-        */
-        value = value.replace(/[^0-9]/g,"");
+
+        value =
+            value.replace(/[^0-9]/g,"");
+
         input.value = value;
+
         total += Number(value) || 0;
+
     });
+
     document.getElementById("total")
         .textContent = total;
+
 }
+
+
 /* حفظ البيانات */
+
 function saveData(){
+
     const inputs =
         document.querySelectorAll(".activity-number");
+
     const numbers = [];
+
     inputs.forEach(function(input){
+
         numbers.push(input.value);
+
     });
+
     const data = {
         numbers:numbers
     };
+
     localStorage.setItem(
         "adelPointsData",
         JSON.stringify(data)
     );
+
     alert("تم حفظ البيانات ✅");
+
 }
+
+
 /* تحميل البيانات */
+
 function loadData(){
+
     const saved =
         localStorage.getItem("adelPointsData");
+
     if(!saved){
+
         calculatePoints();
+
         return;
+
     }
+
     try{
+
         const data =
             JSON.parse(saved);
+
         const inputs =
             document.querySelectorAll(".activity-number");
+
         inputs.forEach(function(input,index){
+
             if(data.numbers[index] !== undefined){
+
                 input.value =
                     String(data.numbers[index])
                     .replace(/[^0-9]/g,"");
+
             }
+
         });
+
         calculatePoints();
+
     }catch(error){
+
         calculatePoints();
+
     }
+
 }
+
+
 /* حذف البيانات */
+
 function deleteData(){
+
     const answer =
-        confirm("هل أنت متأكد من حذف جميع البيانات؟");
+        confirm(
+            "هل أنت متأكد من حذف جميع البيانات؟"
+        );
+
     if(!answer){
+
         return;
+
     }
-    localStorage.removeItem("adelPointsData");
+
+    localStorage.removeItem(
+        "adelPointsData"
+    );
+
     const inputs =
         document.querySelectorAll(".activity-number");
+
     inputs.forEach(function(input){
+
         input.value = "";
+
     });
+
     document.getElementById("total")
         .textContent = "0";
+
     alert("تم حذف البيانات 🗑️");
+
 }
+
+
 /* تحديث المجموع أثناء الكتابة */
+
 document.addEventListener(
     "input",
     function(event){
+
         if(
             event.target.classList
             .contains("activity-number")
         ){
+
             event.target.value =
                 event.target.value
                 .replace(/[^0-9]/g,"");
+
             calculatePoints();
+
         }
+
     }
 );
+
+
 /* تحريك تصميم: عادل الشمري */
+
 function moveDesigner(event){
+
     const designer =
         document.getElementById("designer");
+
     let movement =
         event.beta || 0;
+
     movement =
-        Math.max(-45,Math.min(45,movement));
+        Math.max(
+            -45,
+            Math.min(45,movement)
+        );
+
     designer.style.transform =
         "translateY(" +
         (movement * 2) +
         "px)";
+
 }
+
+
 /* السماح بحركة الجهاز */
+
 document
 .getElementById("motionButton")
 .addEventListener(
     "click",
     async function(){
+
         try{
+
             if(
                 typeof DeviceOrientationEvent !==
                 "undefined" &&
+
                 typeof DeviceOrientationEvent
                 .requestPermission ===
                 "function"
             ){
+
                 const permission =
                     await DeviceOrientationEvent
                     .requestPermission();
+
                 if(permission === "granted"){
+
                     window.addEventListener(
                         "deviceorientation",
                         moveDesigner,
                         true
                     );
+
                     this.style.display =
                         "none";
+
                 }else{
+
                     alert(
                         "لم يتم السماح بحركة الجهاز"
                     );
+
                 }
+
             }else{
+
                 window.addEventListener(
                     "deviceorientation",
                     moveDesigner,
                     true
                 );
+
                 this.style.display =
                     "none";
+
             }
+
         }catch(error){
+
             alert(
                 "تعذر تشغيل حركة الجهاز"
             );
+
         }
+
     }
 );
+
+
 /* تشغيل التطبيق */
+
 window.addEventListener(
     "load",
     loadData
 );
+
 </script>
+
 </body>
 </html>
