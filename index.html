@@ -1,348 +1,891 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام عادل</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Adel App</title>
 
-<style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f2f4f7;color:#111}
-.page{display:none;min-height:100vh;padding:20px}
-.active{display:block}
-.box{max-width:450px;margin:35px auto;background:white;padding:25px;border-radius:18px;box-shadow:0 5px 20px #0001}
-h1,h2{text-align:center}
-input,button{width:100%;padding:14px;margin-top:10px;border-radius:10px;font-size:16px}
-input{border:1px solid #ccc}
-button{border:0;background:#111;color:white;cursor:pointer}
-button:disabled{opacity:.5}
-.gray{background:#e5e5e5;color:#111}
-.red{background:#b00020}
-.green{background:#16803c}
-.card{background:#f7f7f7;padding:15px;margin-top:12px;border-radius:12px}
-.msg{display:none;margin-top:12px;padding:12px;border-radius:10px;text-align:center}
-.ok{display:block;background:#dcf8e3;color:#12652b}
-.err{display:block;background:#ffe0e0;color:#a00000}
-.points{text-align:center;font-size:40px;font-weight:bold;margin:20px}
-.small{text-align:center;color:#777;font-size:13px}
-</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+    }
+
+    button {
+      background: #111827;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .secondary {
+      background: #6b7280;
+    }
+
+    .success {
+      background: #15803d;
+    }
+
+    .danger {
+      background: #b91c1c;
+    }
+
+    .blue {
+      background: #2563eb;
+    }
+
+    .item {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+
+    .msg {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .msg.show {
+      display: block;
+    }
+
+    .msg.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .msg.ok {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .topbar button {
+      width: auto;
+      padding: 10px 18px;
+      margin: 0;
+    }
+
+    .developer {
+      text-align: center;
+      margin-top: 30px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .points {
+      font-size: 35px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- الصفحة الرئيسية -->
-<section id="home" class="page active">
-<div class="box">
-<h1>نظام عادل</h1>
+<!-- =========================
+     الصفحة الرئيسية
+========================= -->
 
-<button onclick="show('login')">تسجيل الدخول</button>
-<button class="gray" onclick="show('register')">طلب تسجيل جديد</button>
-<button class="gray" onclick="show('adminLogin')">دخول المدير</button>
+<section id="homePage" class="page active">
+  <div class="container">
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+    <div class="card center">
+      <h1>Adel App</h1>
+      <p>نظام المستخدمين والأنشطة</p>
+
+      <button onclick="showPage('userLoginPage')">
+        دخول المستخدم
+      </button>
+
+      <button class="blue" onclick="showPage('registerPage')">
+        تسجيل مستخدم جديد
+      </button>
+
+      <button class="secondary" onclick="showPage('adminLoginPage')">
+        دخول المدير
+      </button>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- تسجيل الدخول -->
-<section id="login" class="page">
-<div class="box">
-<h1>تسجيل الدخول</h1>
+<!-- =========================
+     تسجيل مستخدم جديد
+========================= -->
 
-<input id="loginName" placeholder="الاسم الكامل">
-<input id="loginUnit" placeholder="اليونت العسكري">
-<input id="loginCode" placeholder="رمز الدخول">
+<section id="registerPage" class="page">
+  <div class="container">
 
-<button onclick="login()">طلب تسجيل الدخول</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>تسجيل مستخدم جديد</h2>
 
-<div id="loginMsg" class="msg"></div>
-</div>
+      <input id="regName" type="text" placeholder="الاسم الكامل">
+
+      <input id="regUnit" type="text" placeholder="اليونت العسكري">
+
+      <button class="success" onclick="registerUser()">
+        إرسال طلب التسجيل
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="registerMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- التسجيل -->
-<section id="register" class="page">
-<div class="box">
-<h1>طلب تسجيل جديد</h1>
+<!-- =========================
+     دخول المستخدم
+========================= -->
 
-<input id="regName" placeholder="الاسم الكامل">
-<input id="regUnit" placeholder="اليونت العسكري">
+<section id="userLoginPage" class="page">
+  <div class="container">
 
-<button onclick="registerUser()">إرسال الطلب</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>دخول المستخدم</h2>
 
-<div id="regMsg" class="msg"></div>
-</div>
+      <input id="loginName" type="text" placeholder="الاسم الكامل">
+
+      <input id="loginUnit" type="text" placeholder="اليونت العسكري">
+
+      <input id="loginCode" type="text" placeholder="رمز الدخول">
+
+      <button class="success" onclick="loginUser()">
+        دخول
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="loginMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- دخول المدير -->
-<section id="adminLogin" class="page">
-<div class="box">
-<h1>دخول المدير</h1>
+<!-- =========================
+     دخول المدير
+========================= -->
 
-<input id="adminPassword" type="password" placeholder="كلمة مرور المدير">
+<section id="adminLoginPage" class="page">
+  <div class="container">
 
-<button onclick="adminLogin()">دخول</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>دخول المدير</h2>
 
-<div id="adminMsg" class="msg"></div>
-</div>
+      <input
+        id="adminPassword"
+        type="password"
+        placeholder="كلمة مرور المدير"
+      >
+
+      <button onclick="adminLogin()">
+        دخول المدير
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="adminLoginMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- لوحة المدير -->
-<section id="admin" class="page">
-<div class="box">
+<!-- =========================
+     لوحة المدير
+========================= -->
 
-<h1>لوحة تحكم المدير</h1>
+<section id="adminPage" class="page">
+  <div class="container">
 
-<h2>طلبات التسجيل</h2>
-<div id="requests">جاري التحميل...</div>
+    <div class="topbar">
+      <h1>لوحة المدير</h1>
 
-<hr>
+      <button class="danger" onclick="adminLogout()">
+        تسجيل الخروج
+      </button>
+    </div>
 
-<h2>المستخدمون</h2>
-<div id="users">جاري التحميل...</div>
 
-<button class="red" onclick="logout()">تسجيل الخروج</button>
+    <div class="card">
+      <h2>طلبات التسجيل</h2>
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+      <button class="blue" onclick="loadRequests()">
+        تحديث الطلبات
+      </button>
+
+      <div id="requestsList">
+        جاري التحميل...
+      </div>
+    </div>
+
+
+    <div class="card">
+      <h2>المستخدمون</h2>
+
+      <button class="blue" onclick="loadUsers()">
+        تحديث المستخدمين
+      </button>
+
+      <div id="usersList">
+        جاري التحميل...
+      </div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- البرنامج -->
-<section id="app" class="page">
-<div class="box">
+<!-- =========================
+     تطبيق المستخدم
+========================= -->
 
-<h1>نظام النشاط</h1>
+<section id="userPage" class="page">
+  <div class="container">
 
-<div id="welcome" class="small"></div>
+    <div class="topbar">
+      <h1>حسابي</h1>
 
-<div class="points">
-<span id="totalPoints">0</span>
-<div style="font-size:15px;font-weight:normal">النقاط</div>
-</div>
+      <button class="danger" onclick="userLogout()">
+        تسجيل الخروج
+      </button>
+    </div>
 
-<button onclick="toggleActivity()">إضافة نشاط</button>
 
-<div id="activityForm" style="display:none">
-<input id="activityName" placeholder="اسم النشاط">
-<input id="activityPoints" type="number" placeholder="عدد النقاط">
-<button onclick="addActivity()">حفظ النشاط</button>
-</div>
+    <div class="card">
+      <h2 id="userWelcome">
+        مرحباً
+      </h2>
 
-<div id="activities"></div>
+      <p>
+        اليونت العسكري:
+        <strong id="userUnit"></strong>
+      </p>
 
-<button class="gray" onclick="loadActivities()">تحديث</button>
-<button class="red" onclick="logout()">تسجيل الخروج</button>
+      <div class="points">
+        <span id="totalPoints">0</span>
+        نقطة
+      </div>
+    </div>
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+
+    <div class="card">
+      <h2>إضافة نشاط</h2>
+
+      <input
+        id="activityName"
+        type="text"
+        placeholder="اسم النشاط"
+      >
+
+      <input
+        id="activityPoints"
+        type="number"
+        placeholder="النقاط"
+        min="0"
+      >
+
+      <button class="success" onclick="addActivity()">
+        إضافة النشاط
+      </button>
+
+      <div id="activityMsg" class="msg"></div>
+    </div>
+
+
+    <div class="card">
+      <h2>نشاطاتي</h2>
+
+      <div id="activitiesList">
+        لا توجد أنشطة حالياً
+      </div>
+    </div>
+
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
 <script>
-
 /* =========================
-   SUPABASE
+   إعداد Supabase
 ========================= */
 
 const SUPABASE_URL =
-"https://rvgvqooateniymiypraz.supabase.co";
+  "https://rvgvqooateniymiypraz.supabase.co";
 
-/* حط Publishable Key هنا */
 const SUPABASE_KEY =
-"<!DOCTYPE html>
+  "<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام عادل</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Adel App</title>
 
-<style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#f2f4f7;color:#111}
-.page{display:none;min-height:100vh;padding:20px}
-.active{display:block}
-.box{max-width:450px;margin:35px auto;background:white;padding:25px;border-radius:18px;box-shadow:0 5px 20px #0001}
-h1,h2{text-align:center}
-input,button{width:100%;padding:14px;margin-top:10px;border-radius:10px;font-size:16px}
-input{border:1px solid #ccc}
-button{border:0;background:#111;color:white;cursor:pointer}
-button:disabled{opacity:.5}
-.gray{background:#e5e5e5;color:#111}
-.red{background:#b00020}
-.green{background:#16803c}
-.card{background:#f7f7f7;padding:15px;margin-top:12px;border-radius:12px}
-.msg{display:none;margin-top:12px;padding:12px;border-radius:10px;text-align:center}
-.ok{display:block;background:#dcf8e3;color:#12652b}
-.err{display:block;background:#ffe0e0;color:#a00000}
-.points{text-align:center;font-size:40px;font-weight:bold;margin:20px}
-.small{text-align:center;color:#777;font-size:13px}
-</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+    }
+
+    button {
+      background: #111827;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .secondary {
+      background: #6b7280;
+    }
+
+    .success {
+      background: #15803d;
+    }
+
+    .danger {
+      background: #b91c1c;
+    }
+
+    .blue {
+      background: #2563eb;
+    }
+
+    .item {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+
+    .msg {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .msg.show {
+      display: block;
+    }
+
+    .msg.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .msg.ok {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .topbar button {
+      width: auto;
+      padding: 10px 18px;
+      margin: 0;
+    }
+
+    .developer {
+      text-align: center;
+      margin-top: 30px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .points {
+      font-size: 35px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- الصفحة الرئيسية -->
-<section id="home" class="page active">
-<div class="box">
-<h1>نظام عادل</h1>
+<!-- =========================
+     الصفحة الرئيسية
+========================= -->
 
-<button onclick="show('login')">تسجيل الدخول</button>
-<button class="gray" onclick="show('register')">طلب تسجيل جديد</button>
-<button class="gray" onclick="show('adminLogin')">دخول المدير</button>
+<section id="homePage" class="page active">
+  <div class="container">
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+    <div class="card center">
+      <h1>Adel App</h1>
+      <p>نظام المستخدمين والأنشطة</p>
+
+      <button onclick="showPage('userLoginPage')">
+        دخول المستخدم
+      </button>
+
+      <button class="blue" onclick="showPage('registerPage')">
+        تسجيل مستخدم جديد
+      </button>
+
+      <button class="secondary" onclick="showPage('adminLoginPage')">
+        دخول المدير
+      </button>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- تسجيل الدخول -->
-<section id="login" class="page">
-<div class="box">
-<h1>تسجيل الدخول</h1>
+<!-- =========================
+     تسجيل مستخدم جديد
+========================= -->
 
-<input id="loginName" placeholder="الاسم الكامل">
-<input id="loginUnit" placeholder="اليونت العسكري">
-<input id="loginCode" placeholder="رمز الدخول">
+<section id="registerPage" class="page">
+  <div class="container">
 
-<button onclick="login()">طلب تسجيل الدخول</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>تسجيل مستخدم جديد</h2>
 
-<div id="loginMsg" class="msg"></div>
-</div>
+      <input id="regName" type="text" placeholder="الاسم الكامل">
+
+      <input id="regUnit" type="text" placeholder="اليونت العسكري">
+
+      <button class="success" onclick="registerUser()">
+        إرسال طلب التسجيل
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="registerMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- التسجيل -->
-<section id="register" class="page">
-<div class="box">
-<h1>طلب تسجيل جديد</h1>
+<!-- =========================
+     دخول المستخدم
+========================= -->
 
-<input id="regName" placeholder="الاسم الكامل">
-<input id="regUnit" placeholder="اليونت العسكري">
+<section id="userLoginPage" class="page">
+  <div class="container">
 
-<button onclick="registerUser()">إرسال الطلب</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>دخول المستخدم</h2>
 
-<div id="regMsg" class="msg"></div>
-</div>
+      <input id="loginName" type="text" placeholder="الاسم الكامل">
+
+      <input id="loginUnit" type="text" placeholder="اليونت العسكري">
+
+      <input id="loginCode" type="text" placeholder="رمز الدخول">
+
+      <button class="success" onclick="loginUser()">
+        دخول
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="loginMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- دخول المدير -->
-<section id="adminLogin" class="page">
-<div class="box">
-<h1>دخول المدير</h1>
+<!-- =========================
+     دخول المدير
+========================= -->
 
-<input id="adminPassword" type="password" placeholder="كلمة مرور المدير">
+<section id="adminLoginPage" class="page">
+  <div class="container">
 
-<button onclick="adminLogin()">دخول</button>
-<button class="gray" onclick="show('home')">رجوع</button>
+    <div class="card">
+      <h2>دخول المدير</h2>
 
-<div id="adminMsg" class="msg"></div>
-</div>
+      <input
+        id="adminPassword"
+        type="password"
+        placeholder="كلمة مرور المدير"
+      >
+
+      <button onclick="adminLogin()">
+        دخول المدير
+      </button>
+
+      <button class="secondary" onclick="showPage('homePage')">
+        رجوع
+      </button>
+
+      <div id="adminLoginMsg" class="msg"></div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- لوحة المدير -->
-<section id="admin" class="page">
-<div class="box">
+<!-- =========================
+     لوحة المدير
+========================= -->
 
-<h1>لوحة تحكم المدير</h1>
+<section id="adminPage" class="page">
+  <div class="container">
 
-<h2>طلبات التسجيل</h2>
-<div id="requests">جاري التحميل...</div>
+    <div class="topbar">
+      <h1>لوحة المدير</h1>
 
-<hr>
+      <button class="danger" onclick="adminLogout()">
+        تسجيل الخروج
+      </button>
+    </div>
 
-<h2>المستخدمون</h2>
-<div id="users">جاري التحميل...</div>
 
-<button class="red" onclick="logout()">تسجيل الخروج</button>
+    <div class="card">
+      <h2>طلبات التسجيل</h2>
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+      <button class="blue" onclick="loadRequests()">
+        تحديث الطلبات
+      </button>
+
+      <div id="requestsList">
+        جاري التحميل...
+      </div>
+    </div>
+
+
+    <div class="card">
+      <h2>المستخدمون</h2>
+
+      <button class="blue" onclick="loadUsers()">
+        تحديث المستخدمين
+      </button>
+
+      <div id="usersList">
+        جاري التحميل...
+      </div>
+    </div>
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
-<!-- البرنامج -->
-<section id="app" class="page">
-<div class="box">
+<!-- =========================
+     تطبيق المستخدم
+========================= -->
 
-<h1>نظام النشاط</h1>
+<section id="userPage" class="page">
+  <div class="container">
 
-<div id="welcome" class="small"></div>
+    <div class="topbar">
+      <h1>حسابي</h1>
 
-<div class="points">
-<span id="totalPoints">0</span>
-<div style="font-size:15px;font-weight:normal">النقاط</div>
-</div>
+      <button class="danger" onclick="userLogout()">
+        تسجيل الخروج
+      </button>
+    </div>
 
-<button onclick="toggleActivity()">إضافة نشاط</button>
 
-<div id="activityForm" style="display:none">
-<input id="activityName" placeholder="اسم النشاط">
-<input id="activityPoints" type="number" placeholder="عدد النقاط">
-<button onclick="addActivity()">حفظ النشاط</button>
-</div>
+    <div class="card">
+      <h2 id="userWelcome">
+        مرحباً
+      </h2>
 
-<div id="activities"></div>
+      <p>
+        اليونت العسكري:
+        <strong id="userUnit"></strong>
+      </p>
 
-<button class="gray" onclick="loadActivities()">تحديث</button>
-<button class="red" onclick="logout()">تسجيل الخروج</button>
+      <div class="points">
+        <span id="totalPoints">0</span>
+        نقطة
+      </div>
+    </div>
 
-<div class="small">المصمم عادل الشمري</div>
-</div>
+
+    <div class="card">
+      <h2>إضافة نشاط</h2>
+
+      <input
+        id="activityName"
+        type="text"
+        placeholder="اسم النشاط"
+      >
+
+      <input
+        id="activityPoints"
+        type="number"
+        placeholder="النقاط"
+        min="0"
+      >
+
+      <button class="success" onclick="addActivity()">
+        إضافة النشاط
+      </button>
+
+      <div id="activityMsg" class="msg"></div>
+    </div>
+
+
+    <div class="card">
+      <h2>نشاطاتي</h2>
+
+      <div id="activitiesList">
+        لا توجد أنشطة حالياً
+      </div>
+    </div>
+
+
+    <div class="developer">
+      المصمم عادل الشمري
+    </div>
+
+  </div>
 </section>
 
 
 <script>
-
 /* =========================
-   SUPABASE
+   إعداد Supabase
 ========================= */
 
 const SUPABASE_URL =
-"https://rvgvqooateniymiypraz.supabase.co";
+  "https://rvgvqooateniymiypraz.supabase.co";
 
-/* حط Publishable Key هنا */
 const SUPABASE_KEY =
-"حط_هنا_Publishable_Key_الخاص_بمشروعك";
+  "حط_هنا_Publishable_Key_الخاص_بمشروعك";
 
-const db =
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
 /* =========================
-   كلمة مرور المدير
+   إعداد المدير
 ========================= */
 
-const ADMIN_PASSWORD = "Adel@2026";
+const ADMIN_PASSWORD =
+  "Adel@2026";
 
 
 /* =========================
-   التنقل
+   متغير المستخدم الحالي
 ========================= */
 
-function show(id){
+let currentUser = null;
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
 
-document.getElementById(id)
-.classList.add("active");
+/* =========================
+   التنقل بين الصفحات
+========================= */
+
+function showPage(id) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  const page = document.getElementById(id);
+
+  if (page) {
+    page.classList.add("active");
+  }
 }
 
 
@@ -350,146 +893,68 @@ document.getElementById(id)
    الرسائل
 ========================= */
 
-function msg(id,text,type){
+function showMessage(id, text, type) {
 
-const el=document.getElementById(id);
+  const el = document.getElementById(id);
 
-el.textContent=text;
-el.className="msg "+type;
+  if (!el) return;
 
+  el.textContent = text;
+
+  el.className = "msg show " + type;
 }
 
 
 /* =========================
-   طلب تسجيل
+   تسجيل مستخدم جديد
 ========================= */
 
-async function registerUser(){
+async function registerUser() {
 
-const name =
-document.getElementById("regName").value.trim();
+  const name =
+    document.getElementById("regName").value.trim();
 
-const unit =
-document.getElementById("regUnit").value.trim();
+  const unit =
+    document.getElementById("regUnit").value.trim();
 
-if(!name || !unit){
+  if (!name || !unit) {
 
-msg("regMsg","عب جميع البيانات","err");
-return;
+    showMessage(
+      "registerMsg",
+      "اكتب الاسم واليونت العسكري",
+      "error"
+    );
 
-}
+    return;
+  }
 
-try{
+  const { error } = await db
+    .from("registration_requests")
+    .insert({
+      full_name: name,
+      military_unit: unit,
+      status: "pending"
+    });
 
-const {error}=await db
-.from("registration_requests")
-.insert({
-full_name:name,
-military_unit:unit,
-status:"pending"
-});
+  if (error) {
 
-if(error) throw error;
+    showMessage(
+      "registerMsg",
+      "حدث خطأ أثناء إرسال الطلب: " + error.message,
+      "error"
+    );
 
-msg(
-"regMsg",
-"تم إرسال طلبك وانتظر موافقة المدير",
-"ok"
-);
+    return;
+  }
 
-document.getElementById("regName").value="";
-document.getElementById("regUnit").value="";
+  document.getElementById("regName").value = "";
+  document.getElementById("regUnit").value = "";
 
-}catch(e){
-
-msg(
-"regMsg",
-"حدث خطأ: "+e.message,
-"err"
-);
-
-}
-
-}
-
-
-/* =========================
-   دخول المستخدم
-========================= */
-
-async function login(){
-
-const name =
-document.getElementById("loginName").value.trim();
-
-const unit =
-document.getElementById("loginUnit").value.trim();
-
-const code =
-document.getElementById("loginCode").value.trim();
-
-if(!name || !unit || !code){
-
-msg(
-"loginMsg",
-"عب جميع البيانات",
-"err"
-);
-
-return;
-
-}
-
-try{
-
-const {data,error}=await db
-.from("users")
-.select("*")
-.eq("full_name",name)
-.eq("military_unit",unit)
-.eq("access_code",code)
-.eq("approved",true)
-.maybeSingle();
-
-if(error) throw error;
-
-if(!data){
-
-msg(
-"loginMsg",
-"بيانات الدخول غير صحيحة أو لم تتم الموافقة",
-"err"
-);
-
-return;
-
-}
-
-localStorage.setItem(
-"adel_user",
-JSON.stringify(data)
-);
-
-document.getElementById("welcome")
-.textContent =
-"مرحباً "+data.full_name+
-" | اليونت العسكري: "+
-data.military_unit;
-
-show("app");
-
-loadActivities();
-
-}catch(e){
-
-msg(
-"loginMsg",
-"حدث خطأ: "+e.message,
-"err"
-);
-
-}
-
+  showMessage(
+    "registerMsg",
+    "تم إرسال طلب التسجيل للمدير",
+    "ok"
+  );
 }
 
 
@@ -497,473 +962,625 @@ msg(
    دخول المدير
 ========================= */
 
-function adminLogin(){
+function adminLogin() {
 
-const password =
-document.getElementById("adminPassword").value;
+  const password =
+    document.getElementById("adminPassword").value;
 
-if(password !== ADMIN_PASSWORD){
+  if (password !== ADMIN_PASSWORD) {
 
-msg(
-"adminMsg",
-"كلمة المرور غير صحيحة",
-"err"
-);
+    showMessage(
+      "adminLoginMsg",
+      "كلمة المرور غير صحيحة",
+      "error"
+    );
 
-return;
+    return;
+  }
 
-}
+  document.getElementById("adminPassword").value = "";
 
-localStorage.setItem(
-"adel_admin",
-"true"
-);
+  showPage("adminPage");
 
-show("admin");
-
-loadRequests();
-loadUsers();
-
+  loadRequests();
+  loadUsers();
 }
 
 
 /* =========================
-   طلبات التسجيل
+   تسجيل خروج المدير
 ========================= */
 
-async function loadRequests(){
+function adminLogout() {
 
-const box =
-document.getElementById("requests");
-
-box.innerHTML="جاري التحميل...";
-
-const {data,error}=await db
-.from("registration_requests")
-.select("*")
-.order("created_at",{ascending:false});
-
-if(error){
-
-box.innerHTML=
-"خطأ: "+error.message;
-
-return;
-
-}
-
-if(!data || data.length===0){
-
-box.innerHTML="لا توجد طلبات حالياً";
-return;
-
-}
-
-box.innerHTML="";
-
-data.forEach(r=>{
-
-const div=document.createElement("div");
-
-div.className="card";
-
-div.innerHTML=`
-
-<b>${escapeHTML(r.full_name)}</b>
-<br>
-اليونت العسكري:
-${escapeHTML(r.military_unit)}
-<br>
-الحالة:
-${escapeHTML(r.status || "pending")}
-
-<button class="green"
-onclick="approveRequest('${r.id}')">
-موافقة وإنشاء رمز
-</button>
-
-<button class="red"
-onclick="rejectRequest('${r.id}')">
-رفض
-</button>
-
-`;
-
-box.appendChild(div);
-
-});
-
+  showPage("homePage");
 }
 
 
 /* =========================
-   الموافقة
+   تحميل طلبات التسجيل
 ========================= */
 
-async function approveRequest(id){
+async function loadRequests() {
 
-const code =
-"AD"+Math.floor(
-100000+Math.random()*900000
-);
+  const box =
+    document.getElementById("requestsList");
 
-const {data:request,error:getError}=
-await db
-.from("registration_requests")
-.select("*")
-.eq("id",id)
-.single();
+  box.innerHTML = "جاري التحميل...";
 
-if(getError){
+  const { data, error } = await db
+    .from("registration_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-alert(getError.message);
-return;
+  if (error) {
 
-}
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل الطلبات: "
+      + escapeHtml(error.message)
+      + "</div>";
 
-const {error:userError}=
-await db
-.from("users")
-.insert({
-full_name:request.full_name,
-military_unit:request.military_unit,
-access_code:code,
-approved:true
-});
+    return;
+  }
 
-if(userError){
+  if (!data || data.length === 0) {
 
-alert(userError.message);
-return;
+    box.innerHTML =
+      "<div class='item'>لا توجد طلبات تسجيل حالياً</div>";
 
-}
+    return;
+  }
 
-await db
-.from("registration_requests")
-.update({
-status:"approved"
-})
-.eq("id",id);
+  box.innerHTML = "";
 
-alert(
-"تمت الموافقة\n\nرمز الدخول:\n"+code
-);
+  data.forEach(request => {
 
-loadRequests();
-loadUsers();
+    const item =
+      document.createElement("div");
 
+    item.className = "item";
+
+    item.innerHTML = `
+      <strong>الاسم:</strong>
+      ${escapeHtml(request.full_name)}
+      <br><br>
+
+      <strong>اليونت العسكري:</strong>
+      ${escapeHtml(request.military_unit || "-")}
+      <br><br>
+
+      <strong>الحالة:</strong>
+      ${escapeHtml(request.status || "pending")}
+      <br><br>
+
+      ${
+        request.status === "pending"
+        ?
+        `
+        <button
+          class="success"
+          onclick="approveRequest(${request.id})"
+        >
+          قبول الطلب
+        </button>
+        `
+        :
+        ""
+      }
+    `;
+
+    box.appendChild(item);
+  });
 }
 
 
 /* =========================
-   رفض
+   قبول طلب
 ========================= */
 
-async function rejectRequest(id){
+async function approveRequest(id) {
 
-const {error}=await db
-.from("registration_requests")
-.update({
-status:"rejected"
-})
-.eq("id",id);
+  const { data: request, error: requestError } =
+    await db
+      .from("registration_requests")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-if(error){
+  if (requestError) {
 
-alert(error.message);
-return;
+    alert(
+      "تعذر العثور على الطلب: "
+      + requestError.message
+    );
 
-}
+    return;
+  }
 
-loadRequests();
 
+  const accessCode =
+    generateAccessCode();
+
+
+  const { error: userError } =
+    await db
+      .from("users")
+      .insert({
+        full_name: request.full_name,
+        military_unit: request.military_unit,
+        access_code: accessCode,
+        approved: true
+      });
+
+
+  if (userError) {
+
+    alert(
+      "حدث خطأ أثناء إنشاء المستخدم: "
+      + userError.message
+    );
+
+    return;
+  }
+
+
+  const { error: updateError } =
+    await db
+      .from("registration_requests")
+      .update({
+        status: "approved"
+      })
+      .eq("id", id);
+
+
+  if (updateError) {
+
+    alert(
+      "تم إنشاء المستخدم لكن تعذر تحديث الطلب: "
+      + updateError.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "تم قبول الطلب\n\n"
+    + "رمز دخول المستخدم:\n"
+    + accessCode
+  );
+
+
+  loadRequests();
+  loadUsers();
 }
 
 
 /* =========================
-   المستخدمون
+   توليد رمز دخول
 ========================= */
 
-async function loadUsers(){
+function generateAccessCode() {
 
-const box=
-document.getElementById("users");
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-const {data,error}=await db
-.from("users")
-.select("*")
-.order("created_at",{ascending:false});
+  let code = "";
 
-if(error){
+  for (let i = 0; i < 8; i++) {
 
-box.innerHTML=
-"خطأ: "+error.message;
+    code += chars.charAt(
+      Math.floor(Math.random() * chars.length)
+    );
+  }
 
-return;
-
-}
-
-if(!data || data.length===0){
-
-box.innerHTML="لا يوجد مستخدمون";
-return;
-
-}
-
-box.innerHTML="";
-
-data.forEach(u=>{
-
-const div=document.createElement("div");
-
-div.className="card";
-
-div.innerHTML=`
-
-<b>${escapeHTML(u.full_name)}</b>
-<br>
-اليونت العسكري:
-${escapeHTML(u.military_unit)}
-<br>
-رمز الدخول:
-<b>${escapeHTML(u.access_code)}</b>
-
-`;
-
-box.appendChild(div);
-
-});
-
+  return code;
 }
 
 
 /* =========================
-   الأنشطة
+   تحميل المستخدمين
 ========================= */
 
-function toggleActivity(){
+async function loadUsers() {
 
-const f=
-document.getElementById("activityForm");
+  const box =
+    document.getElementById("usersList");
 
-f.style.display =
-f.style.display==="none"
-?"block"
-:"none";
-
-}
+  box.innerHTML = "جاري التحميل...";
 
 
-async function addActivity(){
+  const { data, error } =
+    await db
+      .from("users")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
 
-const user =
-JSON.parse(
-localStorage.getItem("adel_user")
-);
 
-if(!user){
+  if (error) {
 
-show("login");
-return;
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل المستخدمين: "
+      + escapeHtml(error.message)
+      + "</div>";
 
-}
+    return;
+  }
 
-const name =
-document.getElementById("activityName")
-.value.trim();
 
-const points =
-Number(
-document.getElementById("activityPoints")
-.value
-);
+  if (!data || data.length === 0) {
 
-if(!name || !points){
+    box.innerHTML =
+      "<div class='item'>لا يوجد مستخدمون حالياً</div>";
 
-alert("اكتب اسم النشاط وعدد النقاط");
-return;
+    return;
+  }
 
-}
 
-const {error}=await db
-.from("activities")
-.insert({
-user_id:user.id,
-activity_name:name,
-points:points
-});
+  box.innerHTML = "";
 
-if(error){
 
-alert(error.message);
-return;
+  data.forEach(user => {
 
-}
+    const item =
+      document.createElement("div");
 
-document.getElementById("activityName").value="";
-document.getElementById("activityPoints").value="";
+    item.className = "item";
 
-document.getElementById("activityForm")
-.style.display="none";
+    item.innerHTML = `
+      <strong>الاسم:</strong>
+      ${escapeHtml(user.full_name)}
+      <br><br>
 
-loadActivities();
+      <strong>اليونت العسكري:</strong>
+      ${escapeHtml(user.military_unit || "-")}
+      <br><br>
 
+      <strong>رمز الدخول:</strong>
+      ${escapeHtml(user.access_code)}
+      <br><br>
+
+      <strong>الحالة:</strong>
+      ${user.approved ? "مفعل" : "غير مفعل"}
+    `;
+
+    box.appendChild(item);
+  });
 }
 
 
 /* =========================
-   عرض الأنشطة
+   دخول المستخدم
 ========================= */
 
-async function loadActivities(){
+async function loginUser() {
 
-const user =
-JSON.parse(
-localStorage.getItem("adel_user")
-);
+  const name =
+    document.getElementById("loginName").value.trim();
 
-if(!user) return;
+  const unit =
+    document.getElementById("loginUnit").value.trim();
 
-const {data,error}=await db
-.from("activities")
-.select("*")
-.eq("user_id",user.id)
-.order("created_at",{ascending:false});
+  const code =
+    document.getElementById("loginCode").value.trim();
 
-if(error){
 
-alert(error.message);
-return;
+  if (!name || !unit || !code) {
 
-}
+    showMessage(
+      "loginMsg",
+      "عب جميع الخانات",
+      "error"
+    );
 
-const box=
-document.getElementById("activities");
+    return;
+  }
 
-box.innerHTML="";
 
-let total=0;
+  const { data, error } =
+    await db
+      .from("users")
+      .select("*")
+      .eq("full_name", name)
+      .eq("military_unit", unit)
+      .eq("access_code", code)
+      .eq("approved", true)
+      .maybeSingle();
 
-(data || []).forEach(a=>{
 
-total += Number(a.points);
+  if (error) {
 
-const div=document.createElement("div");
+    showMessage(
+      "loginMsg",
+      "حدث خطأ: " + error.message,
+      "error"
+    );
 
-div.className="card";
+    return;
+  }
 
-div.innerHTML=`
 
-<b>${escapeHTML(a.activity_name)}</b>
-<br>
-النقاط: ${a.points}
+  if (!data) {
 
-`;
+    showMessage(
+      "loginMsg",
+      "بيانات الدخول غير صحيحة",
+      "error"
+    );
 
-box.appendChild(div);
+    return;
+  }
 
-});
 
-document.getElementById("totalPoints")
-.textContent=total;
+  currentUser = data;
 
+
+  document.getElementById("loginName").value = "";
+  document.getElementById("loginUnit").value = "";
+  document.getElementById("loginCode").value = "";
+
+
+  document.getElementById("userWelcome").textContent =
+    "مرحباً " + data.full_name;
+
+  document.getElementById("userUnit").textContent =
+    data.military_unit;
+
+
+  showPage("userPage");
+
+  loadActivities();
 }
 
 
 /* =========================
-   خروج
+   تسجيل خروج المستخدم
 ========================= */
 
-function logout(){
+function userLogout() {
 
-localStorage.removeItem("adel_user");
-localStorage.removeItem("adel_admin");
+  currentUser = null;
 
-show("home");
-
+  showPage("homePage");
 }
 
 
 /* =========================
-   حماية النص
+   إضافة نشاط
 ========================= */
 
-function escapeHTML(text){
+async function addActivity() {
 
-const div=document.createElement("div");
+  if (!currentUser) {
 
-div.textContent=text;
+    showMessage(
+      "activityMsg",
+      "يجب تسجيل الدخول أولاً",
+      "error"
+    );
 
-return div.innerHTML;
+    return;
+  }
 
+
+  const name =
+    document
+      .getElementById("activityName")
+      .value
+      .trim();
+
+
+  const points =
+    Number(
+      document
+        .getElementById("activityPoints")
+        .value
+    );
+
+
+  if (!name || !Number.isFinite(points)) {
+
+    showMessage(
+      "activityMsg",
+      "اكتب اسم النشاط والنقاط",
+      "error"
+    );
+
+    return;
+  }
+
+
+  const { error } =
+    await db
+      .from("activities")
+      .insert({
+        user_id: currentUser.id,
+        activity_name: name,
+        points: points
+      });
+
+
+  if (error) {
+
+    showMessage(
+      "activityMsg",
+      "حدث خطأ: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  document.getElementById("activityName").value = "";
+  document.getElementById("activityPoints").value = "";
+
+
+  showMessage(
+    "activityMsg",
+    "تمت إضافة النشاط",
+    "ok"
+  );
+
+
+  loadActivities();
 }
 
 
 /* =========================
-   تشغيل تلقائي
+   تحميل الأنشطة
 ========================= */
 
-if(
-localStorage.getItem("adel_admin")
-==="true"
-){
+async function loadActivities() {
 
-show("admin");
+  if (!currentUser) return;
 
-loadRequests();
-loadUsers();
 
-}else if(
-localStorage.getItem("adel_user")
-){
+  const box =
+    document.getElementById("activitiesList");
 
-const user=
-JSON.parse(
-localStorage.getItem("adel_user")
-);
+  box.innerHTML = "جاري التحميل...";
 
-document.getElementById("welcome")
-.textContent=
-"مرحباً "+user.full_name+
-" | اليونت العسكري: "+
-user.military_unit;
 
-show("app");
+  const { data, error } =
+    await db
+      .from("activities")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", {
+        ascending: false
+      });
 
-loadActivities();
 
+  if (error) {
+
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل الأنشطة: "
+      + escapeHtml(error.message)
+      + "</div>";
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    box.innerHTML =
+      "<div class='item'>لا توجد أنشطة حالياً</div>";
+
+    document.getElementById("totalPoints").textContent = "0";
+
+    return;
+  }
+
+
+  let total = 0;
+
+  box.innerHTML = "";
+
+
+  data.forEach(activity => {
+
+    total += Number(activity.points || 0);
+
+
+    const item =
+      document.createElement("div");
+
+    item.className = "item";
+
+    item.innerHTML = `
+      <strong>
+        ${escapeHtml(activity.activity_name)}
+      </strong>
+
+      <br><br>
+
+      النقاط:
+      <strong>
+        ${Number(activity.points || 0)}
+      </strong>
+    `;
+
+
+    box.appendChild(item);
+  });
+
+
+  document.getElementById("totalPoints").textContent =
+    total;
 }
 
+
+/* =========================
+   حماية النصوص
+========================= */
+
+function escapeHtml(value) {
+
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =========================
+   بداية التطبيق
+========================= */
+
+showPage("homePage");
 </script>
 
 </body>
 </html>";
 
-const db =
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
 /* =========================
-   كلمة مرور المدير
+   إعداد المدير
 ========================= */
 
-const ADMIN_PASSWORD = "Adel@2026";
+const ADMIN_PASSWORD =
+  "Adel@2026";
 
 
 /* =========================
-   التنقل
+   متغير المستخدم الحالي
 ========================= */
 
-function show(id){
+let currentUser = null;
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
 
-document.getElementById(id)
-.classList.add("active");
+/* =========================
+   التنقل بين الصفحات
+========================= */
+
+function showPage(id) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  const page = document.getElementById(id);
+
+  if (page) {
+    page.classList.add("active");
+  }
 }
 
 
@@ -971,146 +1588,68 @@ document.getElementById(id)
    الرسائل
 ========================= */
 
-function msg(id,text,type){
+function showMessage(id, text, type) {
 
-const el=document.getElementById(id);
+  const el = document.getElementById(id);
 
-el.textContent=text;
-el.className="msg "+type;
+  if (!el) return;
 
+  el.textContent = text;
+
+  el.className = "msg show " + type;
 }
 
 
 /* =========================
-   طلب تسجيل
+   تسجيل مستخدم جديد
 ========================= */
 
-async function registerUser(){
+async function registerUser() {
 
-const name =
-document.getElementById("regName").value.trim();
+  const name =
+    document.getElementById("regName").value.trim();
 
-const unit =
-document.getElementById("regUnit").value.trim();
+  const unit =
+    document.getElementById("regUnit").value.trim();
 
-if(!name || !unit){
+  if (!name || !unit) {
 
-msg("regMsg","عب جميع البيانات","err");
-return;
+    showMessage(
+      "registerMsg",
+      "اكتب الاسم واليونت العسكري",
+      "error"
+    );
 
-}
+    return;
+  }
 
-try{
+  const { error } = await db
+    .from("registration_requests")
+    .insert({
+      full_name: name,
+      military_unit: unit,
+      status: "pending"
+    });
 
-const {error}=await db
-.from("registration_requests")
-.insert({
-full_name:name,
-military_unit:unit,
-status:"pending"
-});
+  if (error) {
 
-if(error) throw error;
+    showMessage(
+      "registerMsg",
+      "حدث خطأ أثناء إرسال الطلب: " + error.message,
+      "error"
+    );
 
-msg(
-"regMsg",
-"تم إرسال طلبك وانتظر موافقة المدير",
-"ok"
-);
+    return;
+  }
 
-document.getElementById("regName").value="";
-document.getElementById("regUnit").value="";
+  document.getElementById("regName").value = "";
+  document.getElementById("regUnit").value = "";
 
-}catch(e){
-
-msg(
-"regMsg",
-"حدث خطأ: "+e.message,
-"err"
-);
-
-}
-
-}
-
-
-/* =========================
-   دخول المستخدم
-========================= */
-
-async function login(){
-
-const name =
-document.getElementById("loginName").value.trim();
-
-const unit =
-document.getElementById("loginUnit").value.trim();
-
-const code =
-document.getElementById("loginCode").value.trim();
-
-if(!name || !unit || !code){
-
-msg(
-"loginMsg",
-"عب جميع البيانات",
-"err"
-);
-
-return;
-
-}
-
-try{
-
-const {data,error}=await db
-.from("users")
-.select("*")
-.eq("full_name",name)
-.eq("military_unit",unit)
-.eq("access_code",code)
-.eq("approved",true)
-.maybeSingle();
-
-if(error) throw error;
-
-if(!data){
-
-msg(
-"loginMsg",
-"بيانات الدخول غير صحيحة أو لم تتم الموافقة",
-"err"
-);
-
-return;
-
-}
-
-localStorage.setItem(
-"adel_user",
-JSON.stringify(data)
-);
-
-document.getElementById("welcome")
-.textContent =
-"مرحباً "+data.full_name+
-" | اليونت العسكري: "+
-data.military_unit;
-
-show("app");
-
-loadActivities();
-
-}catch(e){
-
-msg(
-"loginMsg",
-"حدث خطأ: "+e.message,
-"err"
-);
-
-}
-
+  showMessage(
+    "registerMsg",
+    "تم إرسال طلب التسجيل للمدير",
+    "ok"
+  );
 }
 
 
@@ -1118,443 +1657,582 @@ msg(
    دخول المدير
 ========================= */
 
-function adminLogin(){
+function adminLogin() {
 
-const password =
-document.getElementById("adminPassword").value;
+  const password =
+    document.getElementById("adminPassword").value;
 
-if(password !== ADMIN_PASSWORD){
+  if (password !== ADMIN_PASSWORD) {
 
-msg(
-"adminMsg",
-"كلمة المرور غير صحيحة",
-"err"
-);
+    showMessage(
+      "adminLoginMsg",
+      "كلمة المرور غير صحيحة",
+      "error"
+    );
 
-return;
+    return;
+  }
 
-}
+  document.getElementById("adminPassword").value = "";
 
-localStorage.setItem(
-"adel_admin",
-"true"
-);
+  showPage("adminPage");
 
-show("admin");
-
-loadRequests();
-loadUsers();
-
+  loadRequests();
+  loadUsers();
 }
 
 
 /* =========================
-   طلبات التسجيل
+   تسجيل خروج المدير
 ========================= */
 
-async function loadRequests(){
+function adminLogout() {
 
-const box =
-document.getElementById("requests");
-
-box.innerHTML="جاري التحميل...";
-
-const {data,error}=await db
-.from("registration_requests")
-.select("*")
-.order("created_at",{ascending:false});
-
-if(error){
-
-box.innerHTML=
-"خطأ: "+error.message;
-
-return;
-
-}
-
-if(!data || data.length===0){
-
-box.innerHTML="لا توجد طلبات حالياً";
-return;
-
-}
-
-box.innerHTML="";
-
-data.forEach(r=>{
-
-const div=document.createElement("div");
-
-div.className="card";
-
-div.innerHTML=`
-
-<b>${escapeHTML(r.full_name)}</b>
-<br>
-اليونت العسكري:
-${escapeHTML(r.military_unit)}
-<br>
-الحالة:
-${escapeHTML(r.status || "pending")}
-
-<button class="green"
-onclick="approveRequest('${r.id}')">
-موافقة وإنشاء رمز
-</button>
-
-<button class="red"
-onclick="rejectRequest('${r.id}')">
-رفض
-</button>
-
-`;
-
-box.appendChild(div);
-
-});
-
+  showPage("homePage");
 }
 
 
 /* =========================
-   الموافقة
+   تحميل طلبات التسجيل
 ========================= */
 
-async function approveRequest(id){
+async function loadRequests() {
 
-const code =
-"AD"+Math.floor(
-100000+Math.random()*900000
-);
+  const box =
+    document.getElementById("requestsList");
 
-const {data:request,error:getError}=
-await db
-.from("registration_requests")
-.select("*")
-.eq("id",id)
-.single();
+  box.innerHTML = "جاري التحميل...";
 
-if(getError){
+  const { data, error } = await db
+    .from("registration_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-alert(getError.message);
-return;
+  if (error) {
 
-}
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل الطلبات: "
+      + escapeHtml(error.message)
+      + "</div>";
 
-const {error:userError}=
-await db
-.from("users")
-.insert({
-full_name:request.full_name,
-military_unit:request.military_unit,
-access_code:code,
-approved:true
-});
+    return;
+  }
 
-if(userError){
+  if (!data || data.length === 0) {
 
-alert(userError.message);
-return;
+    box.innerHTML =
+      "<div class='item'>لا توجد طلبات تسجيل حالياً</div>";
 
-}
+    return;
+  }
 
-await db
-.from("registration_requests")
-.update({
-status:"approved"
-})
-.eq("id",id);
+  box.innerHTML = "";
 
-alert(
-"تمت الموافقة\n\nرمز الدخول:\n"+code
-);
+  data.forEach(request => {
 
-loadRequests();
-loadUsers();
+    const item =
+      document.createElement("div");
 
+    item.className = "item";
+
+    item.innerHTML = `
+      <strong>الاسم:</strong>
+      ${escapeHtml(request.full_name)}
+      <br><br>
+
+      <strong>اليونت العسكري:</strong>
+      ${escapeHtml(request.military_unit || "-")}
+      <br><br>
+
+      <strong>الحالة:</strong>
+      ${escapeHtml(request.status || "pending")}
+      <br><br>
+
+      ${
+        request.status === "pending"
+        ?
+        `
+        <button
+          class="success"
+          onclick="approveRequest(${request.id})"
+        >
+          قبول الطلب
+        </button>
+        `
+        :
+        ""
+      }
+    `;
+
+    box.appendChild(item);
+  });
 }
 
 
 /* =========================
-   رفض
+   قبول طلب
 ========================= */
 
-async function rejectRequest(id){
+async function approveRequest(id) {
 
-const {error}=await db
-.from("registration_requests")
-.update({
-status:"rejected"
-})
-.eq("id",id);
+  const { data: request, error: requestError } =
+    await db
+      .from("registration_requests")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-if(error){
+  if (requestError) {
 
-alert(error.message);
-return;
+    alert(
+      "تعذر العثور على الطلب: "
+      + requestError.message
+    );
 
-}
+    return;
+  }
 
-loadRequests();
 
+  const accessCode =
+    generateAccessCode();
+
+
+  const { error: userError } =
+    await db
+      .from("users")
+      .insert({
+        full_name: request.full_name,
+        military_unit: request.military_unit,
+        access_code: accessCode,
+        approved: true
+      });
+
+
+  if (userError) {
+
+    alert(
+      "حدث خطأ أثناء إنشاء المستخدم: "
+      + userError.message
+    );
+
+    return;
+  }
+
+
+  const { error: updateError } =
+    await db
+      .from("registration_requests")
+      .update({
+        status: "approved"
+      })
+      .eq("id", id);
+
+
+  if (updateError) {
+
+    alert(
+      "تم إنشاء المستخدم لكن تعذر تحديث الطلب: "
+      + updateError.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "تم قبول الطلب\n\n"
+    + "رمز دخول المستخدم:\n"
+    + accessCode
+  );
+
+
+  loadRequests();
+  loadUsers();
 }
 
 
 /* =========================
-   المستخدمون
+   توليد رمز دخول
 ========================= */
 
-async function loadUsers(){
+function generateAccessCode() {
 
-const box=
-document.getElementById("users");
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-const {data,error}=await db
-.from("users")
-.select("*")
-.order("created_at",{ascending:false});
+  let code = "";
 
-if(error){
+  for (let i = 0; i < 8; i++) {
 
-box.innerHTML=
-"خطأ: "+error.message;
+    code += chars.charAt(
+      Math.floor(Math.random() * chars.length)
+    );
+  }
 
-return;
-
-}
-
-if(!data || data.length===0){
-
-box.innerHTML="لا يوجد مستخدمون";
-return;
-
-}
-
-box.innerHTML="";
-
-data.forEach(u=>{
-
-const div=document.createElement("div");
-
-div.className="card";
-
-div.innerHTML=`
-
-<b>${escapeHTML(u.full_name)}</b>
-<br>
-اليونت العسكري:
-${escapeHTML(u.military_unit)}
-<br>
-رمز الدخول:
-<b>${escapeHTML(u.access_code)}</b>
-
-`;
-
-box.appendChild(div);
-
-});
-
+  return code;
 }
 
 
 /* =========================
-   الأنشطة
+   تحميل المستخدمين
 ========================= */
 
-function toggleActivity(){
+async function loadUsers() {
 
-const f=
-document.getElementById("activityForm");
+  const box =
+    document.getElementById("usersList");
 
-f.style.display =
-f.style.display==="none"
-?"block"
-:"none";
-
-}
+  box.innerHTML = "جاري التحميل...";
 
 
-async function addActivity(){
+  const { data, error } =
+    await db
+      .from("users")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
 
-const user =
-JSON.parse(
-localStorage.getItem("adel_user")
-);
 
-if(!user){
+  if (error) {
 
-show("login");
-return;
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل المستخدمين: "
+      + escapeHtml(error.message)
+      + "</div>";
 
-}
+    return;
+  }
 
-const name =
-document.getElementById("activityName")
-.value.trim();
 
-const points =
-Number(
-document.getElementById("activityPoints")
-.value
-);
+  if (!data || data.length === 0) {
 
-if(!name || !points){
+    box.innerHTML =
+      "<div class='item'>لا يوجد مستخدمون حالياً</div>";
 
-alert("اكتب اسم النشاط وعدد النقاط");
-return;
+    return;
+  }
 
-}
 
-const {error}=await db
-.from("activities")
-.insert({
-user_id:user.id,
-activity_name:name,
-points:points
-});
+  box.innerHTML = "";
 
-if(error){
 
-alert(error.message);
-return;
+  data.forEach(user => {
 
-}
+    const item =
+      document.createElement("div");
 
-document.getElementById("activityName").value="";
-document.getElementById("activityPoints").value="";
+    item.className = "item";
 
-document.getElementById("activityForm")
-.style.display="none";
+    item.innerHTML = `
+      <strong>الاسم:</strong>
+      ${escapeHtml(user.full_name)}
+      <br><br>
 
-loadActivities();
+      <strong>اليونت العسكري:</strong>
+      ${escapeHtml(user.military_unit || "-")}
+      <br><br>
 
+      <strong>رمز الدخول:</strong>
+      ${escapeHtml(user.access_code)}
+      <br><br>
+
+      <strong>الحالة:</strong>
+      ${user.approved ? "مفعل" : "غير مفعل"}
+    `;
+
+    box.appendChild(item);
+  });
 }
 
 
 /* =========================
-   عرض الأنشطة
+   دخول المستخدم
 ========================= */
 
-async function loadActivities(){
+async function loginUser() {
 
-const user =
-JSON.parse(
-localStorage.getItem("adel_user")
-);
+  const name =
+    document.getElementById("loginName").value.trim();
 
-if(!user) return;
+  const unit =
+    document.getElementById("loginUnit").value.trim();
 
-const {data,error}=await db
-.from("activities")
-.select("*")
-.eq("user_id",user.id)
-.order("created_at",{ascending:false});
+  const code =
+    document.getElementById("loginCode").value.trim();
 
-if(error){
 
-alert(error.message);
-return;
+  if (!name || !unit || !code) {
 
-}
+    showMessage(
+      "loginMsg",
+      "عب جميع الخانات",
+      "error"
+    );
 
-const box=
-document.getElementById("activities");
+    return;
+  }
 
-box.innerHTML="";
 
-let total=0;
+  const { data, error } =
+    await db
+      .from("users")
+      .select("*")
+      .eq("full_name", name)
+      .eq("military_unit", unit)
+      .eq("access_code", code)
+      .eq("approved", true)
+      .maybeSingle();
 
-(data || []).forEach(a=>{
 
-total += Number(a.points);
+  if (error) {
 
-const div=document.createElement("div");
+    showMessage(
+      "loginMsg",
+      "حدث خطأ: " + error.message,
+      "error"
+    );
 
-div.className="card";
+    return;
+  }
 
-div.innerHTML=`
 
-<b>${escapeHTML(a.activity_name)}</b>
-<br>
-النقاط: ${a.points}
+  if (!data) {
 
-`;
+    showMessage(
+      "loginMsg",
+      "بيانات الدخول غير صحيحة",
+      "error"
+    );
 
-box.appendChild(div);
+    return;
+  }
 
-});
 
-document.getElementById("totalPoints")
-.textContent=total;
+  currentUser = data;
 
+
+  document.getElementById("loginName").value = "";
+  document.getElementById("loginUnit").value = "";
+  document.getElementById("loginCode").value = "";
+
+
+  document.getElementById("userWelcome").textContent =
+    "مرحباً " + data.full_name;
+
+  document.getElementById("userUnit").textContent =
+    data.military_unit;
+
+
+  showPage("userPage");
+
+  loadActivities();
 }
 
 
 /* =========================
-   خروج
+   تسجيل خروج المستخدم
 ========================= */
 
-function logout(){
+function userLogout() {
 
-localStorage.removeItem("adel_user");
-localStorage.removeItem("adel_admin");
+  currentUser = null;
 
-show("home");
-
+  showPage("homePage");
 }
 
 
 /* =========================
-   حماية النص
+   إضافة نشاط
 ========================= */
 
-function escapeHTML(text){
+async function addActivity() {
 
-const div=document.createElement("div");
+  if (!currentUser) {
 
-div.textContent=text;
+    showMessage(
+      "activityMsg",
+      "يجب تسجيل الدخول أولاً",
+      "error"
+    );
 
-return div.innerHTML;
+    return;
+  }
 
+
+  const name =
+    document
+      .getElementById("activityName")
+      .value
+      .trim();
+
+
+  const points =
+    Number(
+      document
+        .getElementById("activityPoints")
+        .value
+    );
+
+
+  if (!name || !Number.isFinite(points)) {
+
+    showMessage(
+      "activityMsg",
+      "اكتب اسم النشاط والنقاط",
+      "error"
+    );
+
+    return;
+  }
+
+
+  const { error } =
+    await db
+      .from("activities")
+      .insert({
+        user_id: currentUser.id,
+        activity_name: name,
+        points: points
+      });
+
+
+  if (error) {
+
+    showMessage(
+      "activityMsg",
+      "حدث خطأ: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  document.getElementById("activityName").value = "";
+  document.getElementById("activityPoints").value = "";
+
+
+  showMessage(
+    "activityMsg",
+    "تمت إضافة النشاط",
+    "ok"
+  );
+
+
+  loadActivities();
 }
 
 
 /* =========================
-   تشغيل تلقائي
+   تحميل الأنشطة
 ========================= */
 
-if(
-localStorage.getItem("adel_admin")
-==="true"
-){
+async function loadActivities() {
 
-show("admin");
+  if (!currentUser) return;
 
-loadRequests();
-loadUsers();
 
-}else if(
-localStorage.getItem("adel_user")
-){
+  const box =
+    document.getElementById("activitiesList");
 
-const user=
-JSON.parse(
-localStorage.getItem("adel_user")
-);
+  box.innerHTML = "جاري التحميل...";
 
-document.getElementById("welcome")
-.textContent=
-"مرحباً "+user.full_name+
-" | اليونت العسكري: "+
-user.military_unit;
 
-show("app");
+  const { data, error } =
+    await db
+      .from("activities")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", {
+        ascending: false
+      });
 
-loadActivities();
 
+  if (error) {
+
+    box.innerHTML =
+      "<div class='item'>خطأ في تحميل الأنشطة: "
+      + escapeHtml(error.message)
+      + "</div>";
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    box.innerHTML =
+      "<div class='item'>لا توجد أنشطة حالياً</div>";
+
+    document.getElementById("totalPoints").textContent = "0";
+
+    return;
+  }
+
+
+  let total = 0;
+
+  box.innerHTML = "";
+
+
+  data.forEach(activity => {
+
+    total += Number(activity.points || 0);
+
+
+    const item =
+      document.createElement("div");
+
+    item.className = "item";
+
+    item.innerHTML = `
+      <strong>
+        ${escapeHtml(activity.activity_name)}
+      </strong>
+
+      <br><br>
+
+      النقاط:
+      <strong>
+        ${Number(activity.points || 0)}
+      </strong>
+    `;
+
+
+    box.appendChild(item);
+  });
+
+
+  document.getElementById("totalPoints").textContent =
+    total;
 }
 
+
+/* =========================
+   حماية النصوص
+========================= */
+
+function escapeHtml(value) {
+
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =========================
+   بداية التطبيق
+========================= */
+
+showPage("homePage");
 </script>
 
 </body>
