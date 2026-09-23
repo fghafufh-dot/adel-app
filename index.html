@@ -2,16 +2,14 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>تطبيق حسب النقاط</title>
 
 <meta name="theme-color" content="#111827">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="حسب النقاط">
 
 <style>
 
@@ -25,7 +23,7 @@ body{
 .container{
     max-width:600px;
     margin:auto;
-    padding:25px 15px;
+    padding:25px 15px 80px;
 }
 
 h1{
@@ -74,42 +72,22 @@ button{
     text-align:center;
 }
 
-/* تصميم عادل الشمري */
+/* تصميم: عادل الشمري */
 
 #designer{
-    position:fixed;
+    position:absolute;
     bottom:10px;
     left:10px;
     font-size:13px;
     color:#555;
     z-index:9999;
-    transition:transform 0.08s linear;
-}
-
-/* زر تفعيل حركة التصميم */
-
-#motionButton{
-    position:fixed;
-    bottom:40px;
-    left:10px;
-    width:auto;
-    padding:8px 12px;
-    font-size:12px;
-    z-index:10000;
 }
 
 </style>
+
 </head>
 
 <body>
-
-<div id="designer">
-    تصميم: عادل الشمري
-</div>
-
-<button id="motionButton">
-    تفعيل حركة التصميم
-</button>
 
 <div class="container">
 
@@ -153,6 +131,12 @@ button{
 
 <div id="activities"></div>
 
+<!-- التصميم يتحرك مع الصفحة -->
+
+<div id="designer">
+    تصميم: عادل الشمري
+</div>
+
 </div>
 
 <script>
@@ -165,10 +149,14 @@ function addActivity(){
         document.getElementById("activityName").value;
 
     const points =
-        Number(document.getElementById("activityPoints").value);
+        Number(
+            document.getElementById("activityPoints").value
+        );
 
     const count =
-        Number(document.getElementById("activityCount").value);
+        Number(
+            document.getElementById("activityCount").value
+        );
 
     if(!name || !points || !count){
 
@@ -189,9 +177,14 @@ function addActivity(){
 
     box.innerHTML = `
         <h3>${name}</h3>
+
         <p>نقاط النشاط: ${points}</p>
+
         <p>عدد المشاركات: ${count}</p>
-        <p><b>النقاط المكتسبة: ${result}</b></p>
+
+        <p>
+            <b>النقاط المكتسبة: ${result}</b>
+        </p>
     `;
 
     document
@@ -204,63 +197,6 @@ function addActivity(){
 
     document.getElementById("activityCount").value = "";
 }
-
-
-/* حركة تصميم: عادل الشمري */
-
-const designer =
-    document.getElementById("designer");
-
-const motionButton =
-    document.getElementById("motionButton");
-
-function moveDesigner(event){
-
-    let x = event.gamma || 0;
-    let y = event.beta || 0;
-
-    x = Math.max(-25, Math.min(25, x));
-    y = Math.max(-25, Math.min(25, y - 45));
-
-    designer.style.transform =
-        `translate(${x}px, ${y}px)`;
-}
-
-
-motionButton.addEventListener("click", async () => {
-
-    try {
-
-        if(
-            typeof DeviceOrientationEvent !== "undefined" &&
-            typeof DeviceOrientationEvent.requestPermission === "function"
-        ){
-
-            const permission =
-                await DeviceOrientationEvent.requestPermission();
-
-            if(permission !== "granted"){
-
-                alert("لازم تسمح بحركة الجهاز");
-
-                return;
-            }
-        }
-
-        window.addEventListener(
-            "deviceorientation",
-            moveDesigner
-        );
-
-        motionButton.remove();
-
-    } catch(error){
-
-        alert("تعذر تفعيل حركة الجهاز");
-
-    }
-
-});
 
 </script>
 
