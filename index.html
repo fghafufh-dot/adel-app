@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تطبيق حسب النقاط</title>
 
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    color:#111827;
+}
+.container{
+    max-width:600px;
+    margin:auto;
+    padding:25px 15px;
+}
+h1{
+    text-align:center;
+}
+.card{
+    background:white;
+    padding:20px;
+    margin:15px 0;
+    border-radius:15px;
+    box-shadow:0 3px 12px #0001;
+}
+input{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    margin:7px 0;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+}
+button{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:0;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    font-size:16px;
+}
+.activity{
+    border:1px solid #eee;
+    padding:15px;
+    border-radius:12px;
+    margin-top:12px;
+}
+.points{
+    font-size:28px;
+    font-weight:bold;
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>تطبيق حسب النقاط</h1>
+
+<div class="card">
+    <div class="points">
+        مجموع النقاط: <span id="total">0</span>
+    </div>
+</div>
+
+<div class="card">
+    <h2>إضافة نشاط</h2>
+
+    <input id="activityName" placeholder="اسم النشاط">
+    <input id="activityPoints" type="number" placeholder="نقاط النشاط">
+    <input id="activityCount" type="number" placeholder="عدد المشاركات">
+
+    <button onclick="addActivity()">إضافة النشاط</button>
+</div>
+
+<div id="activities"></div>
+
+</div>
+
+<script>
+let total = 0;
+
+function addActivity(){
+    const name = document.getElementById("activityName").value;
+    const points = Number(document.getElementById("activityPoints").value);
+    const count = Number(document.getElementById("activityCount").value);
+
+    if(!name || !points || !count){
+        alert("عبّ كل الخانات");
+        return;
+    }
+
+    const result = points * count;
+    total += result;
+
+    document.getElementById("total").textContent = total;
+
+    const box = document.createElement("div");
+    box.className = "card activity";
+
+    box.innerHTML = `
+        <h3>${name}</h3>
+        <p>نقاط النشاط: ${points}</p>
+        <p>عدد المشاركات: ${count}</p>
+        <p><b>النقاط المكتسبة: ${result}</b></p>
+    `;
+
+    document.getElementById("activities").appendChild(box);
+
+    document.getElementById("activityName").value = "";
+    document.getElementById("activityPoints").value = "";
+    document.getElementById("activityCount").value = "";
+}
+</script>
+
+</body>
+</html>
