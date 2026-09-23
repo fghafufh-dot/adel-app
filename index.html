@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<div style="position:fixed;bottom:10px;left:10px;font-size:13px;color:#555;">تصميم: عادل الشمري</div>
-    <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>تطبيق حسب النقاط</title>
 
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="حسب النقاط">
+
 <style>
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
     background:#f3f4f6;
     color:#111827;
 }
+
 .container{
     max-width:600px;
     margin:auto;
     padding:25px 15px;
 }
+
 h1{
     text-align:center;
 }
+
 .card{
     background:white;
     padding:20px;
@@ -28,6 +39,7 @@ h1{
     border-radius:15px;
     box-shadow:0 3px 12px #0001;
 }
+
 input{
     width:100%;
     box-sizing:border-box;
@@ -37,6 +49,7 @@ input{
     border-radius:10px;
     font-size:16px;
 }
+
 button{
     width:100%;
     padding:13px;
@@ -47,40 +60,95 @@ button{
     color:white;
     font-size:16px;
 }
+
 .activity{
     border:1px solid #eee;
     padding:15px;
     border-radius:12px;
     margin-top:12px;
 }
+
 .points{
     font-size:28px;
     font-weight:bold;
     text-align:center;
 }
+
+/* تصميم عادل الشمري */
+
+#designer{
+    position:fixed;
+    bottom:10px;
+    left:10px;
+    font-size:13px;
+    color:#555;
+    z-index:9999;
+    transition:transform 0.08s linear;
+}
+
+/* زر تفعيل حركة التصميم */
+
+#motionButton{
+    position:fixed;
+    bottom:40px;
+    left:10px;
+    width:auto;
+    padding:8px 12px;
+    font-size:12px;
+    z-index:10000;
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="designer">
+    تصميم: عادل الشمري
+</div>
+
+<button id="motionButton">
+    تفعيل حركة التصميم
+</button>
 
 <div class="container">
 
 <h1>تطبيق حسب النقاط</h1>
 
 <div class="card">
+
     <div class="points">
-        مجموع النقاط: <span id="total">0</span>
+        مجموع النقاط:
+        <span id="total">0</span>
     </div>
+
 </div>
 
 <div class="card">
+
     <h2>إضافة نشاط</h2>
 
-    <input id="activityName" placeholder="اسم النشاط">
-    <input id="activityPoints" type="number" placeholder="نقاط النشاط">
-    <input id="activityCount" type="number" placeholder="عدد المشاركات">
+    <input
+        id="activityName"
+        placeholder="اسم النشاط"
+    >
 
-    <button onclick="addActivity()">إضافة النشاط</button>
+    <input
+        id="activityPoints"
+        type="number"
+        placeholder="نقاط النشاط"
+    >
+
+    <input
+        id="activityCount"
+        type="number"
+        placeholder="عدد المشاركات"
+    >
+
+    <button onclick="addActivity()">
+        إضافة النشاط
+    </button>
+
 </div>
 
 <div id="activities"></div>
@@ -88,24 +156,35 @@ button{
 </div>
 
 <script>
+
 let total = 0;
 
 function addActivity(){
-    const name = document.getElementById("activityName").value;
-    const points = Number(document.getElementById("activityPoints").value);
-    const count = Number(document.getElementById("activityCount").value);
+
+    const name =
+        document.getElementById("activityName").value;
+
+    const points =
+        Number(document.getElementById("activityPoints").value);
+
+    const count =
+        Number(document.getElementById("activityCount").value);
 
     if(!name || !points || !count){
+
         alert("عبّ كل الخانات");
+
         return;
     }
 
     const result = points * count;
+
     total += result;
 
     document.getElementById("total").textContent = total;
 
     const box = document.createElement("div");
+
     box.className = "card activity";
 
     box.innerHTML = `
@@ -115,13 +194,76 @@ function addActivity(){
         <p><b>النقاط المكتسبة: ${result}</b></p>
     `;
 
-    document.getElementById("activities").appendChild(box);
+    document
+        .getElementById("activities")
+        .appendChild(box);
 
     document.getElementById("activityName").value = "";
+
     document.getElementById("activityPoints").value = "";
+
     document.getElementById("activityCount").value = "";
 }
+
+
+/* حركة تصميم: عادل الشمري */
+
+const designer =
+    document.getElementById("designer");
+
+const motionButton =
+    document.getElementById("motionButton");
+
+function moveDesigner(event){
+
+    let x = event.gamma || 0;
+    let y = event.beta || 0;
+
+    x = Math.max(-25, Math.min(25, x));
+    y = Math.max(-25, Math.min(25, y - 45));
+
+    designer.style.transform =
+        `translate(${x}px, ${y}px)`;
+}
+
+
+motionButton.addEventListener("click", async () => {
+
+    try {
+
+        if(
+            typeof DeviceOrientationEvent !== "undefined" &&
+            typeof DeviceOrientationEvent.requestPermission === "function"
+        ){
+
+            const permission =
+                await DeviceOrientationEvent.requestPermission();
+
+            if(permission !== "granted"){
+
+                alert("لازم تسمح بحركة الجهاز");
+
+                return;
+            }
+        }
+
+        window.addEventListener(
+            "deviceorientation",
+            moveDesigner
+        );
+
+        motionButton.remove();
+
+    } catch(error){
+
+        alert("تعذر تفعيل حركة الجهاز");
+
+    }
+
+});
+
 </script>
 
 </body>
+
 </html>
