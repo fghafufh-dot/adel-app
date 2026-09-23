@@ -1,834 +1,1501 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تطبيق حسب النقاط</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام عادل</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-*{box-sizing:border-box}
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f2f2f2;
-color:#111;
-}
+    body {
+      margin: 0;
+      background: #f2f4f7;
+      color: #111;
+    }
 
-.page{
-display:none;
-min-height:100vh;
-padding:20px;
-}
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+    }
 
-.page.active{
-display:block;
-}
+    .active {
+      display: block;
+    }
 
-.card{
-max-width:430px;
-margin:50px auto;
-background:#fff;
-padding:25px;
-border-radius:18px;
-box-shadow:0 4px 15px #0002;
-}
+    .box {
+      width: 100%;
+      max-width: 430px;
+      margin: 60px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
 
-h1{
-text-align:center;
-margin:0 0 8px;
-}
+    h1, h2 {
+      text-align: center;
+    }
 
-.sub{
-text-align:center;
-color:#666;
-margin-bottom:25px;
-}
+    input, select, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
 
-label{
-display:block;
-font-weight:bold;
-margin:14px 0 7px;
-}
+    input, select {
+      border: 1px solid #ccc;
+      background: white;
+    }
 
-input{
-width:100%;
-padding:13px;
-border:1px solid #bbb;
-border-radius:10px;
-font-size:16px;
-}
+    button {
+      border: 0;
+      background: #111;
+      color: white;
+      cursor: pointer;
+    }
 
-button{
-font-family:inherit;
-cursor:pointer;
-}
+    button:active {
+      transform: scale(.98);
+    }
 
-.btn{
-width:100%;
-padding:14px;
-border:0;
-border-radius:10px;
-margin-top:15px;
-font-size:17px;
-font-weight:bold;
-background:#111;
-color:#fff;
-}
+    .secondary {
+      background: #e8e8e8;
+      color: #111;
+    }
 
-.btn2{
-width:100%;
-padding:13px;
-border:1px solid #222;
-border-radius:10px;
-margin-top:10px;
-font-size:16px;
-font-weight:bold;
-background:#fff;
-color:#111;
-}
+    .danger {
+      background: #b00020;
+    }
 
-.msg{
-text-align:center;
-font-weight:bold;
-margin-top:15px;
-min-height:22px;
-}
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      display: none;
+    }
 
-.header{
-background:#111;
-color:#fff;
-padding:15px;
-border-radius:15px;
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-align-items:center;
-margin-bottom:20px;
-}
+    .success {
+      background: #d9f7df;
+      color: #146c2e;
+    }
 
-.right{
-display:flex;
-align-items:center;
-gap:8px;
-}
+    .error {
+      background: #ffe0e0;
+      color: #a00000;
+    }
 
-.center{
-text-align:center;
-font-size:20px;
-font-weight:bold;
-}
+    .activity {
+      background: white;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
 
-.left{
-text-align:left;
-}
+    .points {
+      text-align: center;
+      font-size: 35px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
 
-.logo{
-width:48px;
-height:48px;
-background:#fff;
-border-radius:50%;
-object-fit:contain;
-}
-
-.activities{
-max-width:850px;
-margin:auto;
-}
-
-.activity{
-background:#fff;
-padding:15px;
-border-radius:14px;
-margin-bottom:12px;
-box-shadow:0 2px 7px #0001;
-}
-
-.name{
-font-weight:bold;
-font-size:17px;
-}
-
-.points{
-color:#666;
-font-size:14px;
-margin:7px 0 10px;
-}
-
-.total{
-max-width:850px;
-margin:18px auto;
-padding:18px;
-background:#111;
-color:#fff;
-border-radius:15px;
-text-align:center;
-font-size:24px;
-font-weight:bold;
-}
-
-.actions{
-max-width:850px;
-margin:auto;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.actions button{
-flex:1;
-min-width:150px;
-padding:13px;
-border:0;
-border-radius:10px;
-font-weight:bold;
-}
-
-.save{background:#111;color:#fff}
-.motion{background:#ddd;color:#111}
-.logout{background:#b00020;color:#fff}
-
-.credit{
-position:fixed;
-bottom:15px;
-right:15px;
-font-weight:bold;
-transition:.15s;
-}
-
-@media(max-width:650px){
-.header{
-grid-template-columns:1fr;
-gap:10px;
-text-align:center;
-}
-.right{
-justify-content:center;
-}
-.left{
-text-align:center;
-}
-}
-</style>
+    .designer {
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- تسجيل الدخول -->
-<section id="loginPage" class="page active">
-<div class="card">
+  <!-- تسجيل الدخول -->
+  <section id="loginPage" class="page active">
+    <div class="box">
+      <h1>تسجيل الدخول</h1>
 
-<h1>تسجيل الدخول</h1>
-<div class="sub">تطبيق حسب النقاط</div>
+      <input id="loginName" type="text" placeholder="الاسم الكامل">
+      <input id="loginUnit" type="text" placeholder="الوحدة">
+      <input id="loginCode" type="text" placeholder="رمز الدخول">
 
-<label>الاسم الثنائي</label>
-<input id="loginName" type="text" placeholder="اكتب الاسم الثنائي">
+      <button id="loginBtn">طلب تسجيل الدخول</button>
 
-<label>اليونت العسكري</label>
-<input id="loginUnit" type="text" placeholder="اكتب اليونت العسكري">
+      <button id="openRegister" class="secondary">
+        إنشاء طلب تسجيل جديد
+      </button>
 
-<label>الرمز الخاص</label>
-<input id="loginCode" type="password" placeholder="اكتب الرمز الخاص">
+      <div id="loginMessage" class="message"></div>
 
-<button id="loginBtn" class="btn" type="button">
-تسجيل الدخول
-</button>
-
-<button id="openRegister" class="btn2" type="button">
-طلب تسجيل جديد
-</button>
-
-<div id="loginMsg" class="msg"></div>
-
-</div>
-</section>
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
+  </section>
 
 
-<!-- التسجيل -->
-<section id="registerPage" class="page">
-<div class="card">
+  <!-- التسجيل -->
+  <section id="registerPage" class="page">
+    <div class="box">
+      <h1>طلب تسجيل</h1>
 
-<h1>طلب تسجيل جديد</h1>
-<div class="sub">تطبيق حسب النقاط</div>
+      <input id="registerName" type="text" placeholder="الاسم الكامل">
+      <input id="registerUnit" type="text" placeholder="الوحدة">
+      <input id="registerCode" type="text" placeholder="رمز الدخول المطلوب">
 
-<label>الاسم الثنائي</label>
-<input id="registerName" type="text" placeholder="اكتب الاسم الثنائي">
+      <button id="sendRegister">
+        إرسال طلب التسجيل
+      </button>
 
-<label>اليونت العسكري</label>
-<input id="registerUnit" type="text" placeholder="اكتب اليونت العسكري">
+      <button id="backLogin" class="secondary">
+        العودة لتسجيل الدخول
+      </button>
 
-<button id="sendRegister" class="btn" type="button">
-إرسال طلب التسجيل
-</button>
+      <div id="registerMessage" class="message"></div>
 
-<button id="backLogin" class="btn2" type="button">
-العودة لتسجيل الدخول
-</button>
-
-<div id="registerMsg" class="msg"></div>
-
-</div>
-</section>
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
+  </section>
 
 
-<!-- التطبيق -->
-<section id="appPage" class="page">
+  <!-- البرنامج -->
+  <section id="appPage" class="page">
 
-<div class="header">
+    <div class="box">
+      <h1>نظام النشاط</h1>
 
-<div class="right">
-<span>وزارة الداخلية</span>
-<img
-class="logo"
-src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-alt="شعار السعودية">
-</div>
+      <div class="points">
+        <span id="totalPoints">0</span>
+        <div style="font-size:15px;font-weight:normal;">النقاط</div>
+      </div>
 
-<div class="center">
-تطبيق حسب النقاط
-</div>
+      <button id="addActivity">
+        إضافة نشاط
+      </button>
 
-<div class="left">
-KR
-</div>
+      <div id="activityForm" style="display:none; margin-top:15px;">
+        <input id="activityName" type="text" placeholder="اسم النشاط">
+        <input id="activityPoints" type="number" placeholder="عدد النقاط">
 
-</div>
+        <button id="save">
+          حفظ النشاط
+        </button>
+      </div>
 
-<div id="activities" class="activities"></div>
+      <div id="activities"></div>
 
-<div class="total">
-المجموع:
-<span id="total">0</span>
-</div>
+      <button id="motion" class="secondary">
+        تحديث
+      </button>
 
-<div class="actions">
+      <button id="logout" class="danger">
+        تسجيل الخروج
+      </button>
 
-<button id="save" class="save" type="button">
-حفظ النقاط
-</button>
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
 
-<button id="motion" class="motion" type="button">
-السماح بحركة الجهاز
-</button>
-
-<button id="logout" class="logout" type="button">
-تسجيل الخروج
-</button>
-
-</div>
-
-</section>
-
-<div id="credit" class="credit">
-تصميم: عادل الشمري
-</div>
+  </section>
 
 
 <script>
 
-/* ==========================================
-   إعداد Supabase
-========================================== */
+  /* ==============================
+     بيانات Supabase
+  ============================== */
+
+  const SUPABASE_URL =
+    "https://rvgvqooateniymiypraz.supabase.co";
+
+  /*
+    حط هنا Publishable Key الخاص بمشروعك
+  */
+  const SUPABASE_KEY =
+    "<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام عادل</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f4f7;
+      color: #111;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 430px;
+      margin: 60px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    input, select {
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    button {
+      border: 0;
+      background: #111;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(.98);
+    }
+
+    .secondary {
+      background: #e8e8e8;
+      color: #111;
+    }
+
+    .danger {
+      background: #b00020;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      display: none;
+    }
+
+    .success {
+      background: #d9f7df;
+      color: #146c2e;
+    }
+
+    .error {
+      background: #ffe0e0;
+      color: #a00000;
+    }
 
-const SUPABASE_URL =
-"https://rvgvqooateniymiypraz.supabase.co";
+    .activity {
+      background: white;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
 
-/*
-الصق Publishable Key الخاص بمشروعك بين علامتي التنصيص.
-لا تستخدم Secret Key أو service_role.
-*/
+    .points {
+      text-align: center;
+      font-size: 35px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
 
-const SUPABASE_KEY =
-"بمشروعك بين علامتي التنصيص Publishable Key الصق
-/ *
-const SUPABASE_KEY =
-بوا" الخاص_بمشروعك_Publishable_Key_ الصق_هنا"";
+    .designer {
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+      font-size: 13px;
+    }
+  </style>
+</head>
 
-const db =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+<body>
 
+  <!-- تسجيل الدخول -->
+  <section id="loginPage" class="page active">
+    <div class="box">
+      <h1>تسجيل الدخول</h1>
 
-/* ==========================================
-   الصفحات
-========================================== */
+      <input id="loginName" type="text" placeholder="الاسم الكامل">
+      <input id="loginUnit" type="text" placeholder="الوحدة">
+      <input id="loginCode" type="text" placeholder="رمز الدخول">
 
-const loginPage =
-document.getElementById("loginPage");
+      <button id="loginBtn">طلب تسجيل الدخول</button>
 
-const registerPage =
-document.getElementById("registerPage");
+      <button id="openRegister" class="secondary">
+        إنشاء طلب تسجيل جديد
+      </button>
 
-const appPage =
-document.getElementById("appPage");
+      <div id="loginMessage" class="message"></div>
 
-function page(pageName){
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
+  </section>
 
-loginPage.classList.remove("active");
-registerPage.classList.remove("active");
-appPage.classList.remove("active");
 
-pageName.classList.add("active");
+  <!-- التسجيل -->
+  <section id="registerPage" class="page">
+    <div class="box">
+      <h1>طلب تسجيل</h1>
 
-}
+      <input id="registerName" type="text" placeholder="الاسم الكامل">
+      <input id="registerUnit" type="text" placeholder="الوحدة">
+      <input id="registerCode" type="text" placeholder="رمز الدخول المطلوب">
 
+      <button id="sendRegister">
+        إرسال طلب التسجيل
+      </button>
 
-/* ==========================================
-   فتح صفحة التسجيل
-========================================== */
+      <button id="backLogin" class="secondary">
+        العودة لتسجيل الدخول
+      </button>
 
-document.getElementById("openRegister").onclick =
-function(){
+      <div id="registerMessage" class="message"></div>
 
-document.getElementById("registerMsg").textContent="";
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
+  </section>
 
-page(registerPage);
 
-};
+  <!-- البرنامج -->
+  <section id="appPage" class="page">
 
+    <div class="box">
+      <h1>نظام النشاط</h1>
 
-/* ==========================================
-   العودة
-========================================== */
+      <div class="points">
+        <span id="totalPoints">0</span>
+        <div style="font-size:15px;font-weight:normal;">النقاط</div>
+      </div>
 
-document.getElementById("backLogin").onclick =
-function(){
+      <button id="addActivity">
+        إضافة نشاط
+      </button>
 
-document.getElementById("loginMsg").textContent="";
+      <div id="activityForm" style="display:none; margin-top:15px;">
+        <input id="activityName" type="text" placeholder="اسم النشاط">
+        <input id="activityPoints" type="number" placeholder="عدد النقاط">
 
-page(loginPage);
+        <button id="save">
+          حفظ النشاط
+        </button>
+      </div>
 
-};
+      <div id="activities"></div>
 
+      <button id="motion" class="secondary">
+        تحديث
+      </button>
 
-/* ==========================================
-   الأنشطة
-========================================== */
+      <button id="logout" class="danger">
+        تسجيل الخروج
+      </button>
 
-const activitiesData = [
+      <div class="designer">المصمم عادل الشمري</div>
+    </div>
 
-["تدشين نقطة تفتيش متحركة",1,"كل ١/٢ ساعة"],
-["إستيقاف مروري",1,""],
-["تسجيل مخالفة",1,""],
-["حضور حملة أمنية (عامة)",2,""],
-["حضور حملة أمنية (خاصة)",2,""],
-["حضور تدريب (عام-خاص)",2,""],
-["إسقاط رجل عصابة",3,""],
-["حضور تمشيط",3,""],
-["إعتقال عضو عصابة",5,""],
-["إعتقال احد رؤساء العصابات",5,"ملاحظة"]
+  </section>
 
-];
 
-const activitiesBox =
-document.getElementById("activities");
+<script>
 
-activitiesData.forEach(function(item,index){
+  /* ==============================
+     بيانات Supabase
+  ============================== */
 
-const div =
-document.createElement("div");
+  const SUPABASE_URL =
+    "https://rvgvqooateniymiypraz.supabase.co";
 
-div.className="activity";
+  /*
+    حط هنا Publishable Key الخاص بمشروعك
+  */
+  const SUPABASE_KEY =
+    "حط_هنا_Publishable_Key_الخاص_بمشروعك";
 
-div.innerHTML =
-'<div class="name">'+
-(index+1)+". "+item[0]+
-'</div>'+
-'<div class="points">'+
-"النقاط: ("+item[1]+")"+
-(item[2] ? " — "+item[2] : "")+
-'</div>'+
-'<input class="activityInput" type="number" min="0" step="1" value="0" data-index="'+index+'" placeholder="اكتب عدد المرات">';
 
-activitiesBox.appendChild(div);
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-});
 
+  /* ==============================
+     عناصر الصفحات
+  ============================== */
 
-/* ==========================================
-   حساب النقاط
-========================================== */
+  const loginPage =
+    document.getElementById("loginPage");
 
-function calculate(){
+  const registerPage =
+    document.getElementById("registerPage");
 
-let total=0;
+  const appPage =
+    document.getElementById("appPage");
 
-document.querySelectorAll(".activityInput").forEach(function(input){
 
-let number=parseInt(input.value,10);
+  function showPage(page) {
 
-if(isNaN(number) || number<0){
-number=0;
-}
+    loginPage.classList.remove("active");
+    registerPage.classList.remove("active");
+    appPage.classList.remove("active");
 
-const index=parseInt(input.dataset.index,10);
+    page.classList.add("active");
+  }
 
-total += number * activitiesData[index][1];
 
-});
+  /* ==============================
+     الرسائل
+  ============================== */
 
-document.getElementById("total").textContent =
-total.toLocaleString("ar-SA");
+  function showMessage(element, text, type) {
 
-return total;
+    element.textContent = text;
+    element.className = "message " + type;
+    element.style.display = "block";
+  }
 
-}
 
-document.querySelectorAll(".activityInput").forEach(function(input){
+  /* ==============================
+     فتح التسجيل
+  ============================== */
 
-input.addEventListener("input",calculate);
+  document
+    .getElementById("openRegister")
+    .addEventListener("click", function () {
 
-});
+      document.getElementById("registerName").value = "";
+      document.getElementById("registerUnit").value = "";
+      document.getElementById("registerCode").value = "";
 
+      document.getElementById("registerMessage").style.display = "none";
 
-/* ==========================================
-   حفظ النقاط
-========================================== */
+      showPage(registerPage);
+    });
 
-document.getElementById("save").onclick =
-function(){
 
-const values=[];
+  /* ==============================
+     العودة للدخول
+  ============================== */
 
-document.querySelectorAll(".activityInput").forEach(function(input){
-values.push(input.value);
-});
+  document
+    .getElementById("backLogin")
+    .addEventListener("click", function () {
 
-localStorage.setItem(
-"adelPointsData",
-JSON.stringify(values)
-);
+      document.getElementById("loginMessage").style.display = "none";
 
-alert("تم حفظ النقاط");
+      showPage(loginPage);
+    });
 
-};
 
+  /* ==============================
+     طلب التسجيل
+  ============================== */
 
-function loadPoints(){
+  document
+    .getElementById("sendRegister")
+    .addEventListener("click", async function () {
 
-const saved =
-localStorage.getItem("adelPointsData");
+      const button = this;
 
-if(saved){
+      const name =
+        document.getElementById("registerName")
+          .value.trim();
 
-try{
+      const unit =
+        document.getElementById("registerUnit")
+          .value.trim();
 
-const values=JSON.parse(saved);
+      const code =
+        document.getElementById("registerCode")
+          .value.trim();
 
-document.querySelectorAll(".activityInput").forEach(function(input,index){
+      const message =
+        document.getElementById("registerMessage");
 
-if(values[index] !== undefined){
-input.value=values[index];
-}
 
-});
+      if (!name || !unit || !code) {
 
-}catch(e){}
+        showMessage(
+          message,
+          "عبّ جميع البيانات أولاً",
+          "error"
+        );
 
-}
+        return;
+      }
 
-calculate();
 
-}
+      button.disabled = true;
+      button.textContent = "جاري إرسال الطلب...";
 
 
-/* ==========================================
-   إرسال طلب التسجيل
-========================================== */
+      try {
 
-document.getElementById("sendRegister").onclick =
-async function(){
+        const { error } =
+          await supabaseClient
+            .from("registration_requests")
+            .insert([{
+              full_name: name,
+              military_unit: unit,
+              access_code: code,
+              status: "pending"
+            }]);
 
-const name =
-document.getElementById("registerName").value.trim();
 
-const unit =
-document.getElementById("registerUnit").value.trim();
+        if (error) {
+          throw error;
+        }
 
-const msg =
-document.getElementById("registerMsg");
 
-if(!name){
+        showMessage(
+          message,
+          "تم إرسال طلب التسجيل بنجاح",
+          "success"
+        );
 
-msg.textContent="اكتب الاسم الثنائي";
-return;
 
-}
+        document.getElementById("registerName").value = "";
+        document.getElementById("registerUnit").value = "";
+        document.getElementById("registerCode").value = "";
 
-if(!unit){
 
-msg.textContent="اكتب اليونت العسكري";
-return;
+      } catch (error) {
 
-}
+        console.error(error);
 
-const button =
-document.getElementById("sendRegister");
+        showMessage(
+          message,
+          "تعذر إرسال الطلب: " + error.message,
+          "error"
+        );
 
-button.disabled=true;
-button.textContent="جاري الإرسال...";
-msg.textContent="";
+      } finally {
 
-try{
+        button.disabled = false;
+        button.textContent = "إرسال طلب التسجيل";
+      }
 
-const result =
-await db
-.from("registration_requests")
-.insert({
-full_name:name,
-military_unit:unit,
-access_code:null,
-status:"pending"
-});
+    });
 
-if(result.error){
 
-console.error(result.error);
+  /* ==============================
+     تسجيل الدخول
+  ============================== */
 
-msg.textContent="حدث خطأ أثناء إرسال الطلب";
+  document
+    .getElementById("loginBtn")
+    .addEventListener("click", async function () {
 
-return;
+      const button = this;
 
-}
+      const name =
+        document.getElementById("loginName")
+          .value.trim();
 
-msg.textContent="تم إرسال طلب التسجيل بنجاح";
+      const unit =
+        document.getElementById("loginUnit")
+          .value.trim();
 
-document.getElementById("registerName").value="";
-document.getElementById("registerUnit").value="";
+      const code =
+        document.getElementById("loginCode")
+          .value.trim();
 
-}catch(error){
+      const message =
+        document.getElementById("loginMessage");
 
-console.error(error);
 
-msg.textContent="تعذر الاتصال بقاعدة البيانات";
+      if (!name || !unit || !code) {
 
-}finally{
+        showMessage(
+          message,
+          "عبّ جميع بيانات تسجيل الدخول",
+          "error"
+        );
 
-button.disabled=false;
-button.textContent="إرسال طلب التسجيل";
+        return;
+      }
 
-}
 
-};
+      button.disabled = true;
+      button.textContent = "جاري التحقق...";
 
 
-/* ==========================================
-   تسجيل الدخول
-========================================== */
+      try {
 
-document.getElementById("loginBtn").onclick =
-async function(){
+        const { data, error } =
+          await supabaseClient.rpc(
+            "verify_login",
+            {
+              p_full_name: name,
+              p_military_unit: unit,
+              p_access_code: code
+            }
+          );
 
-const name =
-document.getElementById("loginName").value.trim();
 
-const unit =
-document.getElementById("loginUnit").value.trim();
+        if (error) {
+          throw error;
+        }
 
-const code =
-document.getElementById("loginCode").value.trim();
 
-const msg =
-document.getElementById("loginMsg");
+        /*
+          إذا كانت الدالة ترجع true
+          أو نتيجة تحتوي على success
+        */
 
-if(!name){
+        let success = false;
 
-msg.textContent="اكتب الاسم الثنائي";
-return;
+        if (data === true) {
+          success = true;
+        }
 
-}
+        if (
+          data &&
+          typeof data === "object" &&
+          data.success === true
+        ) {
+          success = true;
+        }
 
-if(!unit){
+        if (
+          Array.isArray(data) &&
+          data.length > 0
+        ) {
+          if (
+            data[0] === true ||
+            data[0]?.success === true
+          ) {
+            success = true;
+          }
+        }
 
-msg.textContent="اكتب اليونت العسكري";
-return;
 
-}
+        if (!success) {
 
-if(!code){
+          showMessage(
+            message,
+            "بيانات الدخول غير صحيحة أو لم تتم الموافقة على الطلب",
+            "error"
+          );
 
-msg.textContent="اكتب الرمز الخاص";
-return;
+          return;
+        }
 
-}
 
-const button =
-document.getElementById("loginBtn");
+        localStorage.setItem(
+          "adel_logged_in",
+          "true"
+        );
 
-button.disabled=true;
-button.textContent="جاري التحقق...";
-msg.textContent="";
+        localStorage.setItem(
+          "adel_name",
+          name
+        );
 
-try{
+        localStorage.setItem(
+          "adel_unit",
+          unit
+        );
 
-const result =
-await db.rpc(
-"verify_login",
-{
-p_full_name:name,
-p_military_unit:unit,
-p_access_code:code
-}
-);
 
-if(result.error){
+        showPage(appPage);
 
-console.error(result.error);
+        loadActivities();
 
-msg.textContent="حدث خطأ أثناء التحقق";
 
-return;
+      } catch (error) {
 
-}
+        console.error(error);
 
-if(
-result.data &&
-result.data.success === true
-){
+        showMessage(
+          message,
+          "حدث خطأ أثناء تسجيل الدخول: " +
+          error.message,
+          "error"
+        );
 
-localStorage.setItem(
-"adelLoggedIn",
-"true"
-);
+      } finally {
 
-localStorage.setItem(
-"adelUserName",
-name
-);
+        button.disabled = false;
+        button.textContent = "طلب تسجيل الدخول";
+      }
 
-localStorage.setItem(
-"adelMilitaryUnit",
-unit
-);
+    });
 
-document.getElementById("loginCode").value="";
 
-page(appPage);
+  /* ==============================
+     إضافة نشاط
+  ============================== */
 
-loadPoints();
+  document
+    .getElementById("addActivity")
+    .addEventListener("click", function () {
 
-}else{
+      const form =
+        document.getElementById("activityForm");
 
-msg.textContent=
-"البيانات أو الرمز الخاص غير صحيح";
+      form.style.display =
+        form.style.display === "none"
+          ? "block"
+          : "none";
+    });
 
-}
 
-}catch(error){
+  /* ==============================
+     حفظ النشاط
+  ============================== */
 
-console.error(error);
+  document
+    .getElementById("save")
+    .addEventListener("click", function () {
 
-msg.textContent=
-"تعذر الاتصال بقاعدة البيانات";
+      const name =
+        document.getElementById("activityName")
+          .value.trim();
 
-}finally{
+      const points =
+        Number(
+          document.getElementById("activityPoints")
+            .value
+        );
 
-button.disabled=false;
-button.textContent="تسجيل الدخول";
 
-}
+      if (!name || !points) {
+        alert("اكتب اسم النشاط وعدد النقاط");
+        return;
+      }
 
-};
 
+      const activities =
+        JSON.parse(
+          localStorage.getItem("adel_activities")
+          || "[]"
+        );
 
-/* ==========================================
-   تسجيل الخروج
-========================================== */
 
-document.getElementById("logout").onclick =
-function(){
+      activities.push({
+        name: name,
+        points: points
+      });
 
-localStorage.removeItem("adelLoggedIn");
-localStorage.removeItem("adelUserName");
-localStorage.removeItem("adelMilitaryUnit");
 
-page(loginPage);
+      localStorage.setItem(
+        "adel_activities",
+        JSON.stringify(activities)
+      );
 
-};
 
+      document.getElementById("activityName").value = "";
+      document.getElementById("activityPoints").value = "";
 
-/* ==========================================
-   حركة الجهاز
-========================================== */
+      document.getElementById("activityForm")
+        .style.display = "none";
 
-let motionStarted=false;
 
-document.getElementById("motion").onclick =
-async function(){
+      loadActivities();
+    });
 
-try{
 
-if(
-typeof DeviceOrientationEvent !== "undefined" &&
-typeof DeviceOrientationEvent.requestPermission === "function"
-){
+  /* ==============================
+     عرض الأنشطة
+  ============================== */
 
-const permission =
-await DeviceOrientationEvent.requestPermission();
+  function loadActivities() {
 
-if(permission !== "granted"){
+    const container =
+      document.getElementById("activities");
 
-alert("لم يتم السماح بحركة الجهاز");
-return;
+    const activities =
+      JSON.parse(
+        localStorage.getItem("adel_activities")
+        || "[]"
+      );
 
-}
 
-}
+    container.innerHTML = "";
 
-if(motionStarted){
-return;
-}
 
-window.addEventListener(
-"deviceorientation",
-function(event){
+    let total = 0;
 
-let value=Number(event.gamma)||0;
 
-value=Math.max(-25,Math.min(25,value));
+    activities.forEach(function(activity, index) {
 
-document.getElementById("credit").style.transform =
-"rotate("+(value*0.8)+"deg)";
+      total += Number(activity.points);
 
-}
-);
 
-motionStarted=true;
+      const div =
+        document.createElement("div");
 
-alert("تم السماح بحركة الجهاز");
+      div.className = "activity";
 
-}catch(error){
+      div.innerHTML = `
+        <strong>${escapeHtml(activity.name)}</strong>
+        <div>النقاط: ${activity.points}</div>
+        <button
+          class="danger"
+          onclick="deleteActivity(${index})">
+          حذف
+        </button>
+      `;
 
-console.error(error);
+      container.appendChild(div);
+    });
 
-alert("تعذر تفعيل حركة الجهاز");
 
-}
+    document.getElementById("totalPoints")
+      .textContent = total;
+  }
 
-};
 
+  /* ==============================
+     حذف النشاط
+  ============================== */
 
-/* ==========================================
-   البداية
-========================================== */
+  function deleteActivity(index) {
 
-calculate();
+    const activities =
+      JSON.parse(
+        localStorage.getItem("adel_activities")
+        || "[]"
+      );
 
-if(
-localStorage.getItem("adelLoggedIn")==="true"
-){
 
-page(appPage);
-loadPoints();
+    activities.splice(index, 1);
 
-}else{
 
-page(loginPage);
+    localStorage.setItem(
+      "adel_activities",
+      JSON.stringify(activities)
+    );
 
-}
+
+    loadActivities();
+  }
+
+
+  /* ==============================
+     حماية عرض النص
+  ============================== */
+
+  function escapeHtml(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+  }
+
+
+  /* ==============================
+     تحديث
+  ============================== */
+
+  document
+    .getElementById("motion")
+    .addEventListener("click", function () {
+
+      loadActivities();
+
+    });
+
+
+  /* ==============================
+     تسجيل الخروج
+  ============================== */
+
+  document
+    .getElementById("logout")
+    .addEventListener("click", function () {
+
+      localStorage.removeItem("adel_logged_in");
+      localStorage.removeItem("adel_name");
+      localStorage.removeItem("adel_unit");
+
+      showPage(loginPage);
+    });
+
+
+  /* ==============================
+     فحص تسجيل الدخول عند فتح الموقع
+  ============================== */
+
+  if (
+    localStorage.getItem("adel_logged_in")
+    === "true"
+  ) {
+
+    showPage(appPage);
+
+    loadActivities();
+
+  } else {
+
+    showPage(loginPage);
+
+  }
+
+</script>
+
+</body>
+</html>";
+
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* ==============================
+     عناصر الصفحات
+  ============================== */
+
+  const loginPage =
+    document.getElementById("loginPage");
+
+  const registerPage =
+    document.getElementById("registerPage");
+
+  const appPage =
+    document.getElementById("appPage");
+
+
+  function showPage(page) {
+
+    loginPage.classList.remove("active");
+    registerPage.classList.remove("active");
+    appPage.classList.remove("active");
+
+    page.classList.add("active");
+  }
+
+
+  /* ==============================
+     الرسائل
+  ============================== */
+
+  function showMessage(element, text, type) {
+
+    element.textContent = text;
+    element.className = "message " + type;
+    element.style.display = "block";
+  }
+
+
+  /* ==============================
+     فتح التسجيل
+  ============================== */
+
+  document
+    .getElementById("openRegister")
+    .addEventListener("click", function () {
+
+      document.getElementById("registerName").value = "";
+      document.getElementById("registerUnit").value = "";
+      document.getElementById("registerCode").value = "";
+
+      document.getElementById("registerMessage").style.display = "none";
+
+      showPage(registerPage);
+    });
+
+
+  /* ==============================
+     العودة للدخول
+  ============================== */
+
+  document
+    .getElementById("backLogin")
+    .addEventListener("click", function () {
+
+      document.getElementById("loginMessage").style.display = "none";
+
+      showPage(loginPage);
+    });
+
+
+  /* ==============================
+     طلب التسجيل
+  ============================== */
+
+  document
+    .getElementById("sendRegister")
+    .addEventListener("click", async function () {
+
+      const button = this;
+
+      const name =
+        document.getElementById("registerName")
+          .value.trim();
+
+      const unit =
+        document.getElementById("registerUnit")
+          .value.trim();
+
+      const code =
+        document.getElementById("registerCode")
+          .value.trim();
+
+      const message =
+        document.getElementById("registerMessage");
+
+
+      if (!name || !unit || !code) {
+
+        showMessage(
+          message,
+          "عبّ جميع البيانات أولاً",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+      button.textContent = "جاري إرسال الطلب...";
+
+
+      try {
+
+        const { error } =
+          await supabaseClient
+            .from("registration_requests")
+            .insert([{
+              full_name: name,
+              military_unit: unit,
+              access_code: code,
+              status: "pending"
+            }]);
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        showMessage(
+          message,
+          "تم إرسال طلب التسجيل بنجاح",
+          "success"
+        );
+
+
+        document.getElementById("registerName").value = "";
+        document.getElementById("registerUnit").value = "";
+        document.getElementById("registerCode").value = "";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          message,
+          "تعذر إرسال الطلب: " + error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+        button.textContent = "إرسال طلب التسجيل";
+      }
+
+    });
+
+
+  /* ==============================
+     تسجيل الدخول
+  ============================== */
+
+  document
+    .getElementById("loginBtn")
+    .addEventListener("click", async function () {
+
+      const button = this;
+
+      const name =
+        document.getElementById("loginName")
+          .value.trim();
+
+      const unit =
+        document.getElementById("loginUnit")
+          .value.trim();
+
+      const code =
+        document.getElementById("loginCode")
+          .value.trim();
+
+      const message =
+        document.getElementById("loginMessage");
+
+
+      if (!name || !unit || !code) {
+
+        showMessage(
+          message,
+          "عبّ جميع بيانات تسجيل الدخول",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+      button.textContent = "جاري التحقق...";
+
+
+      try {
+
+        const { data, error } =
+          await supabaseClient.rpc(
+            "verify_login",
+            {
+              p_full_name: name,
+              p_military_unit: unit,
+              p_access_code: code
+            }
+          );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        /*
+          إذا كانت الدالة ترجع true
+          أو نتيجة تحتوي على success
+        */
+
+        let success = false;
+
+        if (data === true) {
+          success = true;
+        }
+
+        if (
+          data &&
+          typeof data === "object" &&
+          data.success === true
+        ) {
+          success = true;
+        }
+
+        if (
+          Array.isArray(data) &&
+          data.length > 0
+        ) {
+          if (
+            data[0] === true ||
+            data[0]?.success === true
+          ) {
+            success = true;
+          }
+        }
+
+
+        if (!success) {
+
+          showMessage(
+            message,
+            "بيانات الدخول غير صحيحة أو لم تتم الموافقة على الطلب",
+            "error"
+          );
+
+          return;
+        }
+
+
+        localStorage.setItem(
+          "adel_logged_in",
+          "true"
+        );
+
+        localStorage.setItem(
+          "adel_name",
+          name
+        );
+
+        localStorage.setItem(
+          "adel_unit",
+          unit
+        );
+
+
+        showPage(appPage);
+
+        loadActivities();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          message,
+          "حدث خطأ أثناء تسجيل الدخول: " +
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+        button.textContent = "طلب تسجيل الدخول";
+      }
+
+    });
+
+
+  /* ==============================
+     إضافة نشاط
+  ============================== */
+
+  document
+    .getElementById("addActivity")
+    .addEventListener("click", function () {
+
+      const form =
+        document.getElementById("activityForm");
+
+      form.style.display =
+        form.style.display === "none"
+          ? "block"
+          : "none";
+    });
+
+
+  /* ==============================
+     حفظ النشاط
+  ============================== */
+
+  document
+    .getElementById("save")
+    .addEventListener("click", function () {
+
+      const name =
+        document.getElementById("activityName")
+          .value.trim();
+
+      const points =
+        Number(
+          document.getElementById("activityPoints")
+            .value
+        );
+
+
+      if (!name || !points) {
+        alert("اكتب اسم النشاط وعدد النقاط");
+        return;
+      }
+
+
+      const activities =
+        JSON.parse(
+          localStorage.getItem("adel_activities")
+          || "[]"
+        );
+
+
+      activities.push({
+        name: name,
+        points: points
+      });
+
+
+      localStorage.setItem(
+        "adel_activities",
+        JSON.stringify(activities)
+      );
+
+
+      document.getElementById("activityName").value = "";
+      document.getElementById("activityPoints").value = "";
+
+      document.getElementById("activityForm")
+        .style.display = "none";
+
+
+      loadActivities();
+    });
+
+
+  /* ==============================
+     عرض الأنشطة
+  ============================== */
+
+  function loadActivities() {
+
+    const container =
+      document.getElementById("activities");
+
+    const activities =
+      JSON.parse(
+        localStorage.getItem("adel_activities")
+        || "[]"
+      );
+
+
+    container.innerHTML = "";
+
+
+    let total = 0;
+
+
+    activities.forEach(function(activity, index) {
+
+      total += Number(activity.points);
+
+
+      const div =
+        document.createElement("div");
+
+      div.className = "activity";
+
+      div.innerHTML = `
+        <strong>${escapeHtml(activity.name)}</strong>
+        <div>النقاط: ${activity.points}</div>
+        <button
+          class="danger"
+          onclick="deleteActivity(${index})">
+          حذف
+        </button>
+      `;
+
+      container.appendChild(div);
+    });
+
+
+    document.getElementById("totalPoints")
+      .textContent = total;
+  }
+
+
+  /* ==============================
+     حذف النشاط
+  ============================== */
+
+  function deleteActivity(index) {
+
+    const activities =
+      JSON.parse(
+        localStorage.getItem("adel_activities")
+        || "[]"
+      );
+
+
+    activities.splice(index, 1);
+
+
+    localStorage.setItem(
+      "adel_activities",
+      JSON.stringify(activities)
+    );
+
+
+    loadActivities();
+  }
+
+
+  /* ==============================
+     حماية عرض النص
+  ============================== */
+
+  function escapeHtml(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+  }
+
+
+  /* ==============================
+     تحديث
+  ============================== */
+
+  document
+    .getElementById("motion")
+    .addEventListener("click", function () {
+
+      loadActivities();
+
+    });
+
+
+  /* ==============================
+     تسجيل الخروج
+  ============================== */
+
+  document
+    .getElementById("logout")
+    .addEventListener("click", function () {
+
+      localStorage.removeItem("adel_logged_in");
+      localStorage.removeItem("adel_name");
+      localStorage.removeItem("adel_unit");
+
+      showPage(loginPage);
+    });
+
+
+  /* ==============================
+     فحص تسجيل الدخول عند فتح الموقع
+  ============================== */
+
+  if (
+    localStorage.getItem("adel_logged_in")
+    === "true"
+  ) {
+
+    showPage(appPage);
+
+    loadActivities();
+
+  } else {
+
+    showPage(loginPage);
+
+  }
 
 </script>
 
