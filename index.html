@@ -1,933 +1,903 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adel App</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تطبيق حسب النقاط</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    color:#111827;
+    direction:rtl;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:20px 15px 120px;
+}
+
+/* الهيدر */
+
+.top-header{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+    direction:rtl;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:16px;
+    font-size:27px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.header-center{
+    text-align:center;
+    margin:0;
+    font-size:28px;
+    white-space:nowrap;
+}
+
+.header-left{
+    text-align:left;
+    font-size:27px;
+    font-weight:bold;
+    direction:ltr;
+}
+
+/* شعار المملكة */
+
+.saudi-logo{
+    width:82px;
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.saudi-logo img{
+    width:82px;
+    height:82px;
+    display:block;
+    object-fit:contain;
+}
+
+/* البطاقات */
+
+.card{
+    background:white;
+    padding:20px;
+    margin:15px 0;
+    border-radius:15px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.points{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+#total{
+    font-size:35px;
+}
+
+.instructions{
+    text-align:right;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+.arrow{
+    text-align:right;
+    font-size:35px;
+    line-height:1;
+    margin-bottom:8px;
+}
+
+/* الأعمال */
+
+.activities-list{
+    direction:rtl;
+    text-align:right;
+    font-size:17px;
+    line-height:1.8;
+    background:white;
+    padding:15px;
+    border-radius:12px;
+}
+
+.activity-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:12px;
+    margin:15px 0;
+    direction:rtl;
+}
+
+.activity-info{
+    flex:1;
+    text-align:right;
+    direction:rtl;
+}
+
+.activity-name{
+    font-weight:bold;
+}
+
+.activity-points{
+    font-size:15px;
+    color:#555;
+}
+
+/* خانة العدد */
+
+.activity-number{
+    width:90px !important;
+    height:45px;
+    margin:0 !important;
+    padding:8px !important;
+    border:1px solid #bbb;
+    border-radius:10px;
+    background:#fff;
+    font-size:18px;
+    text-align:center !important;
+    direction:ltr !important;
+}
+
+/* الأزرار */
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:0;
+    border-radius:10px;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.save-button{
+    background:#16a34a;
+}
+
+.delete-button{
+    background:#dc2626;
+}
+
+/* تصميم عادل الشمري */
+
+#designer{
+    position:fixed;
+    left:10px;
+    bottom:15px;
+    font-size:13px;
+    color:#555;
+    z-index:9999;
+    transition:transform .08s linear;
+}
+
+#motionButton{
+    position:fixed;
+    right:10px;
+    bottom:15px;
+    width:auto;
+    padding:9px 12px;
+    font-size:13px;
+    z-index:10000;
+    background:#2563eb;
+}
+
+/* الجوال */
+
+@media(max-width:600px){
+
+    .top-header{
+        gap:5px;
     }
-    body {
-      margin: 0;
-      background: #f3f4f6;
-      color: #111827;
+
+    .header-right{
+        font-size:19px;
+        gap:4px;
     }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
+
+    .header-center{
+        font-size:19px;
     }
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 16px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+
+    .header-left{
+        font-size:20px;
     }
-    h1, h2, h3 {
-      text-align: center;
+
+    .saudi-logo{
+        width:58px;
+        height:58px;
     }
-    input, select, button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      font-size: 16px;
+
+    .saudi-logo img{
+        width:58px;
+        height:58px;
     }
-    button {
-      background: #111827;
-      color: white;
-      border: none;
-      cursor: pointer;
+
+    .activity-name{
+        font-size:16px;
     }
-    button:active {
-      transform: scale(.98);
+
+    .activity-points{
+        font-size:14px;
     }
-    .danger {
-      background: #dc2626;
+
+    .activity-number{
+        width:75px !important;
     }
-    .hidden {
-      display: none;
-    }
-    .item {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 10px;
-      background: #fafafa;
-    }
-    .points {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .success {
-      color: #15803d;
-      font-weight: bold;
-    }
-    .error {
-      color: #dc2626;
-      font-weight: bold;
-    }
-    .designer {
-      text-align: center;
-      color: #6b7280;
-      font-weight: bold;
-      margin: 25px 0 10px;
-    }
-  </style>
+
+}
+
+</style>
 </head>
+
 <body>
+
 <div class="container">
-  <!-- الصفحة الرئيسية -->
-  <div id="home">
-    <div class="card">
-      <h1>Adel App</h1>
-      <button onclick="showPage('register')">
-        📝 تسجيل مستخدم
-      </button>
-      <button onclick="showPage('users')">
-        👥 المستخدمون
-      </button>
-      <button onclick="showPage('activities')">
-        📋 الأنشطة والنقاط
-      </button>
+
+<!-- الهيدر -->
+
+<div class="top-header">
+
+    <!-- اليمين -->
+
+    <div class="header-right">
+
+        <span>وزارة الداخلية</span>
+
+        <!-- شعار المملكة الرسمي كصورة -->
+
+        <div class="saudi-logo">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
+                alt="شعار المملكة العربية السعودية">
+
+        </div>
+
     </div>
-  </div>
-  <!-- تسجيل مستخدم -->
-  <div id="register" class="hidden">
-    <div class="card">
-      <h2>تسجيل مستخدم جديد</h2>
-      <input
-        id="name"
-        placeholder="الاسم الكامل"
-      >
-      <input
-        id="unit"
-        placeholder="اليونت العسكري"
-      >
-      <input
-        id="code"
-        placeholder="رمز الدخول"
-      >
-      <button onclick="registerUser()">
-        تسجيل المستخدم
-      </button>
-      <p id="registerMessage"></p>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
+
+
+    <!-- الوسط -->
+
+    <h1 class="header-center">
+        تطبيق حسب النقاط
+    </h1>
+
+
+    <!-- اليسار -->
+
+    <div class="header-left">
+        KR
     </div>
-  </div>
-  <!-- المستخدمون -->
-  <div id="users" class="hidden">
-    <div class="card">
-      <h2>المستخدمون</h2>
-      <button onclick="loadUsers()">
-        🔄 تحديث المستخدمين
-      </button>
-      <div id="usersList">
-        جاري التحميل...
-      </div>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
-    </div>
-  </div>
-  <!-- الأنشطة -->
-  <div id="activities" class="hidden">
-    <div class="card">
-      <h2>إضافة نشاط</h2>
-      <select id="activityUser">
-        <option value="">
-          اختر المستخدم
-        </option>
-      </select>
-      <input
-        id="activityName"
-        placeholder="اسم النشاط"
-      >
-      <input
-        id="activityPoints"
-        type="number"
-        placeholder="النقاط"
-      >
-      <button onclick="addActivity()">
-        ➕ إضافة النشاط
-      </button>
-      <p id="activityMessage"></p>
-    </div>
-    <div class="card">
-      <h2>الأنشطة والنقاط</h2>
-      <button onclick="loadActivities()">
-        🔄 تحديث الأنشطة
-      </button>
-      <div id="activitiesList">
-        جاري التحميل...
-      </div>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
-    </div>
-  </div>
-  <div class="designer">
-    المصمم عادل الشمري
-  </div>
+
 </div>
-<script>
-  /* =========================
-     SUPABASE
-     ========================= */
-  const SUPABASE_URL =
-    "https://rvgvqooateniymiypraz.supabase.co";
-  const SUPABASE_KEY =
-    "<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adel App</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      margin: 0;
-      background: #f3f4f6;
-      color: #111827;
-    }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 16px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
-    }
-    h1, h2, h3 {
-      text-align: center;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      font-size: 16px;
-    }
-    button {
-      background: #111827;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:active {
-      transform: scale(.98);
-    }
-    .danger {
-      background: #dc2626;
-    }
-    .hidden {
-      display: none;
-    }
-    .item {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 10px;
-      background: #fafafa;
-    }
-    .points {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .success {
-      color: #15803d;
-      font-weight: bold;
-    }
-    .error {
-      color: #dc2626;
-      font-weight: bold;
-    }
-    .designer {
-      text-align: center;
-      color: #6b7280;
-      font-weight: bold;
-      margin: 25px 0 10px;
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-  <!-- الصفحة الرئيسية -->
-  <div id="home">
-    <div class="card">
-      <h1>Adel App</h1>
-      <button onclick="showPage('register')">
-        📝 تسجيل مستخدم
-      </button>
-      <button onclick="showPage('users')">
-        👥 المستخدمون
-      </button>
-      <button onclick="showPage('activities')">
-        📋 الأنشطة والنقاط
-      </button>
+
+
+<!-- مجموع النقاط -->
+
+<div class="card">
+
+    <div class="points">
+
+        مجموع النقاط:
+
+        <span id="total">0</span>
+
     </div>
-  </div>
-  <!-- تسجيل مستخدم -->
-  <div id="register" class="hidden">
-    <div class="card">
-      <h2>تسجيل مستخدم جديد</h2>
-      <input
-        id="name"
-        placeholder="الاسم الكامل"
-      >
-      <input
-        id="unit"
-        placeholder="اليونت العسكري"
-      >
-      <input
-        id="code"
-        placeholder="رمز الدخول"
-      >
-      <button onclick="registerUser()">
-        تسجيل المستخدم
-      </button>
-      <p id="registerMessage"></p>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
-    </div>
-  </div>
-  <!-- المستخدمون -->
-  <div id="users" class="hidden">
-    <div class="card">
-      <h2>المستخدمون</h2>
-      <button onclick="loadUsers()">
-        🔄 تحديث المستخدمين
-      </button>
-      <div id="usersList">
-        جاري التحميل...
-      </div>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
-    </div>
-  </div>
-  <!-- الأنشطة -->
-  <div id="activities" class="hidden">
-    <div class="card">
-      <h2>إضافة نشاط</h2>
-      <select id="activityUser">
-        <option value="">
-          اختر المستخدم
-        </option>
-      </select>
-      <input
-        id="activityName"
-        placeholder="اسم النشاط"
-      >
-      <input
-        id="activityPoints"
-        type="number"
-        placeholder="النقاط"
-      >
-      <button onclick="addActivity()">
-        ➕ إضافة النشاط
-      </button>
-      <p id="activityMessage"></p>
-    </div>
-    <div class="card">
-      <h2>الأنشطة والنقاط</h2>
-      <button onclick="loadActivities()">
-        🔄 تحديث الأنشطة
-      </button>
-      <div id="activitiesList">
-        جاري التحميل...
-      </div>
-      <button onclick="showPage('home')">
-        رجوع
-      </button>
-    </div>
-  </div>
-  <div class="designer">
-    المصمم عادل الشمري
-  </div>
+
 </div>
+
+
+<!-- الأعمال -->
+
+<div class="card">
+
+    <div class="instructions">
+        هنا اكتب عدد الأعمال وانسخها
+    </div>
+
+    <div class="arrow">
+        ⬇️
+    </div>
+
+
+    <div class="activities-list">
+
+
+        <!-- 1 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    تدشين نقطة تفتيش متحركة: (1)
+                </div>
+
+                <div class="activity-points">
+                    كل ١/٢ ساعة
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="1"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    إستيقاف مروري: (1)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="1"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    تسجيل مخالفة: (1)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="1"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    حضور حملة أمنية (عامة): (2)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="2"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    حضور حملة أمنية (خاصة): (2)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="2"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    حضور تدريب (عام-خاص): (2)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="2"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    إسقاط رجل عصابة: (3)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="3"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 8 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    حضور تمشيط: (3)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="3"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 9 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    إعتقال عضو عصابة: (5)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="5"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="activity-row">
+
+            <div class="activity-info">
+
+                <div class="activity-name">
+                    إعتقال احد رؤساء العصابات ملاحظة: (5)
+                </div>
+
+            </div>
+
+            <input
+                class="activity-number"
+                data-points="5"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                value="0">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- الأزرار -->
+
+<div class="card">
+
+    <button
+        class="save-button"
+        onclick="saveData()">
+
+        حفظ البيانات
+
+    </button>
+
+
+    <button
+        class="delete-button"
+        onclick="deleteData()">
+
+        حذف البيانات
+
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- تصميم -->
+
+<div id="designer">
+    تصميم: عادل الشمري
+</div>
+
+
+<!-- حركة الجهاز -->
+
+<button id="motionButton">
+    السماح بحركة الجهاز
+</button>
+
+
 <script>
-  /* =========================
-     SUPABASE
-     ========================= */
-  const SUPABASE_URL =
-    "https://rvgvqooateniymiypraz.supabase.co";
-  const SUPABASE_KEY =
-    "حط_هنا_Publishable_Key_الخاص_بمشروعك";
-  const db =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-  /* =========================
-     التنقل
-     ========================= */
-  function showPage(page) {
-    document.getElementById("home")
-      .classList.add("hidden");
-    document.getElementById("register")
-      .classList.add("hidden");
-    document.getElementById("users")
-      .classList.add("hidden");
-    document.getElementById("activities")
-      .classList.add("hidden");
-    document.getElementById(page)
-      .classList.remove("hidden");
-    if (page === "users") {
-      loadUsers();
-    }
-    if (page === "activities") {
-      loadActivityUsers();
-      loadActivities();
-    }
-  }
-  /* =========================
-     تسجيل مستخدم
-     ========================= */
-  async function registerUser() {
-    const name =
-      document.getElementById("name")
-        .value.trim();
-    const unit =
-      document.getElementById("unit")
-        .value.trim();
-    const code =
-      document.getElementById("code")
-        .value.trim();
-    const message =
-      document.getElementById("registerMessage");
-    if (!name || !unit || !code) {
-      message.className = "error";
-      message.textContent =
-        "عبي جميع البيانات";
-      return;
-    }
-    const { error } =
-      await db
-        .from("users")
-        .insert([{
-          full_name: name,
-          military_unit: unit,
-          access_code: code,
-          approved: true
-        }]);
-    if (error) {
-      console.error(error);
-      message.className = "error";
-      message.textContent =
-        "صار خطأ في تسجيل المستخدم";
-      return;
-    }
-    message.className = "success";
-    message.textContent =
-      "تم تسجيل المستخدم بنجاح";
-    document.getElementById("name").value = "";
-    document.getElementById("unit").value = "";
-    document.getElementById("code").value = "";
-  }
-  /* =========================
-     تحميل المستخدمين
-     ========================= */
-  async function loadUsers() {
-    const box =
-      document.getElementById("usersList");
-    box.innerHTML =
-      "جاري التحميل...";
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .order("id", {
-          ascending: false
-        });
-    if (error) {
-      console.error(error);
-      box.innerHTML =
-        "<p class='error'>خطأ في تحميل المستخدمين</p>";
-      return;
-    }
-    if (!data || data.length === 0) {
-      box.innerHTML =
-        "<p>لا يوجد مستخدمون</p>";
-      return;
-    }
-    box.innerHTML =
-      data.map(function(user) {
-        return `
-          <div class="item">
-            <strong>
-              ${escapeHtml(user.full_name)}
-            </strong>
-            <br><br>
-            اليونت العسكري:
-            ${escapeHtml(user.military_unit)}
-            <br>
-            رمز الدخول:
-            ${escapeHtml(user.access_code)}
-            <br>
-            الحالة:
-            ${user.approved ? "مفعل" : "غير مفعل"}
-          </div>
-        `;
-      }).join("");
-  }
-  /* =========================
-     المستخدمون في قائمة النشاط
-     ========================= */
-  async function loadActivityUsers() {
-    const select =
-      document.getElementById("activityUser");
-    const { data, error } =
-      await db
-        .from("users")
-        .select("id, full_name, military_unit")
-        .order("full_name");
-    if (error) {
-      console.error(error);
-      return;
-    }
-    select.innerHTML =
-      '<option value="">اختر المستخدم</option>';
-    if (!data) return;
-    data.forEach(function(user) {
-      const option =
-        document.createElement("option");
-      option.value = user.id;
-      option.textContent =
-        user.full_name +
-        " - " +
-        user.military_unit;
-      select.appendChild(option);
+
+/* حساب النقاط */
+
+function calculatePoints(){
+
+    const inputs =
+        document.querySelectorAll(".activity-number");
+
+    let total = 0;
+
+    inputs.forEach(function(input){
+
+        let value =
+            input.value.replace(/[^0-9]/g,"");
+
+        input.value = value;
+
+        const points =
+            Number(input.dataset.points) || 0;
+
+        total +=
+            (Number(value) || 0) * points;
+
     });
-  }
-  /* =========================
-     إضافة نشاط
-     ========================= */
-  async function addActivity() {
-    const userId =
-      document.getElementById("activityUser")
-        .value;
-    const activityName =
-      document.getElementById("activityName")
-        .value.trim();
-    const points =
-      Number(
-        document.getElementById("activityPoints")
-          .value
-      );
-    const message =
-      document.getElementById("activityMessage");
-    if (!userId || !activityName || !points) {
-      message.className = "error";
-      message.textContent =
-        "اختر المستخدم واكتب النشاط والنقاط";
-      return;
-    }
-    const { error } =
-      await db
-        .from("activities")
-        .insert([{
-          user_id: Number(userId),
-          activity_name: activityName,
-          points: points
-        }]);
-    if (error) {
-      console.error(error);
-      message.className = "error";
-      message.textContent =
-        "صار خطأ في إضافة النشاط";
-      return;
-    }
-    message.className = "success";
-    message.textContent =
-      "تمت إضافة النشاط بنجاح";
-    document.getElementById("activityName")
-      .value = "";
-    document.getElementById("activityPoints")
-      .value = "";
-    loadActivities();
-  }
-  /* =========================
-     تحميل الأنشطة
-     ========================= */
-  async function loadActivities() {
-    const box =
-      document.getElementById("activitiesList");
-    box.innerHTML =
-      "جاري التحميل...";
-    const { data, error } =
-      await db
-        .from("activities")
-        .select(`
-          id,
-          activity_name,
-          points,
-          created_at,
-          user_id,
-          users (
-            full_name,
-            military_unit
-          )
-        `)
-        .order("id", {
-          ascending: false
-        });
-    if (error) {
-      console.error(error);
-      box.innerHTML =
-        "<p class='error'>خطأ في تحميل الأنشطة</p>";
-      return;
-    }
-    if (!data || data.length === 0) {
-      box.innerHTML =
-        "<p>لا توجد أنشطة حتى الآن</p>";
-      return;
-    }
-    box.innerHTML =
-      data.map(function(activity) {
-        const user =
-          activity.users;
-        return `
-          <div class="item">
-            <strong>
-              ${escapeHtml(
-                user ? user.full_name : "مستخدم"
-              )}
-            </strong>
-            <br>
-            اليونت العسكري:
-            ${escapeHtml(
-              user ? user.military_unit : "-"
-            )}
-            <br><br>
-            النشاط:
-            ${escapeHtml(activity.activity_name)}
-            <br>
-            <span class="points">
-              النقاط: ${activity.points}
-            </span>
-          </div>
-        `;
-      }).join("");
-  }
-  /* =========================
-     حماية النصوص
-     ========================= */
-  function escapeHtml(value) {
-    if (
-      value === null ||
-      value === undefined
-    ) {
-      return "";
-    }
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-  /* =========================
-     البداية
-     ========================= */
-  showPage("home");
-</script>
-</body>
-</html>";
-  const db =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-  /* =========================
-     التنقل
-     ========================= */
-  function showPage(page) {
-    document.getElementById("home")
-      .classList.add("hidden");
-    document.getElementById("register")
-      .classList.add("hidden");
-    document.getElementById("users")
-      .classList.add("hidden");
-    document.getElementById("activities")
-      .classList.add("hidden");
-    document.getElementById(page)
-      .classList.remove("hidden");
-    if (page === "users") {
-      loadUsers();
-    }
-    if (page === "activities") {
-      loadActivityUsers();
-      loadActivities();
-    }
-  }
-  /* =========================
-     تسجيل مستخدم
-     ========================= */
-  async function registerUser() {
-    const name =
-      document.getElementById("name")
-        .value.trim();
-    const unit =
-      document.getElementById("unit")
-        .value.trim();
-    const code =
-      document.getElementById("code")
-        .value.trim();
-    const message =
-      document.getElementById("registerMessage");
-    if (!name || !unit || !code) {
-      message.className = "error";
-      message.textContent =
-        "عبي جميع البيانات";
-      return;
-    }
-    const { error } =
-      await db
-        .from("users")
-        .insert([{
-          full_name: name,
-          military_unit: unit,
-          access_code: code,
-          approved: true
-        }]);
-    if (error) {
-      console.error(error);
-      message.className = "error";
-      message.textContent =
-        "صار خطأ في تسجيل المستخدم";
-      return;
-    }
-    message.className = "success";
-    message.textContent =
-      "تم تسجيل المستخدم بنجاح";
-    document.getElementById("name").value = "";
-    document.getElementById("unit").value = "";
-    document.getElementById("code").value = "";
-  }
-  /* =========================
-     تحميل المستخدمين
-     ========================= */
-  async function loadUsers() {
-    const box =
-      document.getElementById("usersList");
-    box.innerHTML =
-      "جاري التحميل...";
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .order("id", {
-          ascending: false
-        });
-    if (error) {
-      console.error(error);
-      box.innerHTML =
-        "<p class='error'>خطأ في تحميل المستخدمين</p>";
-      return;
-    }
-    if (!data || data.length === 0) {
-      box.innerHTML =
-        "<p>لا يوجد مستخدمون</p>";
-      return;
-    }
-    box.innerHTML =
-      data.map(function(user) {
-        return `
-          <div class="item">
-            <strong>
-              ${escapeHtml(user.full_name)}
-            </strong>
-            <br><br>
-            اليونت العسكري:
-            ${escapeHtml(user.military_unit)}
-            <br>
-            رمز الدخول:
-            ${escapeHtml(user.access_code)}
-            <br>
-            الحالة:
-            ${user.approved ? "مفعل" : "غير مفعل"}
-          </div>
-        `;
-      }).join("");
-  }
-  /* =========================
-     المستخدمون في قائمة النشاط
-     ========================= */
-  async function loadActivityUsers() {
-    const select =
-      document.getElementById("activityUser");
-    const { data, error } =
-      await db
-        .from("users")
-        .select("id, full_name, military_unit")
-        .order("full_name");
-    if (error) {
-      console.error(error);
-      return;
-    }
-    select.innerHTML =
-      '<option value="">اختر المستخدم</option>';
-    if (!data) return;
-    data.forEach(function(user) {
-      const option =
-        document.createElement("option");
-      option.value = user.id;
-      option.textContent =
-        user.full_name +
-        " - " +
-        user.military_unit;
-      select.appendChild(option);
+
+    document.getElementById("total")
+        .textContent = total;
+
+}
+
+
+/* حفظ البيانات */
+
+function saveData(){
+
+    const inputs =
+        document.querySelectorAll(".activity-number");
+
+    const numbers = [];
+
+    inputs.forEach(function(input){
+
+        numbers.push(input.value);
+
     });
-  }
-  /* =========================
-     إضافة نشاط
-     ========================= */
-  async function addActivity() {
-    const userId =
-      document.getElementById("activityUser")
-        .value;
-    const activityName =
-      document.getElementById("activityName")
-        .value.trim();
-    const points =
-      Number(
-        document.getElementById("activityPoints")
-          .value
-      );
-    const message =
-      document.getElementById("activityMessage");
-    if (!userId || !activityName || !points) {
-      message.className = "error";
-      message.textContent =
-        "اختر المستخدم واكتب النشاط والنقاط";
-      return;
+
+    localStorage.setItem(
+        "adelPointsData",
+        JSON.stringify({
+            numbers:numbers
+        })
+    );
+
+    alert("تم حفظ البيانات ✅");
+
+}
+
+
+/* تحميل البيانات */
+
+function loadData(){
+
+    const saved =
+        localStorage.getItem("adelPointsData");
+
+    if(!saved){
+
+        calculatePoints();
+
+        return;
+
     }
-    const { error } =
-      await db
-        .from("activities")
-        .insert([{
-          user_id: Number(userId),
-          activity_name: activityName,
-          points: points
-        }]);
-    if (error) {
-      console.error(error);
-      message.className = "error";
-      message.textContent =
-        "صار خطأ في إضافة النشاط";
-      return;
-    }
-    message.className = "success";
-    message.textContent =
-      "تمت إضافة النشاط بنجاح";
-    document.getElementById("activityName")
-      .value = "";
-    document.getElementById("activityPoints")
-      .value = "";
-    loadActivities();
-  }
-  /* =========================
-     تحميل الأنشطة
-     ========================= */
-  async function loadActivities() {
-    const box =
-      document.getElementById("activitiesList");
-    box.innerHTML =
-      "جاري التحميل...";
-    const { data, error } =
-      await db
-        .from("activities")
-        .select(`
-          id,
-          activity_name,
-          points,
-          created_at,
-          user_id,
-          users (
-            full_name,
-            military_unit
-          )
-        `)
-        .order("id", {
-          ascending: false
+
+    try{
+
+        const data =
+            JSON.parse(saved);
+
+        const inputs =
+            document.querySelectorAll(".activity-number");
+
+        inputs.forEach(function(input,index){
+
+            if(
+                data.numbers &&
+                data.numbers[index] !== undefined
+            ){
+
+                input.value =
+                    String(data.numbers[index])
+                    .replace(/[^0-9]/g,"");
+
+            }
+
         });
-    if (error) {
-      console.error(error);
-      box.innerHTML =
-        "<p class='error'>خطأ في تحميل الأنشطة</p>";
-      return;
+
+        calculatePoints();
+
+    }catch(error){
+
+        calculatePoints();
+
     }
-    if (!data || data.length === 0) {
-      box.innerHTML =
-        "<p>لا توجد أنشطة حتى الآن</p>";
-      return;
+
+}
+
+
+/* حذف البيانات */
+
+function deleteData(){
+
+    const answer =
+        confirm(
+            "هل أنت متأكد من حذف جميع البيانات؟"
+        );
+
+    if(!answer){
+
+        return;
+
     }
-    box.innerHTML =
-      data.map(function(activity) {
-        const user =
-          activity.users;
-        return `
-          <div class="item">
-            <strong>
-              ${escapeHtml(
-                user ? user.full_name : "مستخدم"
-              )}
-            </strong>
-            <br>
-            اليونت العسكري:
-            ${escapeHtml(
-              user ? user.military_unit : "-"
-            )}
-            <br><br>
-            النشاط:
-            ${escapeHtml(activity.activity_name)}
-            <br>
-            <span class="points">
-              النقاط: ${activity.points}
-            </span>
-          </div>
-        `;
-      }).join("");
-  }
-  /* =========================
-     حماية النصوص
-     ========================= */
-  function escapeHtml(value) {
-    if (
-      value === null ||
-      value === undefined
-    ) {
-      return "";
+
+    localStorage.removeItem(
+        "adelPointsData"
+    );
+
+    const inputs =
+        document.querySelectorAll(".activity-number");
+
+    inputs.forEach(function(input){
+
+        input.value = "";
+
+    });
+
+    document.getElementById("total")
+        .textContent = "0";
+
+    alert("تم حذف البيانات 🗑️");
+
+}
+
+
+/* تحديث المجموع أثناء الكتابة */
+
+document.addEventListener(
+    "input",
+    function(event){
+
+        if(
+            event.target.classList
+            .contains("activity-number")
+        ){
+
+            event.target.value =
+                event.target.value
+                .replace(/[^0-9]/g,"");
+
+            calculatePoints();
+
+        }
+
     }
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-  /* =========================
-     البداية
-     ========================= */
-  showPage("home");
+);
+
+
+/* تحريك تصميم عادل الشمري */
+
+function moveDesigner(event){
+
+    const designer =
+        document.getElementById("designer");
+
+    let movement =
+        event.beta || 0;
+
+    movement =
+        Math.max(
+            -45,
+            Math.min(45,movement)
+        );
+
+    designer.style.transform =
+        "translateY(" +
+        (movement * 2) +
+        "px)";
+
+}
+
+
+/* السماح بحركة الجهاز */
+
+document
+.getElementById("motionButton")
+.addEventListener(
+    "click",
+    async function(){
+
+        try{
+
+            if(
+                typeof DeviceOrientationEvent !==
+                "undefined" &&
+
+                typeof DeviceOrientationEvent
+                .requestPermission ===
+                "function"
+            ){
+
+                const permission =
+                    await DeviceOrientationEvent
+                    .requestPermission();
+
+                if(permission === "granted"){
+
+                    window.addEventListener(
+                        "deviceorientation",
+                        moveDesigner,
+                        true
+                    );
+
+                    this.style.display =
+                        "none";
+
+                }else{
+
+                    alert(
+                        "لم يتم السماح بحركة الجهاز"
+                    );
+
+                }
+
+            }else{
+
+                window.addEventListener(
+                    "deviceorientation",
+                    moveDesigner,
+                    true
+                );
+
+                this.style.display =
+                    "none";
+
+            }
+
+        }catch(error){
+
+            alert(
+                "تعذر تشغيل حركة الجهاز"
+            );
+
+        }
+
+    }
+);
+
+
+/* تشغيل التطبيق */
+
+window.addEventListener(
+    "load",
+    loadData
+);
+
 </script>
+
 </body>
 </html>
