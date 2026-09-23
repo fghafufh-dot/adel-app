@@ -1,445 +1,328 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>تطبيق حسب النقاط</title>
+<title>تطبيق حسب النقاط</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, Tahoma, sans-serif;
-      background: #f2f2f2;
-      color: #111;
-    }
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f4f4;
+  color:#111;
+}
 
-    button,
-    input {
-      font-family: inherit;
-    }
+button,
+input{
+  font-family:inherit;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.page{
+  display:none;
+  min-height:100vh;
+  padding:20px;
+}
 
-    /* LOGIN */
+.page.active{
+  display:block;
+}
 
-    #loginPage {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: linear-gradient(135deg, #eeeeee, #dcdcdc);
-    }
+/* تسجيل الدخول */
 
-    .login-box {
-      width: 100%;
-      max-width: 430px;
-      background: white;
-      border-radius: 22px;
-      padding: 28px 22px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.15);
-      text-align: center;
-    }
+.login-box{
+  max-width:430px;
+  margin:70px auto;
+  background:white;
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
 
-    .login-logo {
-      width: 105px;
-      height: 105px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
+.login-title{
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
 
-    .login-title {
-      font-size: 30px;
-      font-weight: bold;
-      margin: 5px 0 8px;
-    }
+.app-name{
+  text-align:center;
+  font-size:19px;
+  margin-bottom:28px;
+  color:#444;
+}
 
-    .login-subtitle {
-      color: #666;
-      font-size: 15px;
-      margin-bottom: 25px;
-    }
+label{
+  display:block;
+  font-weight:bold;
+  margin:15px 0 7px;
+}
 
-    .field {
-      margin-bottom: 14px;
-      text-align: right;
-    }
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #bbb;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+  background:#fff;
+}
 
-    .field label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
-      font-size: 15px;
-    }
+input:focus{
+  border-color:#333;
+}
 
-    .field input {
-      width: 100%;
-      height: 50px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      padding: 0 14px;
-      font-size: 17px;
-      outline: none;
-      background: #fafafa;
-    }
+.main-btn{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:14px;
+  margin-top:20px;
+  font-size:17px;
+  font-weight:bold;
+  background:#111;
+  color:white;
+  cursor:pointer;
+}
 
-    .field input:focus {
-      border-color: #555;
-      background: white;
-    }
+.secondary-btn{
+  width:100%;
+  border:1px solid #222;
+  border-radius:10px;
+  padding:13px;
+  margin-top:10px;
+  font-size:16px;
+  font-weight:bold;
+  background:white;
+  color:#111;
+  cursor:pointer;
+}
 
-    .main-btn {
-      width: 100%;
-      height: 52px;
-      border: none;
-      border-radius: 13px;
-      background: #111;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 8px;
-    }
+.message{
+  text-align:center;
+  margin-top:15px;
+  font-weight:bold;
+  min-height:24px;
+}
 
-    .main-btn:active {
-      transform: scale(.98);
-    }
+/* التطبيق */
 
-    .secondary-btn {
-      width: 100%;
-      height: 48px;
-      border: 1px solid #aaa;
-      border-radius: 13px;
-      background: white;
-      color: #111;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+.app-header{
+  background:#111;
+  color:white;
+  border-radius:15px;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:20px;
+}
 
-    .message {
-      min-height: 24px;
-      margin-top: 14px;
-      font-weight: bold;
-      font-size: 14px;
-    }
+.header-side{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    /* REGISTER */
+.header-center{
+  flex:1;
+  text-align:center;
+  font-size:21px;
+  font-weight:bold;
+}
 
-    #registerPage {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: linear-gradient(135deg, #eeeeee, #dcdcdc);
-    }
+.header-left{
+  justify-content:flex-start;
+}
 
-    .register-box {
-      width: 100%;
-      max-width: 430px;
-      background: white;
-      border-radius: 22px;
-      padding: 28px 22px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.15);
-    }
+.header-right{
+  justify-content:flex-end;
+}
 
-    .register-title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+.emblem{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  background:white;
+  border-radius:50%;
+}
 
-    .register-info {
-      text-align: center;
-      color: #666;
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
+.activities{
+  max-width:850px;
+  margin:auto;
+}
 
-    /* APP */
+.activity{
+  background:white;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
 
-    #appPage {
-      min-height: 100vh;
-      background: #f3f3f3;
-    }
+.activity-name{
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
 
-    .header {
-      min-height: 105px;
-      background: white;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr 1fr;
-      align-items: center;
-      padding: 12px 18px;
-      border-bottom: 1px solid #ddd;
-      gap: 10px;
-    }
+.points{
+  font-size:14px;
+  color:#555;
+  margin-bottom:10px;
+}
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      font-size: 17px;
-    }
+.activity input{
+  width:100%;
+}
 
-    .saudi-logo {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-    }
+.total-box{
+  background:#111;
+  color:white;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  margin-top:20px;
+}
 
-    .header-center {
-      text-align: center;
-      font-size: 25px;
-      font-weight: bold;
-    }
+.action-row{
+  max-width:850px;
+  margin:15px auto;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-    .header-left {
-      text-align: left;
-      font-size: 17px;
-      font-weight: bold;
-    }
+.action-row button{
+  flex:1;
+  min-width:170px;
+  padding:13px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    .user-bar {
-      background: #111;
-      color: white;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+.save{
+  background:#111;
+  color:white;
+}
 
-    .user-info {
-      font-size: 15px;
-    }
+.motion{
+  background:#ddd;
+  color:#111;
+}
 
-    .logout-btn {
-      border: 1px solid #777;
-      background: #222;
-      color: white;
-      border-radius: 9px;
-      padding: 9px 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.logout{
+  background:#b00020;
+  color:white;
+}
 
-    .content {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+.credit{
+  position:fixed;
+  bottom:15px;
+  right:15px;
+  font-size:14px;
+  font-weight:bold;
+  transition:transform .2s;
+}
 
-    .total-box {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
-      margin-bottom: 18px;
-    }
+@media(max-width:650px){
 
-    .total-label {
-      font-size: 17px;
-      color: #555;
-    }
+  .app-header{
+    flex-direction:column;
+  }
 
-    .total-number {
-      font-size: 48px;
-      font-weight: bold;
-      margin-top: 4px;
-    }
+  .header-side{
+    width:100%;
+    justify-content:center;
+  }
 
-    .activities {
-      display: grid;
-      gap: 14px;
-    }
+  .header-center{
+    order:-1;
+  }
 
-    .activity {
-      background: white;
-      border-radius: 17px;
-      padding: 17px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.07);
-    }
-
-    .activity-name {
-      font-size: 18px;
-      font-weight: bold;
-      line-height: 1.5;
-    }
-
-    .activity-points {
-      margin-top: 4px;
-      color: #555;
-      font-size: 14px;
-    }
-
-    .activity-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 13px;
-    }
-
-    .activity-row input {
-      flex: 1;
-      height: 48px;
-      border: 1px solid #ccc;
-      border-radius: 11px;
-      padding: 0 13px;
-      font-size: 18px;
-      text-align: center;
-      background: #fafafa;
-    }
-
-    .activity-result {
-      min-width: 95px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .bottom-actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .save-btn {
-      height: 52px;
-      border: none;
-      border-radius: 13px;
-      background: #111;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .clear-btn {
-      height: 48px;
-      border: 1px solid #aaa;
-      border-radius: 13px;
-      background: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .design-credit {
-      text-align: center;
-      margin: 28px 0 15px;
-      color: #555;
-      font-weight: bold;
-      user-select: none;
-    }
-
-    @media (max-width: 650px) {
-      .header {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .header-right,
-      .header-left {
-        justify-content: center;
-        text-align: center;
-      }
-
-      .header-center {
-        order: -1;
-      }
-
-      .activity-row {
-        flex-wrap: wrap;
-      }
-
-      .activity-row input {
-        min-width: 100%;
-      }
-
-      .activity-result {
-        width: 100%;
-      }
-    }
-  </style>
+  .login-box{
+    margin:30px auto;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =========================
+     صفحة تسجيل الدخول
+========================= -->
 
-<section id="loginPage">
+<section id="loginPage" class="page active">
 
   <div class="login-box">
 
-    <img
-      class="login-logo"
-      src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-      alt="شعار المملكة العربية السعودية"
-    >
+    <div class="login-title">
+      تسجيل الدخول
+    </div>
 
-    <div class="login-title">تسجيل الدخول</div>
-
-    <div class="login-subtitle">
+    <div class="app-name">
       تطبيق حسب النقاط
     </div>
 
-    <div class="field">
-      <label for="loginName">الاسم الثنائي</label>
-      <input
-        id="loginName"
-        type="text"
-        placeholder="اكتب الاسم الثنائي"
-        autocomplete="off"
-      >
-    </div>
+    <label for="loginName">
+      الاسم الثنائي
+    </label>
 
-    <div class="field">
-      <label for="loginUnit">اليونت العسكري</label>
-      <input
-        id="loginUnit"
-        type="text"
-        placeholder="اكتب اليونت العسكري"
-        autocomplete="off"
-      >
-    </div>
+    <input
+      id="loginName"
+      type="text"
+      placeholder="اكتب الاسم الثنائي"
+      autocomplete="off"
+    >
 
-    <div class="field">
-      <label for="loginCode">الرمز الخاص</label>
-      <input
-        id="loginCode"
-        type="password"
-        placeholder="اكتب الرمز الخاص"
-        autocomplete="off"
-      >
-    </div>
+    <label for="loginUnit">
+      اليونت العسكري
+    </label>
+
+    <input
+      id="loginUnit"
+      type="text"
+      placeholder="اكتب اليونت العسكري"
+      autocomplete="off"
+    >
+
+    <label for="loginCode">
+      الرمز الخاص
+    </label>
+
+    <input
+      id="loginCode"
+      type="password"
+      placeholder="اكتب الرمز الخاص"
+      autocomplete="off"
+    >
 
     <button
-      class="main-btn"
       id="loginBtn"
+      class="main-btn"
       type="button"
     >
       تسجيل الدخول
     </button>
 
     <button
-      class="secondary-btn"
       id="openRegisterBtn"
+      class="secondary-btn"
       type="button"
     >
       طلب تسجيل جديد
@@ -448,7 +331,6 @@
     <div
       id="loginMessage"
       class="message"
-      aria-live="polite"
     ></div>
 
   </div>
@@ -456,52 +338,55 @@
 </section>
 
 
-<!-- ================= REGISTER ================= -->
+<!-- =========================
+     صفحة طلب التسجيل
+========================= -->
 
-<section id="registerPage" class="hidden">
+<section id="registerPage" class="page">
 
-  <div class="register-box">
+  <div class="login-box">
 
-    <div class="register-title">
+    <div class="login-title">
       طلب تسجيل جديد
     </div>
 
-    <div class="register-info">
-      اكتب بياناتك وسيتم إرسال طلب التسجيل.<br>
-      بعد الموافقة تحصل على الرمز الخاص للدخول.
+    <div class="app-name">
+      تطبيق حسب النقاط
     </div>
 
-    <div class="field">
-      <label for="registerName">الاسم الثنائي</label>
-      <input
-        id="registerName"
-        type="text"
-        placeholder="اكتب الاسم الثنائي"
-        autocomplete="off"
-      >
-    </div>
+    <label for="registerName">
+      الاسم الثنائي
+    </label>
 
-    <div class="field">
-      <label for="registerUnit">اليونت العسكري</label>
-      <input
-        id="registerUnit"
-        type="text"
-        placeholder="اكتب اليونت العسكري"
-        autocomplete="off"
-      >
-    </div>
+    <input
+      id="registerName"
+      type="text"
+      placeholder="اكتب الاسم الثنائي"
+      autocomplete="off"
+    >
+
+    <label for="registerUnit">
+      اليونت العسكري
+    </label>
+
+    <input
+      id="registerUnit"
+      type="text"
+      placeholder="اكتب اليونت العسكري"
+      autocomplete="off"
+    >
 
     <button
-      class="main-btn"
       id="registerBtn"
+      class="main-btn"
       type="button"
     >
       إرسال طلب التسجيل
     </button>
 
     <button
-      class="secondary-btn"
       id="backLoginBtn"
+      class="secondary-btn"
       type="button"
     >
       العودة لتسجيل الدخول
@@ -510,7 +395,6 @@
     <div
       id="registerMessage"
       class="message"
-      aria-live="polite"
     ></div>
 
   </div>
@@ -518,41 +402,69 @@
 </section>
 
 
-<!-- ================= APP ================= -->
+<!-- =========================
+     صفحة التطبيق
+========================= -->
 
-<section id="appPage" class="hidden">
+<section id="appPage" class="page">
 
-  <header class="header">
+  <div class="app-header">
 
-    <div class="header-right">
+    <div class="header-side header-right">
+
+      <div>
+        وزارة الداخلية
+      </div>
+
       <img
-        class="saudi-logo"
+        class="emblem"
         src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-        alt="شعار السعودية"
+        alt="شعار المملكة العربية السعودية"
       >
-      <span>وزارة الداخلية</span>
+
     </div>
 
     <div class="header-center">
       تطبيق حسب النقاط
     </div>
 
-    <div class="header-left">
+    <div class="header-side header-left">
       KR
     </div>
 
-  </header>
+  </div>
 
-  <div class="user-bar">
 
-    <div
-      id="loggedUser"
-      class="user-info"
-    ></div>
+  <div id="activitiesContainer" class="activities"></div>
+
+
+  <div class="total-box">
+    المجموع:
+    <span id="totalPoints">0</span>
+  </div>
+
+
+  <div class="action-row">
+
+    <button
+      id="saveBtn"
+      class="save"
+      type="button"
+    >
+      حفظ النقاط
+    </button>
+
+    <button
+      id="motionBtn"
+      class="motion"
+      type="button"
+    >
+      السماح بحركة الجهاز
+    </button>
 
     <button
       id="logoutBtn"
-      class="logout-btn"
+      class="logout"
       type="button"
     >
       تسجيل الخروج
@@ -560,669 +472,552 @@
 
   </div>
 
-  <main class="content">
-
-    <div class="total-box">
-
-      <div class="total-label">
-        مجموع النقاط
-      </div>
-
-      <div
-        id="totalPoints"
-        class="total-number"
-      >
-        0
-      </div>
-
-    </div>
-
-    <div
-      id="activities"
-      class="activities"
-    ></div>
-
-    <div class="bottom-actions">
-
-      <button
-        id="saveBtn"
-        class="save-btn"
-        type="button"
-      >
-        حفظ النقاط
-      </button>
-
-      <button
-        id="clearBtn"
-        class="clear-btn"
-        type="button"
-      >
-        حذف جميع النقاط
-      </button>
-
-    </div>
-
-    <div
-      id="designCredit"
-      class="design-credit"
-    >
-      تصميم: عادل الشمري
-    </div>
-
-  </main>
-
 </section>
+
+
+<div
+  id="credit"
+  class="credit"
+>
+  تصميم: عادل الشمري
+</div>
 
 
 <script>
 
-  /* =========================================================
-     SUPABASE
-     ========================================================= */
+/* =========================================
+   إعداد Supabase
+========================================= */
 
-  const SUPABASE_URL =
-    "https://rvgvqooateniymiypraz.supabase.co";
+const SUPABASE_URL =
+  "https://rvgvqooateniymiypraz.supabase.co";
 
-  /*
-    مهم جداً:
-    استبدل النص الموجود بين علامات التنصيص
-    بالـ Publishable key الخاص بمشروعك في Supabase.
-  */
 
-  const SUPABASE_KEY =
-    "
-استبدل النص الموجود بين علامات التنصيص
-.Supabase الخاص بمشروعك في Publishable key بال
 /*
+  الصق Publishable Key الخاص بك هنا.
+  لا تضع Secret Key أو Service Role.
+*/
+
 const SUPABASE_KEY =
-"الخاص_بمشروعك_Publishable_key_ضع-هنا "
+ "Settings
+
+CONFIGURATION
+昭
+General
+I
+国
+Security
+SSO
+
+CONNECTIONS
+OAuth Apps
+
+COMPLIANCE
+Audit Logs
+Audit Log Drains
+Legal Documents
+Organizat
+Unable to copy to clipboard
+General configuration, privacy, and lifecycle controls
+Organization details
+Organization name
+fghafufh-dot's Org
+Organization slug
+/mzgduovljfpogiwt
+Copy
+Cancel
+Save
+Data privacy
+Supabase Assistant Opt-in
+Level
+Supabase Al can provide more relevant answers if you choose to share different levels of data. This feature is powered by third-party Al providers. This is an
+organization-wide setting, so please select the level of data you are comfortable sharing.
+For organizations with HIPAA compliance enabled in their Supabase configuration, any consented information will only be shared with third-party Al providers with whom Supabase has established a Business Associate
+Agreement (BAA). Don't input personal data unless you've obtained consent from the individuals it relates to.
+• Disabled
+You do not consent to sharing any database information with third-party Al providers and understand that responses will be generic and not tailored to your database
+Schema Only
+You consent to sharing your database's schema metadata (such as table and column names, data types, and relationships-but not actual database data) with third-party Al providers
+Schema & Logs
+You consent to sharing your schema and logs (which may contain PIl/database data) with third-party Al providers for better results
+Schema, Logs & Database";
+
+
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-/* ニニニ！！！！！！！！！！！！！！！！！！！！！！！l
-ACTIVITIES
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================================
+   الصفحات
+========================================= */
+
+const loginPage =
+  document.getElementById("loginPage");
+
+const registerPage =
+  document.getElementById("registerPage");
+
+const appPage =
+  document.getElementById("appPage");
+
+
+function showPage(page){
+
+  loginPage.classList.remove("active");
+  registerPage.classList.remove("active");
+  appPage.classList.remove("active");
+
+  page.classList.add("active");
+}
+
+
+/* =========================================
+   الأنشطة
+========================================= */
+
 const activities = [
-Use Control + Shift + m to toggle the interactive element on the page.
-Cancel changes
-Commit changes...
-Spaces
-2
-No wrap
-수
-==＝== */
-：==== */
-tab key moving focus. Alternatively,";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+  {
+    name:"تدشين نقطة تفتيش متحركة",
+    points:1,
+    note:"كل ١/٢ ساعة"
+  },
 
+  {
+    name:"إستيقاف مروري",
+    points:1,
+    note:""
+  },
 
-  /* =========================================================
-     ACTIVITIES
-     ========================================================= */
+  {
+    name:"تسجيل مخالفة",
+    points:1,
+    note:""
+  },
 
-  const activities = [
+  {
+    name:"حضور حملة أمنية (عامة)",
+    points:2,
+    note:""
+  },
 
-    {
-      id: 1,
-      name: "تدشين نقطة تفتيش متحركة",
-      points: 1,
-      note: "كل ١/٢ ساعة"
-    },
+  {
+    name:"حضور حملة أمنية (خاصة)",
+    points:2,
+    note:""
+  },
 
-    {
-      id: 2,
-      name: "إستيقاف مروري",
-      points: 1,
-      note: ""
-    },
+  {
+    name:"حضور تدريب (عام-خاص)",
+    points:2,
+    note:""
+  },
 
-    {
-      id: 3,
-      name: "تسجيل مخالفة",
-      points: 1,
-      note: ""
-    },
+  {
+    name:"إسقاط رجل عصابة",
+    points:3,
+    note:""
+  },
 
-    {
-      id: 4,
-      name: "حضور حملة أمنية (عامة)",
-      points: 2,
-      note: ""
-    },
+  {
+    name:"حضور تمشيط",
+    points:3,
+    note:""
+  },
 
-    {
-      id: 5,
-      name: "حضور حملة أمنية (خاصة)",
-      points: 2,
-      note: ""
-    },
+  {
+    name:"إعتقال عضو عصابة",
+    points:5,
+    note:""
+  },
 
-    {
-      id: 6,
-      name: "حضور تدريب (عام-خاص)",
-      points: 2,
-      note: ""
-    },
-
-    {
-      id: 7,
-      name: "إسقاط رجل عصابة",
-      points: 3,
-      note: ""
-    },
-
-    {
-      id: 8,
-      name: "حضور تمشيط",
-      points: 3,
-      note: ""
-    },
-
-    {
-      id: 9,
-      name: "إعتقال عضو عصابة",
-      points: 5,
-      note: ""
-    },
-
-    {
-      id: 10,
-      name: "إعتقال احد رؤساء العصابات",
-      points: 5,
-      note: "ملاحظة"
-    }
-
-  ];
-
-
-  /* =========================================================
-     ELEMENTS
-     ========================================================= */
-
-  const loginPage =
-    document.getElementById("loginPage");
-
-  const registerPage =
-    document.getElementById("registerPage");
-
-  const appPage =
-    document.getElementById("appPage");
-
-  const loginName =
-    document.getElementById("loginName");
-
-  const loginUnit =
-    document.getElementById("loginUnit");
-
-  const loginCode =
-    document.getElementById("loginCode");
-
-  const loginBtn =
-    document.getElementById("loginBtn");
-
-  const loginMessage =
-    document.getElementById("loginMessage");
-
-  const registerName =
-    document.getElementById("registerName");
-
-  const registerUnit =
-    document.getElementById("registerUnit");
-
-  const registerBtn =
-    document.getElementById("registerBtn");
-
-  const registerMessage =
-    document.getElementById("registerMessage");
-
-  const activitiesContainer =
-    document.getElementById("activities");
-
-  const totalPoints =
-    document.getElementById("totalPoints");
-
-  const loggedUser =
-    document.getElementById("loggedUser");
-
-
-  /* =========================================================
-     LOCAL STORAGE
-     ========================================================= */
-
-  const POINTS_KEY =
-    "adelPointsData";
-
-  const USER_KEY =
-    "adelLoggedUser";
-
-
-  /* =========================================================
-     HELPERS
-     ========================================================= */
-
-  function cleanText(value) {
-
-    return String(value || "")
-      .trim()
-      .replace(/\s+/g, " ");
-
+  {
+    name:"إعتقال احد رؤساء العصابات",
+    points:5,
+    note:"ملاحظة"
   }
 
+];
 
-  function showLogin() {
 
-    loginPage.classList.remove("hidden");
-    registerPage.classList.add("hidden");
-    appPage.classList.add("hidden");
+/* =========================================
+   بناء الأنشطة
+========================================= */
 
-  }
+const activitiesContainer =
+  document.getElementById("activitiesContainer");
 
 
-  function showRegister() {
+activities.forEach((activity,index)=>{
 
-    loginPage.classList.add("hidden");
-    registerPage.classList.remove("hidden");
-    appPage.classList.add("hidden");
+  const box =
+    document.createElement("div");
 
-    registerMessage.textContent = "";
+  box.className =
+    "activity";
 
-  }
 
+  const note =
+    activity.note
+      ? ` — ${activity.note}`
+      : "";
 
-  function showApp(user) {
 
-    loginPage.classList.add("hidden");
-    registerPage.classList.add("hidden");
-    appPage.classList.remove("hidden");
+  box.innerHTML = `
 
-    loggedUser.textContent =
-      "المستخدم: " +
-      user.full_name +
-      " — " +
-      user.military_unit;
+    <div class="activity-name">
+      ${index + 1}. ${activity.name}
+    </div>
 
-    loadActivities();
+    <div class="points">
+      النقاط: (${activity.points})${note}
+    </div>
 
-  }
+    <input
+      class="activity-input"
+      type="number"
+      min="0"
+      step="1"
+      value="0"
+      data-index="${index}"
+      placeholder="اكتب عدد المرات"
+    >
 
+  `;
 
-  function saveLoggedUser(user) {
 
-    localStorage.setItem(
-      USER_KEY,
-      JSON.stringify(user)
-    );
+  activitiesContainer.appendChild(box);
 
-  }
+});
 
 
-  function getLoggedUser() {
+/* =========================================
+   حساب المجموع
+========================================= */
 
-    try {
+const totalPoints =
+  document.getElementById("totalPoints");
 
-      const value =
-        localStorage.getItem(USER_KEY);
 
-      if (!value) return null;
+function calculateTotal(){
 
-      return JSON.parse(value);
+  let total = 0;
 
-    } catch (error) {
 
-      return null;
+  document
+    .querySelectorAll(".activity-input")
+    .forEach(input=>{
 
-    }
+      let number =
+        parseInt(input.value,10);
 
-  }
+      if(
+        Number.isNaN(number) ||
+        number < 0
+      ){
 
-
-  /* =========================================================
-     ACTIVITIES UI
-     ========================================================= */
-
-  function renderActivities() {
-
-    activitiesContainer.innerHTML = "";
-
-    activities.forEach(activity => {
-
-      const box =
-        document.createElement("div");
-
-      box.className = "activity";
-
-      box.innerHTML = `
-
-        <div class="activity-name">
-          ${activity.name}
-        </div>
-
-        <div class="activity-points">
-          (${activity.points}) نقطة
-          ${activity.note
-            ? " — " + activity.note
-            : ""}
-        </div>
-
-        <div class="activity-row">
-
-          <input
-            class="activity-input"
-            type="number"
-            min="0"
-            step="1"
-            inputmode="numeric"
-            data-id="${activity.id}"
-            placeholder="عدد المرات"
-          >
-
-          <div
-            class="activity-result"
-            id="result-${activity.id}"
-          >
-            0 نقطة
-          </div>
-
-        </div>
-
-      `;
-
-      activitiesContainer.appendChild(box);
-
-    });
-
-
-    document
-      .querySelectorAll(".activity-input")
-      .forEach(input => {
-
-        input.addEventListener(
-          "input",
-          updateTotal
-        );
-
-      });
-
-  }
-
-
-  function updateTotal() {
-
-    let total = 0;
-
-    document
-      .querySelectorAll(".activity-input")
-      .forEach(input => {
-
-        let count =
-          parseInt(input.value, 10);
-
-        if (!Number.isFinite(count) || count < 0) {
-          count = 0;
-        }
-
-        const id =
-          Number(input.dataset.id);
-
-        const activity =
-          activities.find(item => item.id === id);
-
-        const points =
-          count * activity.points;
-
-        const result =
-          document.getElementById(
-            "result-" + id
-          );
-
-        if (result) {
-
-          result.textContent =
-            points + " نقطة";
-
-        }
-
-        total += points;
-
-      });
-
-
-    totalPoints.textContent =
-      total.toLocaleString("ar-SA");
-
-  }
-
-
-  function loadActivities() {
-
-    renderActivities();
-
-    try {
-
-      const saved =
-        localStorage.getItem(POINTS_KEY);
-
-      if (!saved) {
-
-        updateTotal();
-        return;
+        number = 0;
 
       }
 
-      const data =
-        JSON.parse(saved);
 
-      document
-        .querySelectorAll(".activity-input")
-        .forEach(input => {
+      const index =
+        parseInt(
+          input.dataset.index,
+          10
+        );
 
-          const id =
-            Number(input.dataset.id);
 
-          if (
-            data &&
-            Object.prototype.hasOwnProperty.call(
-              data,
-              id
-            )
-          ) {
+      total +=
+        number *
+        activities[index].points;
 
-            input.value = data[id];
+    });
 
-          }
 
-        });
+  totalPoints.textContent =
+    total.toLocaleString("ar-SA");
 
-    } catch (error) {
+  return total;
+}
 
-      console.log(error);
 
-    }
+document
+  .querySelectorAll(".activity-input")
+  .forEach(input=>{
 
-    updateTotal();
+    input.addEventListener(
+      "input",
+      calculateTotal
+    );
+
+  });
+
+
+/* =========================================
+   حفظ النقاط محليًا
+========================================= */
+
+const STORAGE_KEY =
+  "adelPointsData";
+
+
+function savePoints(){
+
+  const values = [];
+
+
+  document
+    .querySelectorAll(".activity-input")
+    .forEach(input=>{
+
+      values.push(
+        input.value || "0"
+      );
+
+    });
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(values)
+  );
+
+
+  alert("تم حفظ النقاط");
+
+
+}
+
+
+function loadPoints(){
+
+  const saved =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
+
+  if(!saved){
+    calculateTotal();
+    return;
+  }
+
+
+  try{
+
+    const values =
+      JSON.parse(saved);
+
+
+    document
+      .querySelectorAll(".activity-input")
+      .forEach((input,index)=>{
+
+        if(
+          values[index] !== undefined
+        ){
+
+          input.value =
+            values[index];
+
+        }
+
+      });
+
+  }catch(error){
+
+    console.log(error);
 
   }
 
 
-  /* =========================================================
-     SAVE POINTS
-     ========================================================= */
+  calculateTotal();
 
-  document
-    .getElementById("saveBtn")
-    .addEventListener("click", () => {
-
-      const data = {};
-
-      document
-        .querySelectorAll(".activity-input")
-        .forEach(input => {
-
-          let count =
-            parseInt(input.value, 10);
-
-          if (!Number.isFinite(count) || count < 0) {
-            count = 0;
-          }
-
-          data[input.dataset.id] =
-            count;
-
-        });
+}
 
 
-      localStorage.setItem(
-        POINTS_KEY,
-        JSON.stringify(data)
-      );
-
-
-      alert("تم حفظ النقاط بنجاح");
-
-    });
-
-
-  /* =========================================================
-     CLEAR POINTS
-     ========================================================= */
-
-  document
-    .getElementById("clearBtn")
-    .addEventListener("click", () => {
-
-      const confirmed =
-        confirm(
-          "هل أنت متأكد من حذف جميع النقاط؟"
-        );
-
-      if (!confirmed) return;
-
-      localStorage.removeItem(
-        POINTS_KEY
-      );
-
-      document
-        .querySelectorAll(".activity-input")
-        .forEach(input => {
-
-          input.value = "";
-
-        });
-
-      updateTotal();
-
-    });
-
-
-  /* =========================================================
-     REGISTER
-     ========================================================= */
-
-  document
-    .getElementById("openRegisterBtn")
-    .addEventListener(
-      "click",
-      showRegister
-    );
-
-
-  document
-    .getElementById("backLoginBtn")
-    .addEventListener(
-      "click",
-      showLogin
-    );
-
-
-  registerBtn.addEventListener(
+document
+  .getElementById("saveBtn")
+  .addEventListener(
     "click",
-    async () => {
-
-      registerMessage.textContent = "";
-
-      const fullName =
-        cleanText(registerName.value);
-
-      const militaryUnit =
-        cleanText(registerUnit.value);
+    savePoints
+  );
 
 
-      if (!fullName || !militaryUnit) {
+/* =========================================
+   طلب تسجيل جديد
+========================================= */
 
-        registerMessage.textContent =
-          "عبي الاسم الثنائي واليونت العسكري.";
+document
+  .getElementById("openRegisterBtn")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      document.getElementById(
+        "registerName"
+      ).value = "";
+
+      document.getElementById(
+        "registerUnit"
+      ).value = "";
+
+      document.getElementById(
+        "registerMessage"
+      ).textContent = "";
+
+      showPage(registerPage);
+
+    }
+  );
+
+
+/* العودة لتسجيل الدخول */
+
+document
+  .getElementById("backLoginBtn")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      document.getElementById(
+        "registerMessage"
+      ).textContent = "";
+
+      showPage(loginPage);
+
+    }
+  );
+
+
+/* =========================================
+   إرسال طلب التسجيل إلى Supabase
+========================================= */
+
+document
+  .getElementById("registerBtn")
+  .addEventListener(
+    "click",
+    async ()=>{
+
+      const name =
+        document
+          .getElementById(
+            "registerName"
+          )
+          .value
+          .trim();
+
+
+      const unit =
+        document
+          .getElementById(
+            "registerUnit"
+          )
+          .value
+          .trim();
+
+
+      const message =
+        document.getElementById(
+          "registerMessage"
+        );
+
+
+      message.textContent = "";
+
+
+      if(!name){
+
+        message.textContent =
+          "اكتب الاسم الثنائي";
 
         return;
 
       }
 
 
-      if (fullName.length < 3) {
+      if(!unit){
 
-        registerMessage.textContent =
-          "اكتب الاسم بشكل صحيح.";
+        message.textContent =
+          "اكتب اليونت العسكري";
 
         return;
 
       }
 
 
-      registerBtn.disabled = true;
-      registerBtn.textContent =
+      const button =
+        document.getElementById(
+          "registerBtn"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
         "جاري إرسال الطلب...";
 
 
-      try {
+      try{
 
         const { error } =
           await supabaseClient
-            .from("registration_requests")
+            .from(
+              "registration_requests"
+            )
             .insert([
               {
-                full_name: fullName,
-                military_unit: militaryUnit,
-                access_code: null,
-                status: "pending"
+                full_name:name,
+                military_unit:unit,
+                access_code:null,
+                status:"pending"
               }
             ]);
 
 
-        if (error) {
+        if(error){
 
           console.error(error);
 
-          registerMessage.textContent =
-            "تعذر إرسال الطلب، تأكد من إعداد Supabase.";
+          message.textContent =
+            "حدث خطأ أثناء إرسال الطلب";
 
           return;
 
         }
 
 
-        registerName.value = "";
-        registerUnit.value = "";
+        message.textContent =
+          "تم إرسال طلب التسجيل بنجاح";
 
-        registerMessage.textContent =
-          "تم إرسال طلب التسجيل. انتظر الموافقة والرمز الخاص.";
 
-      } catch (error) {
+        document.getElementById(
+          "registerName"
+        ).value = "";
+
+
+        document.getElementById(
+          "registerUnit"
+        ).value = "";
+
+
+      }catch(error){
 
         console.error(error);
 
-        registerMessage.textContent =
-          "حدث خطأ أثناء إرسال الطلب.";
+        message.textContent =
+          "تعذر الاتصال بقاعدة البيانات";
 
-      } finally {
+      }finally{
 
-        registerBtn.disabled = false;
+        button.disabled = false;
 
-        registerBtn.textContent =
+        button.textContent =
           "إرسال طلب التسجيل";
 
       }
@@ -1231,116 +1026,176 @@ tab key moving focus. Alternatively,";
   );
 
 
-  /* =========================================================
-     LOGIN
-     ========================================================= */
+/* =========================================
+   تسجيل الدخول
+========================================= */
 
-  loginBtn.addEventListener(
+document
+  .getElementById("loginBtn")
+  .addEventListener(
     "click",
-    async () => {
+    async ()=>{
 
-      loginMessage.textContent = "";
-
-      const fullName =
-        cleanText(loginName.value);
-
-      const militaryUnit =
-        cleanText(loginUnit.value);
-
-      const accessCode =
-        cleanText(loginCode.value);
+      const name =
+        document
+          .getElementById(
+            "loginName"
+          )
+          .value
+          .trim();
 
 
-      if (
-        !fullName ||
-        !militaryUnit ||
-        !accessCode
-      ) {
+      const unit =
+        document
+          .getElementById(
+            "loginUnit"
+          )
+          .value
+          .trim();
 
-        loginMessage.textContent =
-          "عبي جميع البيانات.";
+
+      const code =
+        document
+          .getElementById(
+            "loginCode"
+          )
+          .value
+          .trim();
+
+
+      const message =
+        document.getElementById(
+          "loginMessage"
+        );
+
+
+      message.textContent = "";
+
+
+      if(!name){
+
+        message.textContent =
+          "اكتب الاسم الثنائي";
 
         return;
 
       }
 
 
-      loginBtn.disabled = true;
-      loginBtn.textContent =
+      if(!unit){
+
+        message.textContent =
+          "اكتب اليونت العسكري";
+
+        return;
+
+      }
+
+
+      if(!code){
+
+        message.textContent =
+          "اكتب الرمز الخاص";
+
+        return;
+
+      }
+
+
+      const button =
+        document.getElementById(
+          "loginBtn"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
         "جاري التحقق...";
 
 
-      try {
+      try{
 
-        const { data, error } =
-          await supabaseClient
-            .rpc(
-              "verify_login",
-              {
-                p_full_name: fullName,
-                p_military_unit: militaryUnit,
-                p_access_code: accessCode
-              }
-            );
+        const { data,error } =
+          await supabaseClient.rpc(
+            "verify_login",
+            {
+              p_full_name:name,
+              p_military_unit:unit,
+              p_access_code:code
+            }
+          );
 
 
-        if (error) {
+        if(error){
 
           console.error(error);
 
-          loginMessage.textContent =
-            "تعذر التحقق من البيانات.";
+          message.textContent =
+            "حدث خطأ أثناء التحقق";
 
           return;
 
         }
 
 
-        if (
-          !data ||
-          data.success !== true
-        ) {
+        if(
+          data &&
+          data.success === true
+        ){
 
-          loginMessage.textContent =
-            "البيانات أو الرمز الخاص غير صحيح.";
+          localStorage.setItem(
+            "adelLoggedIn",
+            "true"
+          );
 
-          return;
+
+          localStorage.setItem(
+            "adelUserName",
+            name
+          );
+
+
+          localStorage.setItem(
+            "adelMilitaryUnit",
+            unit
+          );
+
+
+          message.textContent =
+            "";
+
+
+          document.getElementById(
+            "loginCode"
+          ).value = "";
+
+
+          showPage(appPage);
+
+          loadPoints();
+
+
+        }else{
+
+          message.textContent =
+            "البيانات أو الرمز الخاص غير صحيح";
 
         }
 
 
-        const user = {
-
-          full_name:
-            data.full_name,
-
-          military_unit:
-            data.military_unit
-
-        };
-
-
-        saveLoggedUser(user);
-
-        showApp(user);
-
-
-        loginName.value = "";
-        loginUnit.value = "";
-        loginCode.value = "";
-
-      } catch (error) {
+      }catch(error){
 
         console.error(error);
 
-        loginMessage.textContent =
-          "حدث خطأ أثناء تسجيل الدخول.";
+        message.textContent =
+          "تعذر الاتصال بقاعدة البيانات";
 
-      } finally {
+      }finally{
 
-        loginBtn.disabled = false;
+        button.disabled = false;
 
-        loginBtn.textContent =
+        button.textContent =
           "تسجيل الدخول";
 
       }
@@ -1349,99 +1204,168 @@ tab key moving focus. Alternatively,";
   );
 
 
-  /* =========================================================
-     LOGOUT
-     ========================================================= */
+/* =========================================
+   تسجيل الخروج
+========================================= */
 
-  document
-    .getElementById("logoutBtn")
-    .addEventListener(
-      "click",
-      () => {
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    ()=>{
 
-        localStorage.removeItem(
-          USER_KEY
-        );
-
-        showLogin();
-
-      }
-    );
-
-
-  /* =========================================================
-     DEVICE MOTION
-     ========================================================= */
-
-  let motionHandler = null;
-
-  function setupMotion() {
-
-    const credit =
-      document.getElementById(
-        "designCredit"
+      localStorage.removeItem(
+        "adelLoggedIn"
       );
 
-    if (!credit) return;
+      localStorage.removeItem(
+        "adelUserName"
+      );
+
+      localStorage.removeItem(
+        "adelMilitaryUnit"
+      );
 
 
-    motionHandler = event => {
+      document.getElementById(
+        "loginName"
+      ).value = "";
 
-      const gamma =
-        Number(event.gamma || 0);
+      document.getElementById(
+        "loginUnit"
+      ).value = "";
 
-      const beta =
-        Number(event.beta || 0);
+      document.getElementById(
+        "loginCode"
+      ).value = "";
 
-      const x =
-        Math.max(
-          -18,
-          Math.min(18, gamma)
+
+      showPage(loginPage);
+
+    }
+  );
+
+
+/* =========================================
+   حركة الجهاز
+========================================= */
+
+const credit =
+  document.getElementById(
+    "credit"
+  );
+
+
+let motionEnabled = false;
+
+
+document
+  .getElementById("motionBtn")
+  .addEventListener(
+    "click",
+    async ()=>{
+
+      try{
+
+        if(
+          typeof DeviceOrientationEvent !==
+          "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission ===
+          "function"
+        ){
+
+          const permission =
+            await DeviceOrientationEvent.requestPermission();
+
+
+          if(
+            permission !== "granted"
+          ){
+
+            alert(
+              "لم يتم السماح بحركة الجهاز"
+            );
+
+            return;
+
+          }
+
+        }
+
+
+        if(!motionEnabled){
+
+          window.addEventListener(
+            "deviceorientation",
+            handleOrientation
+          );
+
+          motionEnabled = true;
+
+          alert(
+            "تم السماح بحركة الجهاز"
+          );
+
+        }
+
+      }catch(error){
+
+        console.error(error);
+
+        alert(
+          "تعذر تفعيل حركة الجهاز"
         );
 
-      const y =
-        Math.max(
-          -18,
-          Math.min(18, beta)
-        );
+      }
+
+    }
+  );
 
 
-      credit.style.transform =
-        "translate(" +
-        (x * 0.5) +
-        "px," +
-        (y * 0.15) +
-        "px)";
+function handleOrientation(event){
 
-    };
+  const gamma =
+    Number(event.gamma) || 0;
 
 
-    window.addEventListener(
-      "deviceorientation",
-      motionHandler
+  const limited =
+    Math.max(
+      -25,
+      Math.min(
+        25,
+        gamma
+      )
     );
 
-  }
+
+  credit.style.transform =
+    `rotate(${limited * 0.8}deg)`;
+
+}
 
 
-  /* =========================================================
-     START
-     ========================================================= */
+/* =========================================
+   تشغيل التطبيق
+========================================= */
 
-  setupMotion();
+if(
+  localStorage.getItem(
+    "adelLoggedIn"
+  ) === "true"
+){
 
-  const existingUser =
-    getLoggedUser();
+  showPage(appPage);
 
-  if (existingUser) {
+  loadPoints();
 
-    showApp(existingUser);
+}else{
 
-  } else {
+  showPage(loginPage);
 
-    showLogin();
+}
 
-  }
+
+calculateTotal();
 
 </script>
 
