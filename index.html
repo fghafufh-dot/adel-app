@@ -3,27 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>تطبيق حسب النقاط</title>
 
 <style>
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background: #f3f3f3;
-  font-family: Arial, sans-serif;
-  color: #111;
+    margin: 0;
+    min-height: 100vh;
+    background: #f3f3f3;
+    color: #111;
+    font-family: Arial, sans-serif;
 }
 
 .container {
-  width: 95%;
-  max-width: 900px;
-  margin: auto;
-  padding: 15px;
+    width: 95%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 15px;
 }
 
 /* =========================
@@ -31,53 +30,63 @@ body {
 ========================= */
 
 .header {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  background: white;
-  border-radius: 15px;
-  padding: 12px 15px;
-  margin-bottom: 18px;
-  box-shadow: 0 3px 10px rgba(0,0,0,.12);
+    position: relative;
+    min-height: 95px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 12px 15px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-title {
+    font-size: 21px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: flex-start;
-  font-size: 18px;
-  font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .header-left {
-  text-align: right;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.header-center {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    direction: ltr;
+    text-align: left;
 }
 
 /* شعار السعودية */
 
 .saudi-logo {
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .saudi-logo img {
-  width: 70px;
-  height: 70px;
-  display: block;
-  object-fit: contain;
+    width: 70px;
+    height: 70px;
+    display: block;
+    object-fit: contain;
 }
 
 /* =========================
@@ -85,38 +94,40 @@ body {
 ========================= */
 
 .activity {
-  background: white;
-  border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.10);
+    background: #fff;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
 .activity-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 7px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.6;
 }
 
 .activity-points {
-  font-size: 15px;
-  color: #555;
-  margin-bottom: 10px;
+    color: #555;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .activity-input {
-  width: 100%;
-  height: 45px;
-  border: 1px solid #aaa;
-  border-radius: 9px;
-  padding: 8px 12px;
-  font-size: 17px;
-  text-align: center;
-  outline: none;
+    width: 100%;
+    height: 45px;
+    border: 1px solid #aaa;
+    border-radius: 9px;
+    padding: 8px 12px;
+    font-size: 17px;
+    text-align: center;
+    outline: none;
+    background: #fff;
 }
 
 .activity-input:focus {
-  border-color: #111;
+    border-color: #111;
 }
 
 /* =========================
@@ -124,14 +135,14 @@ body {
 ========================= */
 
 .total-box {
-  background: #111;
-  color: white;
-  border-radius: 14px;
-  padding: 18px;
-  text-align: center;
-  margin-top: 18px;
-  font-size: 23px;
-  font-weight: bold;
+    background: #111;
+    color: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    margin-top: 18px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 /* =========================
@@ -139,50 +150,52 @@ body {
 ========================= */
 
 .buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 button {
-  border: none;
-  border-radius: 10px;
-  padding: 13px 18px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  flex: 1;
-  min-width: 150px;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 18px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+    min-width: 150px;
 }
 
 .save-btn {
-  background: #111;
-  color: white;
+    background: #111;
+    color: #fff;
 }
 
 .delete-btn {
-  background: #c62828;
-  color: white;
+    background: #c62828;
+    color: #fff;
 }
 
 .motion-btn {
-  background: #ddd;
-  color: #111;
+    background: #ddd;
+    color: #111;
 }
 
 /* =========================
-   التصميم
+   تصميم: عادل الشمري
 ========================= */
 
 .design-credit {
-  position: fixed;
-  bottom: 15px;
-  left: 15px;
-  font-size: 15px;
-  font-weight: bold;
-  transition: transform .15s ease;
-  transform-origin: center;
+    position: fixed;
+    left: 15px;
+    bottom: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    transition: transform 0.15s ease;
+    transform-origin: center;
+    z-index: 10;
 }
 
 /* =========================
@@ -191,44 +204,42 @@ button {
 
 @media (max-width: 600px) {
 
-  .header {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
+    .header {
+        min-height: 90px;
+    }
 
-  .header-center {
-    grid-column: 1 / 3;
-    grid-row: 1;
-    order: 1;
-  }
+    .header-title {
+        font-size: 18px;
+        max-width: 160px;
+    }
 
-  .header-right {
-    order: 2;
-    justify-content: flex-start;
-  }
+    .header-right {
+        right: 10px;
+        font-size: 14px;
+    }
 
-  .header-left {
-    order: 3;
-    text-align: right;
-  }
+    .header-left {
+        left: 10px;
+        font-size: 18px;
+    }
 
-  .saudi-logo {
-    width: 58px;
-    height: 58px;
-  }
+    .saudi-logo {
+        width: 55px;
+        height: 55px;
+    }
 
-  .saudi-logo img {
-    width: 58px;
-    height: 58px;
-  }
+    .saudi-logo img {
+        width: 55px;
+        height: 55px;
+    }
 
-  .activity-title {
-    font-size: 17px;
-  }
+    .activity-title {
+        font-size: 17px;
+    }
 
-  button {
-    min-width: 100%;
-  }
+    .buttons button {
+        min-width: 100%;
+    }
 }
 </style>
 </head>
@@ -237,86 +248,81 @@ button {
 
 <div class="container">
 
-  <!-- =========================
-       الرأس
-  ========================== -->
+    <!-- الرأس -->
 
-  <div class="header">
+    <header class="header">
 
-    <div class="header-right">
-      <span>وزارة الداخلية</span>
+        <!-- وزارة الداخلية + الشعار -->
+        <div class="header-right">
+            <span>وزارة الداخلية</span>
 
-      <div class="saudi-logo">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-          alt="شعار المملكة العربية السعودية">
-      </div>
+            <div class="saudi-logo">
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
+                    alt="شعار المملكة العربية السعودية">
+            </div>
+        </div>
+
+        <!-- العنوان -->
+        <div class="header-title">
+            تطبيق حسب النقاط
+        </div>
+
+        <!-- KR في الزاوية اليسار -->
+        <div class="header-left">
+            KR
+        </div>
+
+    </header>
+
+
+    <!-- الأعمال -->
+
+    <main id="activities"></main>
+
+
+    <!-- المجموع -->
+
+    <div class="total-box">
+        المجموع:
+        <span id="total">0</span>
     </div>
 
-    <div class="header-center">
-      تطبيق حسب النقاط
+
+    <!-- الأزرار -->
+
+    <div class="buttons">
+
+        <button
+            id="saveBtn"
+            class="save-btn"
+            type="button">
+            حفظ البيانات
+        </button>
+
+        <button
+            id="deleteBtn"
+            class="delete-btn"
+            type="button">
+            حذف البيانات
+        </button>
+
+        <button
+            id="motionBtn"
+            class="motion-btn"
+            type="button">
+            السماح بحركة الجهاز
+        </button>
+
     </div>
-
-    <div class="header-left">
-      KR
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       الأعمال
-  ========================== -->
-
-  <div id="activities"></div>
-
-
-  <!-- =========================
-       المجموع
-  ========================== -->
-
-  <div class="total-box">
-    المجموع:
-    <span id="total">0</span>
-  </div>
-
-
-  <!-- =========================
-       الأزرار
-  ========================== -->
-
-  <div class="buttons">
-
-    <button
-      class="save-btn"
-      id="saveBtn"
-      type="button">
-      حفظ البيانات
-    </button>
-
-    <button
-      class="delete-btn"
-      id="deleteBtn"
-      type="button">
-      حذف البيانات
-    </button>
-
-    <button
-      class="motion-btn"
-      id="motionBtn"
-      type="button">
-      السماح بحركة الجهاز
-    </button>
-
-  </div>
 
 </div>
 
 
-<!-- التصميم -->
+<!-- تصميم: عادل الشمري -->
 
 <div id="designCredit" class="design-credit">
-  تصميم: عادل الشمري
+    تصميم: عادل الشمري
 </div>
 
 
@@ -327,73 +333,61 @@ button {
 ========================================= */
 
 const activities = [
-
-  {
-    name: "تدشين نقطة تفتيش متحركة",
-    points: 1,
-    note: "كل ١/٢ ساعة"
-  },
-
-  {
-    name: "إستيقاف مروري",
-    points: 1,
-    note: ""
-  },
-
-  {
-    name: "تسجيل مخالفة",
-    points: 1,
-    note: ""
-  },
-
-  {
-    name: "حضور حملة أمنية (عامة)",
-    points: 2,
-    note: ""
-  },
-
-  {
-    name: "حضور حملة أمنية (خاصة)",
-    points: 2,
-    note: ""
-  },
-
-  {
-    name: "حضور تدريب (عام-خاص)",
-    points: 2,
-    note: ""
-  },
-
-  {
-    name: "إسقاط رجل عصابة",
-    points: 2,
-    note: ""
-  },
-
-  {
-    name: "حضور تمشيط",
-    points: 3,
-    note: ""
-  },
-
-  {
-    name: "إعتقال عضو عصابة",
-    points: 3,
-    note: ""
-  },
-
-  {
-    name: "إعتقال احد رؤساء العصابات",
-    points: 5,
-    note: "ملاحظة"
-  },
-
-  {
-    name: "إعتقال احد مسؤولي العصابات",
-    points: 20,
-    note: "ملاحظة"
-  }
-
+    {
+        name: "تدشين نقطة تفتيش متحركة",
+        points: 1,
+        note: "كل ١/٢ ساعة"
+    },
+    {
+        name: "إستيقاف مروري",
+        points: 1,
+        note: ""
+    },
+    {
+        name: "تسجيل مخالفة",
+        points: 1,
+        note: ""
+    },
+    {
+        name: "حضور حملة أمنية (عامة)",
+        points: 2,
+        note: ""
+    },
+    {
+        name: "حضور حملة أمنية (خاصة)",
+        points: 2,
+        note: ""
+    },
+    {
+        name: "حضور تدريب (عام-خاص)",
+        points: 2,
+        note: ""
+    },
+    {
+        name: "إسقاط رجل عصابة",
+        points: 2,
+        note: ""
+    },
+    {
+        name: "حضور تمشيط",
+        points: 3,
+        note: ""
+    },
+    {
+        name: "إعتقال عضو عصابة",
+        points: 3,
+        note: ""
+    },
+    {
+        name: "إعتقال احد رؤساء العصابات",
+        points: 5,
+        note: "ملاحظة"
+    },
+    {
+        name: "إعتقال احد مسؤولي العصابات",
+        points: 20,
+        note: "ملاحظة"
+    }
 ];
 
 
@@ -402,49 +396,55 @@ const activities = [
 ========================================= */
 
 const activitiesContainer =
-  document.getElementById("activities");
+    document.getElementById("activities");
 
 activities.forEach(function(activity, index) {
 
-  const box = document.createElement("div");
+    const box = document.createElement("section");
 
-  box.className = "activity";
+    box.className = "activity";
 
-  box.innerHTML = `
-    <div class="activity-title">
-      ${index + 1}. ${activity.name}
-    </div>
+    let pointsText = "";
 
-    <div class="activity-points">
-      (${activity.points})${activity.note ? " — " + activity.note : ""}
-      ${activity.note === "كل ١/٢ ساعة" ? "" : ""}
-    </div>
+    if (activity.note === "كل ١/٢ ساعة") {
+        pointsText =
+            "كل ١/٢ ساعة — (" +
+            activity.points +
+            ")";
+    } else if (activity.note === "ملاحظة") {
+        pointsText =
+            "ملاحظة — (" +
+            activity.points +
+            ")";
+    } else {
+        pointsText =
+            "(" +
+            activity.points +
+            ")";
+    }
 
-    <input
-      class="activity-input"
-      type="number"
-      min="0"
-      step="1"
-      value="0"
-      inputmode="numeric"
-      data-index="${index}"
-      placeholder="اكتب العدد">
-  `;
+    box.innerHTML = `
+        <div class="activity-title">
+            ${index + 1}. ${activity.name}
+        </div>
 
-  /*
-    نضع ملاحظة كل نصف ساعة بشكل واضح
-    تحت اسم النشاط الأول.
-  */
+        <div class="activity-points">
+            ${pointsText}
+        </div>
 
-  if (activity.note === "كل ١/٢ ساعة") {
+        <input
+            class="activity-input"
+            type="number"
+            min="0"
+            step="1"
+            value="0"
+            inputmode="numeric"
+            data-index="${index}"
+            aria-label="${activity.name}"
+            placeholder="اكتب العدد">
+    `;
 
-    box.querySelector(".activity-points").innerHTML =
-      "كل ١/٢ ساعة — (" + activity.points + ")";
-
-  }
-
-  activitiesContainer.appendChild(box);
-
+    activitiesContainer.appendChild(box);
 });
 
 
@@ -454,49 +454,48 @@ activities.forEach(function(activity, index) {
 
 function calculateTotal() {
 
-  let total = 0;
+    let total = 0;
 
-  const inputs =
-    document.querySelectorAll(".activity-input");
+    const inputs =
+        document.querySelectorAll(".activity-input");
 
-  inputs.forEach(function(input) {
+    inputs.forEach(function(input) {
 
-    let number =
-      parseInt(input.value, 10);
+        let number =
+            parseInt(input.value, 10);
 
-    if (isNaN(number) || number < 0) {
-      number = 0;
-    }
+        if (isNaN(number) || number < 0) {
+            number = 0;
+        }
 
-    const index =
-      parseInt(input.dataset.index, 10);
+        const index =
+            parseInt(input.dataset.index, 10);
 
-    total +=
-      number * activities[index].points;
+        total +=
+            number * activities[index].points;
+    });
 
-  });
+    document.getElementById("total").textContent =
+        total.toLocaleString("ar-SA");
 
-  document.getElementById("total").textContent =
-    total.toLocaleString("ar-SA");
-
-  return total;
+    return total;
 }
 
 
 /* =========================================
-   تحديث الحساب عند الكتابة
+   تحديث المجموع عند تغيير الأرقام
 ========================================= */
 
 document
-  .querySelectorAll(".activity-input")
-  .forEach(function(input) {
+    .querySelectorAll(".activity-input")
+    .forEach(function(input) {
 
-    input.addEventListener(
-      "input",
-      calculateTotal
-    );
+        input.addEventListener(
+            "input",
+            calculateTotal
+        );
 
-  });
+    });
 
 
 /* =========================================
@@ -504,65 +503,72 @@ document
 ========================================= */
 
 document
-  .getElementById("saveBtn")
-  .addEventListener("click", function() {
+    .getElementById("saveBtn")
+    .addEventListener("click", function() {
 
-    const data = [];
+        const data = [];
 
-    document
-      .querySelectorAll(".activity-input")
-      .forEach(function(input) {
+        document
+            .querySelectorAll(".activity-input")
+            .forEach(function(input) {
 
-        data.push(input.value);
+                data.push(input.value);
 
-      });
+            });
 
-    localStorage.setItem(
-      "adelPointsData",
-      JSON.stringify(data)
-    );
+        localStorage.setItem(
+            "adelPointsData",
+            JSON.stringify(data)
+        );
 
-    alert("تم حفظ البيانات بنجاح");
+        alert("تم حفظ البيانات بنجاح");
 
-  });
+    });
 
 
 /* =========================================
-   تحميل البيانات المحفوظة
+   تحميل البيانات
 ========================================= */
 
 function loadData() {
 
-  const saved =
-    localStorage.getItem("adelPointsData");
+    const saved =
+        localStorage.getItem("adelPointsData");
 
-  if (!saved) {
+    if (!saved) {
+        calculateTotal();
+        return;
+    }
+
+    try {
+
+        const data =
+            JSON.parse(saved);
+
+        const inputs =
+            document.querySelectorAll(".activity-input");
+
+        inputs.forEach(function(input, index) {
+
+            if (
+                Array.isArray(data) &&
+                data[index] !== undefined
+            ) {
+                input.value = data[index];
+            }
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "خطأ في قراءة البيانات:",
+            error
+        );
+
+    }
+
     calculateTotal();
-    return;
-  }
-
-  try {
-
-    const data =
-      JSON.parse(saved);
-
-    document
-      .querySelectorAll(".activity-input")
-      .forEach(function(input, index) {
-
-        if (data[index] !== undefined) {
-          input.value = data[index];
-        }
-
-      });
-
-  } catch (error) {
-
-    console.error(error);
-
-  }
-
-  calculateTotal();
 }
 
 
@@ -571,125 +577,139 @@ function loadData() {
 ========================================= */
 
 document
-  .getElementById("deleteBtn")
-  .addEventListener("click", function() {
+    .getElementById("deleteBtn")
+    .addEventListener("click", function() {
 
-    const confirmDelete =
-      confirm("هل أنت متأكد من حذف جميع البيانات؟");
+        const confirmed =
+            confirm(
+                "هل أنت متأكد من حذف جميع البيانات؟"
+            );
 
-    if (!confirmDelete) {
-      return;
-    }
+        if (!confirmed) {
+            return;
+        }
 
-    document
-      .querySelectorAll(".activity-input")
-      .forEach(function(input) {
+        document
+            .querySelectorAll(".activity-input")
+            .forEach(function(input) {
 
-        input.value = 0;
+                input.value = "0";
 
-      });
+            });
 
-    localStorage.removeItem(
-      "adelPointsData"
-    );
+        localStorage.removeItem(
+            "adelPointsData"
+        );
 
-    calculateTotal();
+        calculateTotal();
 
-    alert("تم حذف البيانات");
+        alert("تم حذف البيانات");
 
-  });
+    });
 
 
 /* =========================================
-   حركة عبارة تصميم: عادل الشمري
+   حركة تصميم: عادل الشمري
 ========================================= */
 
 let motionEnabled = false;
 
 document
-  .getElementById("motionBtn")
-  .addEventListener("click", async function() {
+    .getElementById("motionBtn")
+    .addEventListener("click", async function() {
 
-    try {
+        try {
 
-      /*
-        أجهزة Apple تطلب إذن الحركة.
-      */
+            /*
+             * بعض أجهزة Apple تطلب إذنًا
+             * للوصول إلى حركة الجهاز.
+             */
 
-      if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function"
-      ) {
+            if (
+                typeof DeviceOrientationEvent !== "undefined" &&
+                typeof DeviceOrientationEvent.requestPermission === "function"
+            ) {
 
-        const permission =
-          await DeviceOrientationEvent.requestPermission();
+                const permission =
+                    await DeviceOrientationEvent.requestPermission();
 
-        if (permission !== "granted") {
+                if (permission !== "granted") {
 
-          alert("لم يتم السماح بحركة الجهاز");
+                    alert(
+                        "لم يتم السماح بحركة الجهاز"
+                    );
 
-          return;
+                    return;
+                }
+            }
+
+            if (motionEnabled) {
+
+                alert(
+                    "حركة الجهاز مفعلة بالفعل"
+                );
+
+                return;
+            }
+
+            window.addEventListener(
+                "deviceorientation",
+                function(event) {
+
+                    let horizontal =
+                        Number(event.gamma) || 0;
+
+                    let vertical =
+                        Number(event.beta) || 0;
+
+                    horizontal =
+                        Math.max(
+                            -30,
+                            Math.min(30, horizontal)
+                        );
+
+                    vertical =
+                        Math.max(
+                            -30,
+                            Math.min(30, vertical)
+                        );
+
+                    const credit =
+                        document.getElementById(
+                            "designCredit"
+                        );
+
+                    credit.style.transform =
+                        "translate(" +
+                        (horizontal * 0.7) +
+                        "px, " +
+                        (vertical * 0.25) +
+                        "px)";
+
+                },
+                {
+                    passive: true
+                }
+            );
+
+            motionEnabled = true;
+
+            this.textContent =
+                "حركة الجهاز مفعلة";
+
+            alert(
+                "تم السماح بحركة الجهاز"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "تعذر تفعيل حركة الجهاز"
+            );
         }
-
-      }
-
-      if (motionEnabled) {
-
-        alert("حركة الجهاز مفعلة بالفعل");
-
-        return;
-      }
-
-      window.addEventListener(
-        "deviceorientation",
-        function(event) {
-
-          let x =
-            Number(event.gamma) || 0;
-
-          let y =
-            Number(event.beta) || 0;
-
-          /*
-            تحديد الحركة حتى لا تتحرك العبارة
-            بشكل مبالغ فيه.
-          */
-
-          x =
-            Math.max(-30, Math.min(30, x));
-
-          y =
-            Math.max(-30, Math.min(30, y));
-
-          const credit =
-            document.getElementById("designCredit");
-
-          credit.style.transform =
-            "translate(" +
-            (x * 0.7) +
-            "px," +
-            (y * 0.25) +
-            "px)";
-
-        }
-      );
-
-      motionEnabled = true;
-
-      this.textContent =
-        "حركة الجهاز مفعلة";
-
-      alert("تم السماح بحركة الجهاز");
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("تعذر تفعيل حركة الجهاز");
-
-    }
-
-  });
+    });
 
 
 /* =========================================
