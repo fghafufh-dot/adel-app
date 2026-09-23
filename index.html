@@ -1,46 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>تطبيق حسب النقاط</title>
-
-<meta name="theme-color" content="#111827">
-
 <style>
-
 *{
     box-sizing:border-box;
 }
-
-html{
-    scroll-behavior:smooth;
-}
-
 body{
     margin:0;
-    padding:0;
     font-family:Arial,sans-serif;
     background:#f3f4f6;
     color:#111827;
-    min-height:100vh;
 }
-
 .container{
-    width:100%;
-    max-width:600px;
+    max-width:700px;
     margin:auto;
     padding:25px 15px 100px;
 }
-
 h1{
     text-align:center;
-    margin-bottom:25px;
 }
-
 .card{
     background:white;
     padding:20px;
@@ -48,34 +29,23 @@ h1{
     border-radius:15px;
     box-shadow:0 3px 12px #0001;
 }
-
 .points{
-    font-size:25px;
-    font-weight:bold;
     text-align:center;
+    font-size:24px;
+    font-weight:bold;
 }
-
 #total{
     font-size:35px;
 }
-
 input{
-    display:block;
     width:100%;
     padding:13px;
-    margin:9px 0;
+    margin:8px 0;
     border:1px solid #ddd;
     border-radius:10px;
     font-size:16px;
-    outline:none;
 }
-
-input:focus{
-    border-color:#111827;
-}
-
 button{
-    display:block;
     width:100%;
     padding:14px;
     margin-top:10px;
@@ -85,202 +55,127 @@ button{
     color:white;
     font-size:17px;
     font-weight:bold;
-    cursor:pointer;
 }
-
-button:active{
-    transform:scale(.98);
-}
-
-.activity{
-    border:1px solid #eee;
-    padding:16px;
-    border-radius:12px;
-    margin-top:12px;
-    background:white;
-}
-
-.activity h3{
-    margin-top:0;
-}
-
-.no-activities{
-    text-align:center;
-    color:#777;
+.instructions{
+    text-align:left;
+    font-size:18px;
+    font-weight:bold;
     margin-top:25px;
 }
-
-/* تصميم: عادل الشمري
-   يتحرك مع الصفحة عند النزول والصعود */
-
+.arrow{
+    text-align:left;
+    font-size:35px;
+    margin:5px 0;
+}
+.activities-list{
+    text-align:left;
+    direction:ltr;
+    font-size:17px;
+    line-height:2;
+    background:white;
+    padding:15px 20px;
+    border-radius:12px;
+}
+.activity{
+    background:white;
+    padding:15px;
+    margin-top:12px;
+    border-radius:12px;
+    border:1px solid #eee;
+}
 #designer{
     position:absolute;
-    top:100%;
     left:10px;
-    transform:translateY(-35px);
-    font-size:13px;
+    bottom:10px;
     color:#555;
-    z-index:9999;
-    white-space:nowrap;
+    font-size:13px;
 }
-
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-    <h1>تطبيق حسب النقاط</h1>
-
-    <div class="card">
-
-        <div class="points">
-            مجموع النقاط:
-            <span id="total">0</span>
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>إضافة نشاط</h2>
-
-        <input
-            id="activityName"
-            type="text"
-            placeholder="اسم النشاط"
-        >
-
-        <input
-            id="activityPoints"
-            type="number"
-            inputmode="numeric"
-            placeholder="نقاط النشاط"
-        >
-
-        <input
-            id="activityCount"
-            type="number"
-            inputmode="numeric"
-            placeholder="عدد المشاركات"
-        >
-
-        <button onclick="addActivity()">
-            إضافة النشاط
-        </button>
-
-    </div>
-
-    <div id="activities">
-
-        <div class="no-activities" id="emptyMessage">
-            لم تتم إضافة أي نشاط حتى الآن
-        </div>
-
-    </div>
-
-    <!-- تصميم: عادل الشمري -->
-
-    <div id="designer">
-        تصميم: عادل الشمري
-    </div>
-
+<h1>تطبيق حسب النقاط</h1>
+<div class="card">
+<div class="points">
+مجموع النقاط:
+<span id="total">0</span>
 </div>
-
+</div>
+<div class="card">
+<h2>إضافة نشاط</h2>
+<input
+id="activityName"
+type="text"
+placeholder="اسم النشاط">
+<input
+id="activityPoints"
+type="number"
+placeholder="نقاط النشاط">
+<input
+id="activityCount"
+type="number"
+placeholder="عدد المشاركات">
+<button onclick="addActivity()">
+إضافة النشاط
+</button>
+</div>
+<!-- الكلام المطلوب -->
+<div class="instructions">
+هنا اكتب عدد الأعمال وانسخها
+</div>
+<div class="arrow">
+⬇️
+</div>
+<div class="activities-list">
+<div>تدشين نقطة تفتيش متحركة:</div>
+<div>إستيقاف مروري:</div>
+<div>تسجيل مخالفة:</div>
+<div>حضور حملة أمنية (عامة):</div>
+<div>حضور حملة أمنية (خاصة):</div>
+<div>حضور تدريب (عام-خاص):</div>
+<div>إسقاط رجل عصابة:</div>
+<div>حضور تمشيط:</div>
+<div>إعتقال عضو عصابة:</div>
+<div>إعتقال احد رؤساء العصابات ملاحظة:</div>
+<div>إعتقال احد مسؤولي العصابات ملاحظة:</div>
+</div>
+<div id="activities"></div>
+<div id="designer">
+تصميم: عادل الشمري
+</div>
+</div>
 <script>
-
 let total = 0;
-
 function addActivity(){
-
-    const name =
-        document.getElementById("activityName").value.trim();
-
-    const points =
-        Number(
-            document.getElementById("activityPoints").value
-        );
-
-    const count =
-        Number(
-            document.getElementById("activityCount").value
-        );
-
-    if(
-        name === "" ||
-        points <= 0 ||
-        count <= 0
-    ){
-
-        alert("عبّ كل الخانات");
-
-        return;
-    }
-
-    const emptyMessage =
-        document.getElementById("emptyMessage");
-
-    if(emptyMessage){
-        emptyMessage.remove();
-    }
-
-    const result = points * count;
-
-    total += result;
-
-    document.getElementById("total").textContent = total;
-
-    const box =
-        document.createElement("div");
-
-    box.className = "activity";
-
-    box.innerHTML = `
-
-        <h3>${escapeHTML(name)}</h3>
-
-        <p>
-            نقاط النشاط:
-            <b>${points}</b>
-        </p>
-
-        <p>
-            عدد المشاركات:
-            <b>${count}</b>
-        </p>
-
-        <p>
-            النقاط المكتسبة:
-            <b>${result}</b>
-        </p>
-
-    `;
-
-    document
-        .getElementById("activities")
-        .appendChild(box);
-
-    document.getElementById("activityName").value = "";
-
-    document.getElementById("activityPoints").value = "";
-
-    document.getElementById("activityCount").value = "";
-
+const name =
+document.getElementById("activityName").value.trim();
+const points =
+Number(document.getElementById("activityPoints").value);
+const count =
+Number(document.getElementById("activityCount").value);
+if(!name || points <= 0 || count <= 0){
+alert("عبّ كل الخانات");
+return;
 }
-
-function escapeHTML(text){
-
-    const div =
-        document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
+const result = points * count;
+total += result;
+document.getElementById("total").textContent = total;
+const box =
+document.createElement("div");
+box.className = "activity";
+box.innerHTML = `
+<h3>${name}</h3>
+<p>نقاط النشاط: ${points}</p>
+<p>عدد المشاركات: ${count}</p>
+<p><b>النقاط المكتسبة: ${result}</b></p>
+`;
+document
+.getElementById("activities")
+.appendChild(box);
+document.getElementById("activityName").value = "";
+document.getElementById("activityPoints").value = "";
+document.getElementById("activityCount").value = "";
 }
-
 </script>
-
 </body>
-
 </html>
