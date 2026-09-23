@@ -105,16 +105,27 @@ button{
     font-size:17px;
     line-height:2;
     background:white;
-    padding:15px 20px;
+    padding:15px;
     border-radius:12px;
 }
 
-.activity{
-    background:white;
-    padding:15px;
-    margin-top:12px;
-    border-radius:12px;
-    border:1px solid #eee;
+.activity-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin:8px 0;
+}
+
+.activity-name{
+    flex:1;
+}
+
+.activity-number{
+    width:90px;
+    margin:0;
+    text-align:center;
+    direction:ltr;
 }
 
 #designer{
@@ -159,25 +170,109 @@ button{
 
 <div class="card">
 
-<h2>إضافة نشاط</h2>
+<div class="instructions">
+هنا اكتب عدد الأعمال وانسخها
+</div>
 
-<input
-id="activityName"
-type="text"
-placeholder="اسم النشاط">
+<div class="arrow">
+⬇️
+</div>
 
-<input
-id="activityPoints"
-type="number"
-placeholder="نقاط النشاط">
 
-<input
-id="activityCount"
-type="number"
-placeholder="عدد المشاركات">
+<div class="activities-list">
 
-<button onclick="addActivity()">
-إضافة النشاط
+<div class="activity-row">
+<div class="activity-name">
+تدشين نقطة تفتيش متحركة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+إستيقاف مروري:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+تسجيل مخالفة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+حضور حملة أمنية (عامة):
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+حضور حملة أمنية (خاصة):
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+حضور تدريب (عام-خاص):
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+إسقاط رجل عصابة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+حضور تمشيط:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+إعتقال عضو عصابة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+إعتقال احد رؤساء العصابات ملاحظة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+
+<div class="activity-row">
+<div class="activity-name">
+إعتقال احد مسؤولي العصابات ملاحظة:
+</div>
+<input class="activity-number" type="number" min="0" step="1" inputmode="numeric" value="0">
+</div>
+
+</div>
+
+
+<button onclick="calculatePoints()">
+حساب النقاط
 </button>
 
 </div>
@@ -194,38 +289,6 @@ placeholder="عدد المشاركات">
 </button>
 
 </div>
-
-
-<div class="card">
-
-<div class="instructions">
-هنا اكتب عدد الأعمال وانسخها
-</div>
-
-<div class="arrow">
-⬇️
-</div>
-
-<div class="activities-list">
-
-<div>تدشين نقطة تفتيش متحركة:</div>
-<div>إستيقاف مروري:</div>
-<div>تسجيل مخالفة:</div>
-<div>حضور حملة أمنية (عامة):</div>
-<div>حضور حملة أمنية (خاصة):</div>
-<div>حضور تدريب (عام-خاص):</div>
-<div>إسقاط رجل عصابة:</div>
-<div>حضور تمشيط:</div>
-<div>إعتقال عضو عصابة:</div>
-<div>إعتقال احد رؤساء العصابات ملاحظة:</div>
-<div>إعتقال احد مسؤولي العصابات ملاحظة:</div>
-
-</div>
-
-</div>
-
-
-<div id="activities"></div>
 
 </div>
 
@@ -244,68 +307,50 @@ class="motion-button">
 
 <script>
 
-let total = 0;
+/* أسماء الأعمال */
+
+const activityNames = [
+    "تدشين نقطة تفتيش متحركة:",
+    "إستيقاف مروري:",
+    "تسجيل مخالفة:",
+    "حضور حملة أمنية (عامة):",
+    "حضور حملة أمنية (خاصة):",
+    "حضور تدريب (عام-خاص):",
+    "إسقاط رجل عصابة:",
+    "حضور تمشيط:",
+    "إعتقال عضو عصابة:",
+    "إعتقال احد رؤساء العصابات ملاحظة:",
+    "إعتقال احد مسؤولي العصابات ملاحظة:"
+];
 
 
-/* إضافة نشاط */
+/* حساب النقاط */
 
-function addActivity(){
+function calculatePoints(){
 
-    const name =
-        document.getElementById("activityName").value.trim();
+    const inputs =
+        document.querySelectorAll(".activity-number");
 
-    const points =
-        Number(document.getElementById("activityPoints").value);
+    let total = 0;
 
-    const count =
-        Number(document.getElementById("activityCount").value);
+    inputs.forEach(input => {
 
-    if(!name || points <= 0 || count <= 0){
+        let number =
+            parseInt(input.value) || 0;
 
-        alert("عبّ كل الخانات");
+        if(number < 0){
+            number = 0;
+            input.value = 0;
+        }
 
-        return;
-    }
+        total += number;
 
-    const result = points * count;
-
-    total += result;
-
-    document.getElementById("total").textContent = total;
+    });
 
 
-    const box = document.createElement("div");
+    document.getElementById("total")
+        .textContent = total;
 
-    box.className = "activity";
-
-    box.innerHTML = `
-        <h3>${escapeHTML(name)}</h3>
-        <p>نقاط النشاط: ${points}</p>
-        <p>عدد المشاركات: ${count}</p>
-        <p><b>النقاط المكتسبة: ${result}</b></p>
-    `;
-
-
-    document
-        .getElementById("activities")
-        .appendChild(box);
-
-
-    document.getElementById("activityName").value = "";
-    document.getElementById("activityPoints").value = "";
-    document.getElementById("activityCount").value = "";
-}
-
-
-/* حماية النص */
-
-function escapeHTML(text){
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
 }
 
 
@@ -313,15 +358,19 @@ function escapeHTML(text){
 
 function saveData(){
 
-    const activities =
-        document.getElementById("activities").innerHTML;
+    const inputs =
+        document.querySelectorAll(".activity-number");
+
+    const numbers = [];
+
+    inputs.forEach(input => {
+        numbers.push(input.value);
+    });
+
 
     const data = {
-
-        total: total,
-
-        activities: activities
-
+        numbers: numbers,
+        total: document.getElementById("total").textContent
     };
 
 
@@ -353,16 +402,24 @@ function loadData(){
             JSON.parse(saved);
 
 
-        total =
-            Number(data.total) || 0;
+        const inputs =
+            document.querySelectorAll(".activity-number");
 
 
-        document.getElementById("total")
-            .textContent = total;
+        if(data.numbers){
+
+            inputs.forEach((input,index) => {
+
+                if(data.numbers[index] !== undefined){
+                    input.value = data.numbers[index];
+                }
+
+            });
+
+        }
 
 
-        document.getElementById("activities")
-            .innerHTML = data.activities || "";
+        calculatePoints();
 
 
     }catch(error){
@@ -390,22 +447,24 @@ function deleteData(){
     localStorage.removeItem("adelPointsData");
 
 
-    total = 0;
+    const inputs =
+        document.querySelectorAll(".activity-number");
+
+
+    inputs.forEach(input => {
+        input.value = 0;
+    });
 
 
     document.getElementById("total")
         .textContent = "0";
 
 
-    document.getElementById("activities")
-        .innerHTML = "";
-
-
     alert("تم حذف البيانات 🗑️");
 }
 
 
-/* تحريك تصميم: عادل الشمري */
+/* السماح بحركة الجهاز */
 
 function moveDesigner(event){
 
@@ -425,8 +484,6 @@ function moveDesigner(event){
         "translateY(" + (movement * 2) + "px)";
 }
 
-
-/* السماح بحركة الجهاز */
 
 document
 .getElementById("motionButton")
@@ -485,12 +542,25 @@ document
 });
 
 
-/* تحميل البيانات عند فتح التطبيق */
+/* فتح التطبيق */
 
 window.addEventListener(
     "load",
     loadData
 );
+
+
+/* حساب النقاط مباشرة عند تغيير الأرقام */
+
+document.addEventListener("input", function(event){
+
+    if(event.target.classList.contains("activity-number")){
+
+        calculatePoints();
+
+    }
+
+});
 
 </script>
 
