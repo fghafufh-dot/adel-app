@@ -1,60 +1,119 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>حساب النقاط</title>
+
+  <title>KR - حساب النقاط</title>
+
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
+
     body {
       margin: 0;
-      background: #f3f4f6;
+      background: #f2f3f5;
       color: #111827;
     }
+
+    .top {
+      background: white;
+      padding: 15px 18px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kr {
+      direction: ltr;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .ministry {
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .emblem {
+      text-align: center;
+      font-size: 30px;
+      margin-top: 12px;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 8px 0 18px;
+    }
+
     .container {
       max-width: 650px;
       margin: auto;
-      padding: 20px;
+      padding: 15px;
     }
+
     .card {
       background: white;
-      padding: 20px;
+      border-radius: 15px;
+      padding: 18px;
       margin-bottom: 15px;
-      border-radius: 16px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 12px rgba(0,0,0,.07);
     }
-    h1, h2 {
+
+    h2 {
       text-align: center;
+      margin-top: 0;
     }
-    input,
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-top: 9px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
     button {
       width: 100%;
       padding: 13px;
-      margin-top: 8px;
+      margin-top: 10px;
+      border: 0;
       border-radius: 10px;
-      font-size: 16px;
-    }
-    input {
-      border: 1px solid #d1d5db;
-    }
-    button {
-      border: none;
       background: #111827;
       color: white;
+      font-size: 16px;
       cursor: pointer;
     }
+
     button:hover {
-      opacity: 0.9;
+      opacity: .9;
     }
+
+    .delete {
+      background: #dc2626;
+    }
+
     .total {
       text-align: center;
-      font-size: 32px;
+      font-size: 42px;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 10px 0;
     }
+
+    .totalText {
+      text-align: center;
+      color: #6b7280;
+    }
+
     .activity {
       border: 1px solid #e5e7eb;
       border-radius: 12px;
@@ -62,144 +121,459 @@
       margin-top: 10px;
       background: #fafafa;
     }
-    .activity-name {
+
+    .activityName {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .userName {
+      margin-top: 6px;
+      color: #4b5563;
+    }
+
+    .points {
+      margin-top: 6px;
       font-weight: bold;
       font-size: 18px;
     }
-    .activity-points {
-      margin-top: 5px;
-      font-weight: bold;
-    }
-    .designer {
-      text-align: center;
-      color: #6b7280;
-      font-weight: bold;
-      margin-top: 25px;
-      padding-bottom: 15px;
-    }
+
     .empty {
       text-align: center;
       color: #6b7280;
     }
+
+    .designer {
+      text-align: center;
+      margin: 25px 0 15px;
+      color: #6b7280;
+      font-weight: bold;
+    }
+
   </style>
+
 </head>
+
+
 <body>
-<div class="container">
-  <div class="card">
-    <h1>حساب النقاط</h1>
-    <input
-      id="userName"
-      type="text"
-      placeholder="اسم المستخدم"
-    >
-    <input
-      id="activityName"
-      type="text"
-      placeholder="اسم النشاط"
-    >
-    <input
-      id="activityPoints"
-      type="number"
-      placeholder="عدد النقاط"
-      min="0"
-    >
-    <button onclick="addActivity()">
-      إضافة النشاط
-    </button>
-  </div>
-  <div class="card">
-    <h2>مجموع النقاط</h2>
-    <div class="total" id="totalPoints">
-      0
+
+
+  <!-- الهيدر -->
+
+  <div class="top">
+
+    <div class="kr">
+      KR
     </div>
-  </div>
-  <div class="card">
-    <h2>الأنشطة</h2>
-    <div id="activitiesList">
-      <p class="empty">
-        لا توجد أنشطة حتى الآن
-      </p>
+
+    <div class="ministry">
+      وزارة الداخلية
     </div>
+
   </div>
-  <div class="designer">
-    المصمم: عادل الشمري
+
+
+  <!-- الشعار الرمزي -->
+
+  <div class="emblem">
+    ⚔️🌴
   </div>
-</div>
+
+
+  <div class="title">
+    نظام حساب النقاط
+  </div>
+
+
+  <div class="container">
+
+
+    <!-- إضافة نشاط -->
+
+    <div class="card">
+
+      <h2>
+        إضافة نشاط
+      </h2>
+
+
+      <input
+        id="userName"
+        type="text"
+        placeholder="اسم المستخدم"
+      >
+
+
+      <input
+        id="activityName"
+        type="text"
+        placeholder="اسم النشاط"
+      >
+
+
+      <input
+        id="activityPoints"
+        type="number"
+        min="0"
+        placeholder="عدد النقاط"
+      >
+
+
+      <button onclick="addActivity()">
+        إضافة النشاط
+      </button>
+
+    </div>
+
+
+
+    <!-- مجموع النقاط -->
+
+    <div class="card">
+
+      <h2>
+        مجموع النقاط
+      </h2>
+
+      <div
+        class="total"
+        id="totalPoints"
+      >
+        0
+      </div>
+
+      <div class="totalText">
+        إجمالي النقاط
+      </div>
+
+    </div>
+
+
+
+    <!-- الأنشطة -->
+
+    <div class="card">
+
+      <h2>
+        سجل الأنشطة
+      </h2>
+
+
+      <div id="activitiesList">
+
+        <p class="empty">
+          لا توجد أنشطة حتى الآن
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- المصمم -->
+
+    <div class="designer">
+      المصمم: عادل الشمري
+    </div>
+
+
+  </div>
+
+
+
 <script>
-  let activities = [];
+
+
+  /* =========================
+     حفظ البيانات
+     ========================= */
+
+  let activities =
+    JSON.parse(
+      localStorage.getItem("adelActivities")
+    ) || [];
+
+
+
+  /* =========================
+     إضافة نشاط
+     ========================= */
+
   function addActivity() {
+
+
     const userName =
-      document.getElementById("userName")
-        .value.trim();
+      document
+        .getElementById("userName")
+        .value
+        .trim();
+
+
     const activityName =
-      document.getElementById("activityName")
-        .value.trim();
+      document
+        .getElementById("activityName")
+        .value
+        .trim();
+
+
     const points =
       Number(
-        document.getElementById("activityPoints")
+        document
+          .getElementById("activityPoints")
           .value
       );
+
+
     if (!userName) {
+
       alert("اكتب اسم المستخدم");
+
       return;
     }
+
+
     if (!activityName) {
+
       alert("اكتب اسم النشاط");
+
       return;
     }
+
+
     if (!points || points < 0) {
+
       alert("اكتب عدد النقاط");
+
       return;
     }
+
+
+
     activities.push({
+
+      id: Date.now(),
+
       userName: userName,
+
       activityName: activityName,
+
       points: points
+
     });
-    document.getElementById("activityName").value = "";
-    document.getElementById("activityPoints").value = "";
+
+
+
+    saveData();
+
+
+    document
+      .getElementById("activityName")
+      .value = "";
+
+
+    document
+      .getElementById("activityPoints")
+      .value = "";
+
+
     updateScreen();
+
   }
+
+
+
+  /* =========================
+     حذف نشاط
+     ========================= */
+
+  function deleteActivity(id) {
+
+
+    activities =
+      activities.filter(
+        function(activity) {
+
+          return activity.id !== id;
+
+        }
+      );
+
+
+    saveData();
+
+    updateScreen();
+
+  }
+
+
+
+  /* =========================
+     حفظ البيانات
+     ========================= */
+
+  function saveData() {
+
+    localStorage.setItem(
+      "adelActivities",
+      JSON.stringify(activities)
+    );
+
+  }
+
+
+
+  /* =========================
+     تحديث الشاشة
+     ========================= */
+
   function updateScreen() {
+
+
     const list =
-      document.getElementById("activitiesList");
-    if (activities.length === 0) {
+      document.getElementById(
+        "activitiesList"
+      );
+
+
+    const totalElement =
+      document.getElementById(
+        "totalPoints"
+      );
+
+
+    if (
+      activities.length === 0
+    ) {
+
+
       list.innerHTML =
         '<p class="empty">لا توجد أنشطة حتى الآن</p>';
-      document.getElementById("totalPoints")
-        .textContent = "0";
+
+
+      totalElement.textContent =
+        "0";
+
+
       return;
+
     }
+
+
+
     let total = 0;
+
+
+
     list.innerHTML =
-      activities.map(function(activity) {
-        total += activity.points;
-        return `
-          <div class="activity">
-            <div class="activity-name">
-              ${escapeHtml(activity.activityName)}
-            </div>
-            <div>
-              المستخدم:
-              ${escapeHtml(activity.userName)}
-            </div>
-            <div class="activity-points">
-              النقاط: ${activity.points}
-            </div>
-          </div>
-        `;
-      }).join("");
-    document.getElementById("totalPoints")
-      .textContent = total;
+      activities
+        .slice()
+        .reverse()
+        .map(
+          function(activity) {
+
+
+            total +=
+              Number(activity.points);
+
+
+
+            return `
+
+              <div class="activity">
+
+                <div class="activityName">
+                  ${escapeHtml(
+                    activity.activityName
+                  )}
+                </div>
+
+
+                <div class="userName">
+                  المستخدم:
+                  ${escapeHtml(
+                    activity.userName
+                  )}
+                </div>
+
+
+                <div class="points">
+                  النقاط:
+                  ${activity.points}
+                </div>
+
+
+                <button
+                  class="delete"
+                  onclick="deleteActivity(${activity.id})"
+                >
+                  حذف النشاط
+                </button>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+
+
+    totalElement.textContent =
+      total;
+
   }
+
+
+
+  /* =========================
+     حماية النصوص
+     ========================= */
+
   function escapeHtml(value) {
+
     return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
   }
+
+
+
+  /* =========================
+     تشغيل التطبيق
+     ========================= */
+
+  updateScreen();
+
+
 </script>
+
+
 </body>
+
 </html>
