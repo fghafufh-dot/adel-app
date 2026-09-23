@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,21 +12,33 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     margin:0;
+    padding:0;
     font-family:Arial,sans-serif;
     background:#f3f4f6;
     color:#111827;
+    min-height:100vh;
 }
 
 .container{
+    width:100%;
     max-width:600px;
     margin:auto;
-    padding:25px 15px 80px;
+    padding:25px 15px 100px;
 }
 
 h1{
     text-align:center;
+    margin-bottom:25px;
 }
 
 .card{
@@ -38,104 +49,142 @@ h1{
     box-shadow:0 3px 12px #0001;
 }
 
-input{
-    width:100%;
-    box-sizing:border-box;
-    padding:12px;
-    margin:7px 0;
-    border:1px solid #ddd;
-    border-radius:10px;
-    font-size:16px;
-}
-
-button{
-    width:100%;
-    padding:13px;
-    margin-top:8px;
-    border:0;
-    border-radius:10px;
-    background:#111827;
-    color:white;
-    font-size:16px;
-}
-
-.activity{
-    border:1px solid #eee;
-    padding:15px;
-    border-radius:12px;
-    margin-top:12px;
-}
-
 .points{
-    font-size:28px;
+    font-size:25px;
     font-weight:bold;
     text-align:center;
 }
 
-/* تصميم: عادل الشمري */
+#total{
+    font-size:35px;
+}
+
+input{
+    display:block;
+    width:100%;
+    padding:13px;
+    margin:9px 0;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#111827;
+}
+
+button{
+    display:block;
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:0;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.activity{
+    border:1px solid #eee;
+    padding:16px;
+    border-radius:12px;
+    margin-top:12px;
+    background:white;
+}
+
+.activity h3{
+    margin-top:0;
+}
+
+.no-activities{
+    text-align:center;
+    color:#777;
+    margin-top:25px;
+}
+
+/* تصميم: عادل الشمري
+   يتحرك مع الصفحة عند النزول والصعود */
 
 #designer{
     position:absolute;
-    bottom:10px;
+    top:100%;
     left:10px;
+    transform:translateY(-35px);
     font-size:13px;
     color:#555;
     z-index:9999;
+    white-space:nowrap;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>تطبيق حسب النقاط</h1>
+    <h1>تطبيق حسب النقاط</h1>
 
-<div class="card">
+    <div class="card">
 
-    <div class="points">
-        مجموع النقاط:
-        <span id="total">0</span>
+        <div class="points">
+            مجموع النقاط:
+            <span id="total">0</span>
+        </div>
+
     </div>
 
-</div>
+    <div class="card">
 
-<div class="card">
+        <h2>إضافة نشاط</h2>
 
-    <h2>إضافة نشاط</h2>
+        <input
+            id="activityName"
+            type="text"
+            placeholder="اسم النشاط"
+        >
 
-    <input
-        id="activityName"
-        placeholder="اسم النشاط"
-    >
+        <input
+            id="activityPoints"
+            type="number"
+            inputmode="numeric"
+            placeholder="نقاط النشاط"
+        >
 
-    <input
-        id="activityPoints"
-        type="number"
-        placeholder="نقاط النشاط"
-    >
+        <input
+            id="activityCount"
+            type="number"
+            inputmode="numeric"
+            placeholder="عدد المشاركات"
+        >
 
-    <input
-        id="activityCount"
-        type="number"
-        placeholder="عدد المشاركات"
-    >
+        <button onclick="addActivity()">
+            إضافة النشاط
+        </button>
 
-    <button onclick="addActivity()">
-        إضافة النشاط
-    </button>
+    </div>
 
-</div>
+    <div id="activities">
 
-<div id="activities"></div>
+        <div class="no-activities" id="emptyMessage">
+            لم تتم إضافة أي نشاط حتى الآن
+        </div>
 
-<!-- التصميم يتحرك مع الصفحة -->
+    </div>
 
-<div id="designer">
-    تصميم: عادل الشمري
-</div>
+    <!-- تصميم: عادل الشمري -->
+
+    <div id="designer">
+        تصميم: عادل الشمري
+    </div>
 
 </div>
 
@@ -146,7 +195,7 @@ let total = 0;
 function addActivity(){
 
     const name =
-        document.getElementById("activityName").value;
+        document.getElementById("activityName").value.trim();
 
     const points =
         Number(
@@ -158,11 +207,22 @@ function addActivity(){
             document.getElementById("activityCount").value
         );
 
-    if(!name || !points || !count){
+    if(
+        name === "" ||
+        points <= 0 ||
+        count <= 0
+    ){
 
         alert("عبّ كل الخانات");
 
         return;
+    }
+
+    const emptyMessage =
+        document.getElementById("emptyMessage");
+
+    if(emptyMessage){
+        emptyMessage.remove();
     }
 
     const result = points * count;
@@ -171,20 +231,30 @@ function addActivity(){
 
     document.getElementById("total").textContent = total;
 
-    const box = document.createElement("div");
+    const box =
+        document.createElement("div");
 
-    box.className = "card activity";
+    box.className = "activity";
 
     box.innerHTML = `
-        <h3>${name}</h3>
 
-        <p>نقاط النشاط: ${points}</p>
-
-        <p>عدد المشاركات: ${count}</p>
+        <h3>${escapeHTML(name)}</h3>
 
         <p>
-            <b>النقاط المكتسبة: ${result}</b>
+            نقاط النشاط:
+            <b>${points}</b>
         </p>
+
+        <p>
+            عدد المشاركات:
+            <b>${count}</b>
+        </p>
+
+        <p>
+            النقاط المكتسبة:
+            <b>${result}</b>
+        </p>
+
     `;
 
     document
@@ -196,6 +266,17 @@ function addActivity(){
     document.getElementById("activityPoints").value = "";
 
     document.getElementById("activityCount").value = "";
+
+}
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
 }
 
 </script>
