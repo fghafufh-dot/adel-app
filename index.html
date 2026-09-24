@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>تطبيق حسب النقاط</title>
 
 <style>
@@ -10,162 +11,252 @@
     box-sizing: border-box;
 }
 
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
 body {
     margin: 0;
+    width: 100%;
     min-height: 100vh;
     background: #f3f3f3;
     color: #111;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Tahoma, sans-serif;
+    overflow-x: hidden;
 }
 
 .container {
-    width: 95%;
-    max-width: 900px;
+    width: 100%;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 18px;
 }
 
-/* =========================
+/* =========================================
    الرأس
-========================= */
+========================================= */
 
 .header {
     position: relative;
-    min-height: 95px;
+    width: 100%;
+    min-height: 105px;
     background: #fff;
-    border-radius: 15px;
-    padding: 12px 15px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    border-radius: 18px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* عنوان التطبيق */
+
 .header-title {
-    font-size: 21px;
-    font-weight: bold;
+    width: 100%;
     text-align: center;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    line-height: 1.4;
+    padding: 0 190px;
 }
+
+/* وزارة الداخلية */
 
 .header-right {
     position: absolute;
-    right: 15px;
+    right: 18px;
     top: 50%;
     transform: translateY(-50%);
+
     display: flex;
     align-items: center;
-    gap: 9px;
-    font-size: 18px;
-    font-weight: bold;
+    justify-content: flex-end;
+    gap: 10px;
+
+    font-size: clamp(15px, 2vw, 21px);
+    font-weight: 700;
+
+    white-space: nowrap;
 }
+
+/* KR */
 
 .header-left {
     position: absolute;
-    left: 15px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
-    font-weight: bold;
+
     direction: ltr;
     text-align: left;
+
+    font-size: clamp(19px, 2.5vw, 27px);
+    font-weight: 700;
 }
 
-/* شعار السعودية */
+/* =========================================
+   شعار السعودية
+========================================= */
 
 .saudi-logo {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
 }
 
 .saudi-logo img {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
+
     display: block;
+
     object-fit: contain;
 }
 
-/* =========================
+/* =========================================
    الأعمال
-========================= */
+========================================= */
+
+#activities {
+    width: 100%;
+}
 
 .activity {
+    width: 100%;
     background: #fff;
-    border-radius: 14px;
-    padding: 15px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    border-radius: 16px;
+
+    padding: 18px;
+    margin-bottom: 14px;
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.10);
+
+    overflow: hidden;
 }
 
 .activity-title {
-    font-size: 18px;
-    font-weight: bold;
+    width: 100%;
+
+    font-size: clamp(17px, 2.5vw, 22px);
+    font-weight: 700;
+
     line-height: 1.6;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .activity-points {
+    width: 100%;
+
     color: #555;
-    font-size: 15px;
+
+    font-size: clamp(15px, 2vw, 18px);
+
+    line-height: 1.5;
+
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+
+    overflow-wrap: anywhere;
 }
 
+/* =========================================
+   خانات الأرقام
+========================================= */
+
 .activity-input {
+    display: block;
+
     width: 100%;
-    height: 45px;
+    height: 50px;
+
     border: 1px solid #aaa;
-    border-radius: 9px;
-    padding: 8px 12px;
-    font-size: 17px;
-    text-align: center;
-    outline: none;
+    border-radius: 11px;
+
     background: #fff;
+
+    padding: 8px 14px;
+
+    font-family: Arial, Tahoma, sans-serif;
+    font-size: 19px;
+
+    text-align: center;
+
+    outline: none;
+
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .activity-input:focus {
     border-color: #111;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.06);
 }
 
-/* =========================
+/* =========================================
    المجموع
-========================= */
+========================================= */
 
 .total-box {
+    width: 100%;
+
     background: #111;
     color: #fff;
-    border-radius: 14px;
-    padding: 18px;
+
+    border-radius: 16px;
+
+    padding: 19px;
+
+    margin-top: 20px;
+
     text-align: center;
-    margin-top: 18px;
-    font-size: 23px;
-    font-weight: bold;
+
+    font-size: clamp(21px, 3vw, 27px);
+    font-weight: 700;
 }
 
-/* =========================
+/* =========================================
    الأزرار
-========================= */
+========================================= */
 
 .buttons {
+    width: 100%;
+
     display: flex;
     flex-wrap: wrap;
+
     gap: 10px;
+
     margin-top: 15px;
 }
 
 button {
-    border: none;
-    border-radius: 10px;
-    padding: 13px 18px;
-    font-family: Arial, sans-serif;
+    min-height: 48px;
+
+    border: 0;
+    border-radius: 11px;
+
+    padding: 12px 18px;
+
+    font-family: Arial, Tahoma, sans-serif;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
+
     cursor: pointer;
-    flex: 1;
-    min-width: 150px;
+
+    flex: 1 1 200px;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .save-btn {
@@ -183,62 +274,218 @@ button {
     color: #111;
 }
 
-/* =========================
-   تصميم: عادل الشمري
-========================= */
+/* =========================================
+   التصميم
+========================================= */
 
 .design-credit {
-    position: fixed;
-    left: 15px;
-    bottom: 15px;
-    font-size: 15px;
-    font-weight: bold;
+    width: 100%;
+
+    margin-top: 25px;
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    font-size: clamp(14px, 2vw, 17px);
+    font-weight: 700;
+
     transition: transform 0.15s ease;
+
     transform-origin: center;
-    z-index: 10;
 }
 
-/* =========================
+/* =========================================
+   شاشات متوسطة - آيباد
+========================================= */
+
+@media (max-width: 800px) {
+
+    .container {
+        max-width: 760px;
+        padding: 15px;
+    }
+
+    .header {
+        min-height: 120px;
+    }
+
+    .header-title {
+        padding: 0 175px;
+        font-size: 21px;
+    }
+
+    .header-right {
+        right: 12px;
+        font-size: 15px;
+        gap: 7px;
+    }
+
+    .header-left {
+        left: 12px;
+        font-size: 21px;
+    }
+
+    .saudi-logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .saudi-logo img {
+        width: 62px;
+        height: 62px;
+    }
+}
+
+/* =========================================
    الجوال
-========================= */
+========================================= */
 
 @media (max-width: 600px) {
 
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
     .header {
-        min-height: 90px;
+        min-height: 145px;
+
+        padding: 10px;
+
+        border-radius: 15px;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    /* KR */
+
+    .header-left {
+        left: 12px;
+        top: 14px;
+
+        transform: none;
+
+        font-size: 21px;
+    }
+
+    /* وزارة الداخلية */
+
+    .header-right {
+        right: 10px;
+        top: 10px;
+
+        transform: none;
+
+        font-size: 13px;
+
+        gap: 5px;
+    }
+
+    /* الشعار */
+
+    .saudi-logo {
+        width: 48px;
+        height: 48px;
+    }
+
+    .saudi-logo img {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* عنوان التطبيق */
+
+    .header-title {
+        padding: 0;
+
+        margin-bottom: 13px;
+
+        font-size: 20px;
+
+        line-height: 1.4;
+
+        width: 100%;
+    }
+
+    .activity {
+        padding: 15px;
+        border-radius: 14px;
+        margin-bottom: 12px;
+    }
+
+    .activity-title {
+        font-size: 18px;
+        line-height: 1.55;
+    }
+
+    .activity-points {
+        font-size: 15px;
+        margin-top: 4px;
+        margin-bottom: 10px;
+    }
+
+    .activity-input {
+        height: 48px;
+        font-size: 18px;
+    }
+
+    .total-box {
+        padding: 17px;
+        font-size: 22px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+
+    button {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .design-credit {
+        margin-top: 22px;
+        margin-bottom: 15px;
+        font-size: 15px;
+    }
+}
+
+/* =========================================
+   الجوال الصغير جدًا
+========================================= */
+
+@media (max-width: 380px) {
+
+    .header {
+        min-height: 140px;
+    }
+
+    .header-right {
+        font-size: 12px;
+    }
+
+    .header-left {
+        font-size: 19px;
+    }
+
+    .saudi-logo {
+        width: 43px;
+        height: 43px;
+    }
+
+    .saudi-logo img {
+        width: 43px;
+        height: 43px;
     }
 
     .header-title {
         font-size: 18px;
-        max-width: 160px;
-    }
-
-    .header-right {
-        right: 10px;
-        font-size: 14px;
-    }
-
-    .header-left {
-        left: 10px;
-        font-size: 18px;
-    }
-
-    .saudi-logo {
-        width: 55px;
-        height: 55px;
-    }
-
-    .saudi-logo img {
-        width: 55px;
-        height: 55px;
     }
 
     .activity-title {
         font-size: 17px;
-    }
-
-    .buttons button {
-        min-width: 100%;
     }
 }
 </style>
@@ -248,27 +495,34 @@ button {
 
 <div class="container">
 
-    <!-- الرأس -->
+    <!-- =================================
+         الرأس
+    ================================== -->
 
     <header class="header">
 
-        <!-- وزارة الداخلية + الشعار -->
+        <!-- اليمين -->
         <div class="header-right">
+
             <span>وزارة الداخلية</span>
 
             <div class="saudi-logo">
                 <img
                     src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-                    alt="شعار المملكة العربية السعودية">
+                    alt="شعار المملكة العربية السعودية"
+                >
             </div>
+
         </div>
 
-        <!-- العنوان -->
+
+        <!-- المنتصف -->
         <div class="header-title">
             تطبيق حسب النقاط
         </div>
 
-        <!-- KR في الزاوية اليسار -->
+
+        <!-- اليسار -->
         <div class="header-left">
             KR
         </div>
@@ -276,20 +530,28 @@ button {
     </header>
 
 
-    <!-- الأعمال -->
+    <!-- =================================
+         الأعمال
+    ================================== -->
 
     <main id="activities"></main>
 
 
-    <!-- المجموع -->
+    <!-- =================================
+         المجموع
+    ================================== -->
 
     <div class="total-box">
+
         المجموع:
         <span id="total">0</span>
+
     </div>
 
 
-    <!-- الأزرار -->
+    <!-- =================================
+         الأزرار
+    ================================== -->
 
     <div class="buttons">
 
@@ -316,13 +578,19 @@ button {
 
     </div>
 
-</div>
 
+    <!-- =================================
+         التصميم
+    ================================== -->
 
-<!-- تصميم: عادل الشمري -->
+    <div
+        id="designCredit"
+        class="design-credit">
 
-<div id="designCredit" class="design-credit">
-    تصميم: عادل الشمري
+        تصميم: عادل الشمري
+
+    </div>
+
 </div>
 
 
@@ -333,61 +601,73 @@ button {
 ========================================= */
 
 const activities = [
+
     {
         name: "تدشين نقطة تفتيش متحركة",
         points: 1,
         note: "كل ١/٢ ساعة"
     },
+
     {
         name: "إستيقاف مروري",
         points: 1,
         note: ""
     },
+
     {
         name: "تسجيل مخالفة",
         points: 1,
         note: ""
     },
+
     {
         name: "حضور حملة أمنية (عامة)",
         points: 2,
         note: ""
     },
+
     {
         name: "حضور حملة أمنية (خاصة)",
         points: 2,
         note: ""
     },
+
     {
         name: "حضور تدريب (عام-خاص)",
         points: 2,
         note: ""
     },
+
     {
         name: "إسقاط رجل عصابة",
         points: 2,
         note: ""
     },
+
     {
         name: "حضور تمشيط",
         points: 3,
         note: ""
     },
+
     {
         name: "إعتقال عضو عصابة",
         points: 3,
         note: ""
     },
+
     {
         name: "إعتقال احد رؤساء العصابات",
         points: 5,
         note: "ملاحظة"
     },
+
     {
         name: "إعتقال احد مسؤولي العصابات",
         points: 20,
         note: "ملاحظة"
     }
+
 ];
 
 
@@ -398,32 +678,44 @@ const activities = [
 const activitiesContainer =
     document.getElementById("activities");
 
+
 activities.forEach(function(activity, index) {
 
-    const box = document.createElement("section");
+    const box =
+        document.createElement("section");
 
     box.className = "activity";
 
+
     let pointsText = "";
 
+
     if (activity.note === "كل ١/٢ ساعة") {
+
         pointsText =
             "كل ١/٢ ساعة — (" +
             activity.points +
             ")";
+
     } else if (activity.note === "ملاحظة") {
+
         pointsText =
             "ملاحظة — (" +
             activity.points +
             ")";
+
     } else {
+
         pointsText =
             "(" +
             activity.points +
             ")";
+
     }
 
+
     box.innerHTML = `
+
         <div class="activity-title">
             ${index + 1}. ${activity.name}
         </div>
@@ -442,48 +734,77 @@ activities.forEach(function(activity, index) {
             data-index="${index}"
             aria-label="${activity.name}"
             placeholder="اكتب العدد">
+
     `;
 
+
     activitiesContainer.appendChild(box);
+
 });
 
 
 /* =========================================
-   حساب المجموع
+   حساب النقاط
 ========================================= */
 
 function calculateTotal() {
 
     let total = 0;
 
+
     const inputs =
-        document.querySelectorAll(".activity-input");
+        document.querySelectorAll(
+            ".activity-input"
+        );
+
 
     inputs.forEach(function(input) {
 
         let number =
             parseInt(input.value, 10);
 
-        if (isNaN(number) || number < 0) {
+
+        if (
+            isNaN(number) ||
+            number < 0
+        ) {
+
             number = 0;
+
         }
 
-        const index =
-            parseInt(input.dataset.index, 10);
 
-        total +=
-            number * activities[index].points;
+        const index =
+            parseInt(
+                input.dataset.index,
+                10
+            );
+
+
+        if (
+            !isNaN(index) &&
+            activities[index]
+        ) {
+
+            total +=
+                number *
+                activities[index].points;
+
+        }
+
     });
+
 
     document.getElementById("total").textContent =
         total.toLocaleString("ar-SA");
+
 
     return total;
 }
 
 
 /* =========================================
-   تحديث المجموع عند تغيير الأرقام
+   تحديث المجموع
 ========================================= */
 
 document
@@ -504,26 +825,36 @@ document
 
 document
     .getElementById("saveBtn")
-    .addEventListener("click", function() {
+    .addEventListener(
+        "click",
+        function() {
 
-        const data = [];
+            const data = [];
 
-        document
-            .querySelectorAll(".activity-input")
-            .forEach(function(input) {
 
-                data.push(input.value);
+            document
+                .querySelectorAll(
+                    ".activity-input"
+                )
+                .forEach(function(input) {
 
-            });
+                    data.push(input.value);
 
-        localStorage.setItem(
-            "adelPointsData",
-            JSON.stringify(data)
-        );
+                });
 
-        alert("تم حفظ البيانات بنجاح");
 
-    });
+            localStorage.setItem(
+                "adelPointsData",
+                JSON.stringify(data)
+            );
+
+
+            alert(
+                "تم حفظ البيانات بنجاح"
+            );
+
+        }
+    );
 
 
 /* =========================================
@@ -533,40 +864,64 @@ document
 function loadData() {
 
     const saved =
-        localStorage.getItem("adelPointsData");
+        localStorage.getItem(
+            "adelPointsData"
+        );
+
 
     if (!saved) {
+
         calculateTotal();
+
         return;
     }
+
 
     try {
 
         const data =
             JSON.parse(saved);
 
+
+        if (!Array.isArray(data)) {
+
+            calculateTotal();
+
+            return;
+        }
+
+
         const inputs =
-            document.querySelectorAll(".activity-input");
+            document.querySelectorAll(
+                ".activity-input"
+            );
 
-        inputs.forEach(function(input, index) {
 
-            if (
-                Array.isArray(data) &&
-                data[index] !== undefined
-            ) {
-                input.value = data[index];
+        inputs.forEach(
+            function(input, index) {
+
+                if (
+                    data[index] !== undefined
+                ) {
+
+                    input.value =
+                        data[index];
+
+                }
+
             }
+        );
 
-        });
 
     } catch (error) {
 
         console.error(
-            "خطأ في قراءة البيانات:",
+            "خطأ في تحميل البيانات:",
             error
         );
 
     }
+
 
     calculateTotal();
 }
@@ -578,138 +933,188 @@ function loadData() {
 
 document
     .getElementById("deleteBtn")
-    .addEventListener("click", function() {
+    .addEventListener(
+        "click",
+        function() {
 
-        const confirmed =
-            confirm(
-                "هل أنت متأكد من حذف جميع البيانات؟"
+            const confirmed =
+                confirm(
+                    "هل أنت متأكد من حذف جميع البيانات؟"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            document
+                .querySelectorAll(
+                    ".activity-input"
+                )
+                .forEach(function(input) {
+
+                    input.value = "0";
+
+                });
+
+
+            localStorage.removeItem(
+                "adelPointsData"
             );
 
-        if (!confirmed) {
-            return;
+
+            calculateTotal();
+
+
+            alert(
+                "تم حذف البيانات"
+            );
+
         }
-
-        document
-            .querySelectorAll(".activity-input")
-            .forEach(function(input) {
-
-                input.value = "0";
-
-            });
-
-        localStorage.removeItem(
-            "adelPointsData"
-        );
-
-        calculateTotal();
-
-        alert("تم حذف البيانات");
-
-    });
+    );
 
 
 /* =========================================
-   حركة تصميم: عادل الشمري
+   حركة عبارة التصميم
 ========================================= */
 
 let motionEnabled = false;
 
+
 document
     .getElementById("motionBtn")
-    .addEventListener("click", async function() {
+    .addEventListener(
+        "click",
+        async function() {
 
-        try {
+            try {
 
-            /*
-             * بعض أجهزة Apple تطلب إذنًا
-             * للوصول إلى حركة الجهاز.
-             */
+                /*
+                 * أجهزة Apple قد تطلب إذن
+                 * الوصول إلى حركة الجهاز.
+                 */
 
-            if (
-                typeof DeviceOrientationEvent !== "undefined" &&
-                typeof DeviceOrientationEvent.requestPermission === "function"
-            ) {
+                if (
+                    typeof DeviceOrientationEvent !==
+                    "undefined" &&
+                    typeof DeviceOrientationEvent
+                        .requestPermission ===
+                    "function"
+                ) {
 
-                const permission =
-                    await DeviceOrientationEvent.requestPermission();
+                    const permission =
+                        await DeviceOrientationEvent
+                            .requestPermission();
 
-                if (permission !== "granted") {
+
+                    if (
+                        permission !==
+                        "granted"
+                    ) {
+
+                        alert(
+                            "لم يتم السماح بحركة الجهاز"
+                        );
+
+                        return;
+                    }
+                }
+
+
+                if (motionEnabled) {
 
                     alert(
-                        "لم يتم السماح بحركة الجهاز"
+                        "حركة الجهاز مفعلة بالفعل"
                     );
 
                     return;
                 }
-            }
 
-            if (motionEnabled) {
 
-                alert(
-                    "حركة الجهاز مفعلة بالفعل"
+                window.addEventListener(
+                    "deviceorientation",
+                    function(event) {
+
+                        let horizontal =
+                            Number(
+                                event.gamma
+                            ) || 0;
+
+
+                        let vertical =
+                            Number(
+                                event.beta
+                            ) || 0;
+
+
+                        horizontal =
+                            Math.max(
+                                -30,
+                                Math.min(
+                                    30,
+                                    horizontal
+                                )
+                            );
+
+
+                        vertical =
+                            Math.max(
+                                -30,
+                                Math.min(
+                                    30,
+                                    vertical
+                                )
+                            );
+
+
+                        const credit =
+                            document.getElementById(
+                                "designCredit"
+                            );
+
+
+                        credit.style.transform =
+                            "translate(" +
+                            (horizontal * 0.7) +
+                            "px, " +
+                            (vertical * 0.25) +
+                            "px)";
+
+                    },
+                    {
+                        passive: true
+                    }
                 );
 
-                return;
+
+                motionEnabled = true;
+
+
+                this.textContent =
+                    "حركة الجهاز مفعلة";
+
+
+                alert(
+                    "تم السماح بحركة الجهاز"
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                alert(
+                    "تعذر تفعيل حركة الجهاز"
+                );
+
             }
 
-            window.addEventListener(
-                "deviceorientation",
-                function(event) {
-
-                    let horizontal =
-                        Number(event.gamma) || 0;
-
-                    let vertical =
-                        Number(event.beta) || 0;
-
-                    horizontal =
-                        Math.max(
-                            -30,
-                            Math.min(30, horizontal)
-                        );
-
-                    vertical =
-                        Math.max(
-                            -30,
-                            Math.min(30, vertical)
-                        );
-
-                    const credit =
-                        document.getElementById(
-                            "designCredit"
-                        );
-
-                    credit.style.transform =
-                        "translate(" +
-                        (horizontal * 0.7) +
-                        "px, " +
-                        (vertical * 0.25) +
-                        "px)";
-
-                },
-                {
-                    passive: true
-                }
-            );
-
-            motionEnabled = true;
-
-            this.textContent =
-                "حركة الجهاز مفعلة";
-
-            alert(
-                "تم السماح بحركة الجهاز"
-            );
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "تعذر تفعيل حركة الجهاز"
-            );
         }
-    });
+    );
 
 
 /* =========================================
