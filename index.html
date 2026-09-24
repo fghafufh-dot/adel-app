@@ -7,485 +7,265 @@
 <title>تطبيق حسب النقاط</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    width: 100%;
-    min-height: 100%;
+body{
+    font-family:Arial,Tahoma,sans-serif;
+    background:#f3f5f7;
+    color:#111;
+    min-height:100vh;
 }
 
-body {
-    margin: 0;
-    width: 100%;
-    min-height: 100vh;
-    background: #f3f3f3;
-    color: #111;
-    font-family: Arial, Tahoma, sans-serif;
-    overflow-x: hidden;
+/* الهيدر */
+
+header{
+    background:#fff;
+    min-height:95px;
+    padding:10px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #ddd;
 }
 
-.container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 18px;
+/* شعار المملكة */
+
+.saudi-logo{
+    width:82px;
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
 }
 
-/* =========================================
-   الرأس
-========================================= */
-
-.header {
-    position: relative;
-    width: 100%;
-    min-height: 105px;
-    background: #fff;
-    border-radius: 18px;
-    margin-bottom: 20px;
-    padding: 15px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.saudi-logo img{
+    width:82px;
+    height:82px;
+    display:block;
+    object-fit:contain;
 }
 
-/* عنوان التطبيق */
+/* الجهة اليمنى */
 
-.header-title {
-    width: 100%;
-    text-align: center;
-    font-size: clamp(20px, 3vw, 30px);
-    font-weight: 700;
-    line-height: 1.4;
-    padding: 0 190px;
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-/* وزارة الداخلية */
-
-.header-right {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-
-    font-size: clamp(15px, 2vw, 21px);
-    font-weight: 700;
-
-    white-space: nowrap;
+.ministry{
+    font-size:20px;
+    font-weight:bold;
 }
 
 /* KR */
 
-.header-left {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    direction: ltr;
-    text-align: left;
-
-    font-size: clamp(19px, 2.5vw, 27px);
-    font-weight: 700;
+.kr{
+    font-size:25px;
+    font-weight:900;
+    direction:ltr;
 }
 
-/* =========================================
-   شعار السعودية
-========================================= */
+/* المحتوى */
 
-.saudi-logo {
-    width: 72px;
-    height: 72px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
+.container{
+    width:92%;
+    max-width:900px;
+    margin:30px auto;
 }
 
-.saudi-logo img {
-    width: 72px;
-    height: 72px;
-
-    display: block;
-
-    object-fit: contain;
+.title{
+    text-align:center;
+    margin-bottom:25px;
 }
 
-/* =========================================
-   الأعمال
-========================================= */
-
-#activities {
-    width: 100%;
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
 }
 
-.activity {
-    width: 100%;
-    background: #fff;
-    border-radius: 16px;
-
-    padding: 18px;
-    margin-bottom: 14px;
-
-    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.10);
-
-    overflow: hidden;
+.title p{
+    color:#777;
 }
 
-.activity-title {
-    width: 100%;
+/* البطاقات */
 
-    font-size: clamp(17px, 2.5vw, 22px);
-    font-weight: 700;
-
-    line-height: 1.6;
-
-    overflow-wrap: anywhere;
-    word-break: normal;
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
 }
 
-.activity-points {
-    width: 100%;
-
-    color: #555;
-
-    font-size: clamp(15px, 2vw, 18px);
-
-    line-height: 1.5;
-
-    margin-top: 5px;
-    margin-bottom: 12px;
-
-    overflow-wrap: anywhere;
+.card h2{
+    margin-bottom:18px;
 }
 
-/* =========================================
-   خانات الأرقام
-========================================= */
+/* الإدخال */
 
-.activity-input {
-    display: block;
-
-    width: 100%;
-    height: 50px;
-
-    border: 1px solid #aaa;
-    border-radius: 11px;
-
-    background: #fff;
-
-    padding: 8px 14px;
-
-    font-family: Arial, Tahoma, sans-serif;
-    font-size: 19px;
-
-    text-align: center;
-
-    outline: none;
-
-    -webkit-appearance: none;
-    appearance: none;
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr 130px;
+    gap:10px;
 }
 
-.activity-input:focus {
-    border-color: #111;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.06);
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
 }
 
-/* =========================================
-   المجموع
-========================================= */
-
-.total-box {
-    width: 100%;
-
-    background: #111;
-    color: #fff;
-
-    border-radius: 16px;
-
-    padding: 19px;
-
-    margin-top: 20px;
-
-    text-align: center;
-
-    font-size: clamp(21px, 3vw, 27px);
-    font-weight: 700;
+input:focus{
+    border-color:#111;
 }
 
-/* =========================================
-   الأزرار
-========================================= */
-
-.buttons {
-    width: 100%;
-
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-top: 15px;
+button{
+    border:0;
+    border-radius:10px;
+    background:#111;
+    color:#fff;
+    padding:14px;
+    font-size:16px;
+    cursor:pointer;
 }
 
-button {
-    min-height: 48px;
-
-    border: 0;
-    border-radius: 11px;
-
-    padding: 12px 18px;
-
-    font-family: Arial, Tahoma, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    flex: 1 1 200px;
+button:active{
+    transform:scale(.98);
 }
 
-button:active {
-    transform: scale(0.98);
+/* مجموع النقاط */
+
+.total{
+    background:#111;
+    color:#fff;
+    border-radius:16px;
+    text-align:center;
+    padding:25px;
+    margin-bottom:20px;
 }
 
-.save-btn {
-    background: #111;
-    color: #fff;
+.total-title{
+    font-size:17px;
+    margin-bottom:8px;
 }
 
-.delete-btn {
-    background: #c62828;
-    color: #fff;
+.total-number{
+    font-size:42px;
+    font-weight:bold;
 }
 
-.motion-btn {
-    background: #ddd;
-    color: #111;
+/* النشاط */
+
+.activity{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
-/* =========================================
-   التصميم
-========================================= */
-
-.design-credit {
-    width: 100%;
-
-    margin-top: 25px;
-    margin-bottom: 20px;
-
-    text-align: center;
-
-    font-size: clamp(14px, 2vw, 17px);
-    font-weight: 700;
-
-    transition: transform 0.15s ease;
-
-    transform-origin: center;
+.activity-info{
+    flex:1;
 }
 
-/* =========================================
-   شاشات متوسطة - آيباد
-========================================= */
-
-@media (max-width: 800px) {
-
-    .container {
-        max-width: 760px;
-        padding: 15px;
-    }
-
-    .header {
-        min-height: 120px;
-    }
-
-    .header-title {
-        padding: 0 175px;
-        font-size: 21px;
-    }
-
-    .header-right {
-        right: 12px;
-        font-size: 15px;
-        gap: 7px;
-    }
-
-    .header-left {
-        left: 12px;
-        font-size: 21px;
-    }
-
-    .saudi-logo {
-        width: 62px;
-        height: 62px;
-    }
-
-    .saudi-logo img {
-        width: 62px;
-        height: 62px;
-    }
+.activity-name{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:6px;
 }
 
-/* =========================================
-   الجوال
-========================================= */
-
-@media (max-width: 600px) {
-
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .header {
-        min-height: 145px;
-
-        padding: 10px;
-
-        border-radius: 15px;
-
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-    }
-
-    /* KR */
-
-    .header-left {
-        left: 12px;
-        top: 14px;
-
-        transform: none;
-
-        font-size: 21px;
-    }
-
-    /* وزارة الداخلية */
-
-    .header-right {
-        right: 10px;
-        top: 10px;
-
-        transform: none;
-
-        font-size: 13px;
-
-        gap: 5px;
-    }
-
-    /* الشعار */
-
-    .saudi-logo {
-        width: 48px;
-        height: 48px;
-    }
-
-    .saudi-logo img {
-        width: 48px;
-        height: 48px;
-    }
-
-    /* عنوان التطبيق */
-
-    .header-title {
-        padding: 0;
-
-        margin-bottom: 13px;
-
-        font-size: 20px;
-
-        line-height: 1.4;
-
-        width: 100%;
-    }
-
-    .activity {
-        padding: 15px;
-        border-radius: 14px;
-        margin-bottom: 12px;
-    }
-
-    .activity-title {
-        font-size: 18px;
-        line-height: 1.55;
-    }
-
-    .activity-points {
-        font-size: 15px;
-        margin-top: 4px;
-        margin-bottom: 10px;
-    }
-
-    .activity-input {
-        height: 48px;
-        font-size: 18px;
-    }
-
-    .total-box {
-        padding: 17px;
-        font-size: 22px;
-    }
-
-    .buttons {
-        gap: 8px;
-    }
-
-    button {
-        flex: 1 1 100%;
-        width: 100%;
-    }
-
-    .design-credit {
-        margin-top: 22px;
-        margin-bottom: 15px;
-        font-size: 15px;
-    }
+.activity-user{
+    color:#777;
+    font-size:14px;
 }
 
-/* =========================================
-   الجوال الصغير جدًا
-========================================= */
+.activity-points{
+    font-weight:bold;
+    font-size:18px;
+}
 
-@media (max-width: 380px) {
+.delete{
+    background:#c62828;
+    padding:9px 13px;
+    font-size:14px;
+}
 
-    .header {
-        min-height: 140px;
+.empty{
+    text-align:center;
+    color:#777;
+    padding:25px;
+}
+
+/* المصمم */
+
+footer{
+    text-align:center;
+    color:#666;
+    padding:25px;
+    font-size:14px;
+}
+
+/* الجوال */
+
+@media(max-width:600px){
+
+    header{
+        min-height:70px;
+        padding:6px 12px;
     }
 
-    .header-right {
-        font-size: 12px;
+    .saudi-logo{
+        width:58px;
+        height:58px;
     }
 
-    .header-left {
-        font-size: 19px;
+    .saudi-logo img{
+        width:58px;
+        height:58px;
     }
 
-    .saudi-logo {
-        width: 43px;
-        height: 43px;
+    .ministry{
+        font-size:16px;
     }
 
-    .saudi-logo img {
-        width: 43px;
-        height: 43px;
+    .kr{
+        font-size:20px;
     }
 
-    .header-title {
-        font-size: 18px;
+    .container{
+        width:94%;
+        margin:20px auto;
     }
 
-    .activity-title {
-        font-size: 17px;
+    .title h1{
+        font-size:25px;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .activity{
+        flex-wrap:wrap;
+    }
+
+    .activity-info{
+        width:100%;
+    }
+
+    .activity-points{
+        flex:1;
     }
 }
 </style>
@@ -493,635 +273,293 @@ button:active {
 
 <body>
 
-<div class="container">
+<header>
 
-    <!-- =================================
-         الرأس
-    ================================== -->
+    <div class="header-right">
 
-    <header class="header">
+        <div class="saudi-logo">
+            <span style="font-size:38px;">⚔️🌴</span>
+        </div>
 
-        <!-- اليمين -->
-        <div class="header-right">
+        <div class="ministry">
+            وزارة الداخلية
+        </div>
 
-            <span>وزارة الداخلية</span>
+    </div>
 
-            <div class="saudi-logo">
-                <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/9/99/Emblem_of_Saudi_Arabia.svg"
-                    alt="شعار المملكة العربية السعودية"
-                >
+    <div class="kr">
+        KR
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="title">
+        <h1>تطبيق حسب النقاط</h1>
+        <p>نظام حساب وإدارة النقاط</p>
+    </div>
+
+
+    <div class="card">
+
+        <h2>إضافة نشاط</h2>
+
+        <div class="form">
+
+            <input
+                id="username"
+                type="text"
+                placeholder="اسم المستخدم"
+            >
+
+            <input
+                id="activity"
+                type="text"
+                placeholder="اسم النشاط"
+            >
+
+            <input
+                id="points"
+                type="number"
+                min="0"
+                placeholder="النقاط"
+            >
+
+            <button onclick="addActivity()">
+                إضافة النشاط
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="total">
+
+        <div class="total-title">
+            مجموع النقاط
+        </div>
+
+        <div
+            class="total-number"
+            id="totalPoints"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>الأنشطة</h2>
+
+        <div id="activities">
+
+            <div class="empty">
+                لا توجد أنشطة مضافة
             </div>
 
         </div>
 
-
-        <!-- المنتصف -->
-        <div class="header-title">
-            تطبيق حسب النقاط
-        </div>
-
-
-        <!-- اليسار -->
-        <div class="header-left">
-            KR
-        </div>
-
-    </header>
-
-
-    <!-- =================================
-         الأعمال
-    ================================== -->
-
-    <main id="activities"></main>
-
-
-    <!-- =================================
-         المجموع
-    ================================== -->
-
-    <div class="total-box">
-
-        المجموع:
-        <span id="total">0</span>
-
     </div>
 
-
-    <!-- =================================
-         الأزرار
-    ================================== -->
-
-    <div class="buttons">
-
-        <button
-            id="saveBtn"
-            class="save-btn"
-            type="button">
-            حفظ البيانات
-        </button>
-
-        <button
-            id="deleteBtn"
-            class="delete-btn"
-            type="button">
-            حذف البيانات
-        </button>
-
-        <button
-            id="motionBtn"
-            class="motion-btn"
-            type="button">
-            السماح بحركة الجهاز
-        </button>
-
-    </div>
+</main>
 
 
-    <!-- =================================
-         التصميم
-    ================================== -->
-
-    <div
-        id="designCredit"
-        class="design-credit">
-
-        تصميم: عادل الشمري
-
-    </div>
-
-</div>
+<footer>
+    المصمم: عادل الشمري
+</footer>
 
 
 <script>
 
-/* =========================================
-   الأعمال والنقاط
-========================================= */
-
-const activities = [
-
-    {
-        name: "تدشين نقطة تفتيش متحركة",
-        points: 1,
-        note: "كل ١/٢ ساعة"
-    },
-
-    {
-        name: "إستيقاف مروري",
-        points: 1,
-        note: ""
-    },
-
-    {
-        name: "تسجيل مخالفة",
-        points: 1,
-        note: ""
-    },
-
-    {
-        name: "حضور حملة أمنية (عامة)",
-        points: 2,
-        note: ""
-    },
-
-    {
-        name: "حضور حملة أمنية (خاصة)",
-        points: 2,
-        note: ""
-    },
-
-    {
-        name: "حضور تدريب (عام-خاص)",
-        points: 2,
-        note: ""
-    },
-
-    {
-        name: "إسقاط رجل عصابة",
-        points: 2,
-        note: ""
-    },
-
-    {
-        name: "حضور تمشيط",
-        points: 3,
-        note: ""
-    },
-
-    {
-        name: "إعتقال عضو عصابة",
-        points: 3,
-        note: ""
-    },
-
-    {
-        name: "إعتقال احد رؤساء العصابات",
-        points: 5,
-        note: "ملاحظة"
-    },
-
-    {
-        name: "إعتقال احد مسؤولي العصابات",
-        points: 20,
-        note: "ملاحظة"
-    }
-
-];
-
-
-/* =========================================
-   إنشاء الأعمال
-========================================= */
-
-const activitiesContainer =
-    document.getElementById("activities");
-
-
-activities.forEach(function(activity, index) {
-
-    const box =
-        document.createElement("section");
-
-    box.className = "activity";
-
-
-    let pointsText = "";
-
-
-    if (activity.note === "كل ١/٢ ساعة") {
-
-        pointsText =
-            "كل ١/٢ ساعة — (" +
-            activity.points +
-            ")";
-
-    } else if (activity.note === "ملاحظة") {
-
-        pointsText =
-            "ملاحظة — (" +
-            activity.points +
-            ")";
-
-    } else {
-
-        pointsText =
-            "(" +
-            activity.points +
-            ")";
-
-    }
-
-
-    box.innerHTML = `
-
-        <div class="activity-title">
-            ${index + 1}. ${activity.name}
-        </div>
-
-        <div class="activity-points">
-            ${pointsText}
-        </div>
-
-        <input
-            class="activity-input"
-            type="number"
-            min="0"
-            step="1"
-            value="0"
-            inputmode="numeric"
-            data-index="${index}"
-            aria-label="${activity.name}"
-            placeholder="اكتب العدد">
-
-    `;
-
-
-    activitiesContainer.appendChild(box);
-
-});
-
-
-/* =========================================
-   حساب النقاط
-========================================= */
-
-function calculateTotal() {
-
-    let total = 0;
-
-
-    const inputs =
-        document.querySelectorAll(
-            ".activity-input"
-        );
-
-
-    inputs.forEach(function(input) {
-
-        let number =
-            parseInt(input.value, 10);
-
-
-        if (
-            isNaN(number) ||
-            number < 0
-        ) {
-
-            number = 0;
-
-        }
-
-
-        const index =
-            parseInt(
-                input.dataset.index,
-                10
-            );
-
-
-        if (
-            !isNaN(index) &&
-            activities[index]
-        ) {
-
-            total +=
-                number *
-                activities[index].points;
-
-        }
-
-    });
-
-
-    document.getElementById("total").textContent =
-        total.toLocaleString("ar-SA");
-
-
-    return total;
-}
-
-
-/* =========================================
-   تحديث المجموع
-========================================= */
-
-document
-    .querySelectorAll(".activity-input")
-    .forEach(function(input) {
-
-        input.addEventListener(
-            "input",
-            calculateTotal
-        );
-
-    });
-
-
-/* =========================================
-   حفظ البيانات
-========================================= */
-
-document
-    .getElementById("saveBtn")
-    .addEventListener(
-        "click",
-        function() {
-
-            const data = [];
-
-
-            document
-                .querySelectorAll(
-                    ".activity-input"
-                )
-                .forEach(function(input) {
-
-                    data.push(input.value);
-
-                });
-
-
-            localStorage.setItem(
-                "adelPointsData",
-                JSON.stringify(data)
-            );
-
-
-            alert(
-                "تم حفظ البيانات بنجاح"
-            );
-
-        }
+let activities =
+    JSON.parse(
+        localStorage.getItem("adel_points") || "[]"
     );
 
 
-/* =========================================
-   تحميل البيانات
-========================================= */
+function save(){
 
-function loadData() {
+    localStorage.setItem(
+        "adel_points",
+        JSON.stringify(activities)
+    );
 
-    const saved =
-        localStorage.getItem(
-            "adelPointsData"
+}
+
+
+function addActivity(){
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const activity =
+        document.getElementById("activity").value.trim();
+
+    const points =
+        Number(
+            document.getElementById("points").value
         );
 
 
-    if (!saved) {
+    if(username === ""){
 
-        calculateTotal();
+        alert("اكتب اسم المستخدم");
 
         return;
-    }
-
-
-    try {
-
-        const data =
-            JSON.parse(saved);
-
-
-        if (!Array.isArray(data)) {
-
-            calculateTotal();
-
-            return;
-        }
-
-
-        const inputs =
-            document.querySelectorAll(
-                ".activity-input"
-            );
-
-
-        inputs.forEach(
-            function(input, index) {
-
-                if (
-                    data[index] !== undefined
-                ) {
-
-                    input.value =
-                        data[index];
-
-                }
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "خطأ في تحميل البيانات:",
-            error
-        );
 
     }
 
 
-    calculateTotal();
+    if(activity === ""){
+
+        alert("اكتب اسم النشاط");
+
+        return;
+
+    }
+
+
+    if(points <= 0){
+
+        alert("اكتب عدد النقاط");
+
+        return;
+
+    }
+
+
+    activities.push({
+
+        username:username,
+
+        activity:activity,
+
+        points:points
+
+    });
+
+
+    save();
+
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("activity").value = "";
+
+    document.getElementById("points").value = "";
+
+
+    showActivities();
+
 }
 
 
-/* =========================================
-   حذف البيانات
-========================================= */
+function deleteActivity(index){
 
-document
-    .getElementById("deleteBtn")
-    .addEventListener(
-        "click",
-        function() {
+    activities.splice(index,1);
 
-            const confirmed =
-                confirm(
-                    "هل أنت متأكد من حذف جميع البيانات؟"
-                );
+    save();
 
+    showActivities();
 
-            if (!confirmed) {
+}
 
-                return;
 
-            }
+function showActivities(){
 
+    const box =
+        document.getElementById("activities");
 
-            document
-                .querySelectorAll(
-                    ".activity-input"
-                )
-                .forEach(function(input) {
+    const total =
+        document.getElementById("totalPoints");
 
-                    input.value = "0";
 
-                });
+    if(activities.length === 0){
 
+        box.innerHTML =
+            '<div class="empty">لا توجد أنشطة مضافة</div>';
 
-            localStorage.removeItem(
-                "adelPointsData"
-            );
+        total.textContent = "0";
 
+        return;
 
-            calculateTotal();
+    }
 
 
-            alert(
-                "تم حذف البيانات"
-            );
+    box.innerHTML = "";
 
-        }
-    );
 
+    let sum = 0;
 
-/* =========================================
-   حركة عبارة التصميم
-========================================= */
 
-let motionEnabled = false;
+    activities.forEach(function(item,index){
 
+        sum += Number(item.points);
 
-document
-    .getElementById("motionBtn")
-    .addEventListener(
-        "click",
-        async function() {
 
-            try {
+        const div =
+            document.createElement("div");
 
-                /*
-                 * أجهزة Apple قد تطلب إذن
-                 * الوصول إلى حركة الجهاز.
-                 */
+        div.className = "activity";
 
-                if (
-                    typeof DeviceOrientationEvent !==
-                    "undefined" &&
-                    typeof DeviceOrientationEvent
-                        .requestPermission ===
-                    "function"
-                ) {
 
-                    const permission =
-                        await DeviceOrientationEvent
-                            .requestPermission();
+        div.innerHTML = `
 
+            <div class="activity-info">
 
-                    if (
-                        permission !==
-                        "granted"
-                    ) {
+                <div class="activity-name">
+                    ${safe(item.activity)}
+                </div>
 
-                        alert(
-                            "لم يتم السماح بحركة الجهاز"
-                        );
+                <div class="activity-user">
+                    المستخدم:
+                    ${safe(item.username)}
+                </div>
 
-                        return;
-                    }
-                }
+            </div>
 
+            <div class="activity-points">
+                ${item.points} نقطة
+            </div>
 
-                if (motionEnabled) {
+            <button
+                class="delete"
+                onclick="deleteActivity(${index})"
+            >
+                حذف
+            </button>
 
-                    alert(
-                        "حركة الجهاز مفعلة بالفعل"
-                    );
+        `;
 
-                    return;
-                }
 
+        box.appendChild(div);
 
-                window.addEventListener(
-                    "deviceorientation",
-                    function(event) {
+    });
 
-                        let horizontal =
-                            Number(
-                                event.gamma
-                            ) || 0;
 
+    total.textContent = sum;
 
-                        let vertical =
-                            Number(
-                                event.beta
-                            ) || 0;
+}
 
 
-                        horizontal =
-                            Math.max(
-                                -30,
-                                Math.min(
-                                    30,
-                                    horizontal
-                                )
-                            );
+function safe(text){
 
+    const div =
+        document.createElement("div");
 
-                        vertical =
-                            Math.max(
-                                -30,
-                                Math.min(
-                                    30,
-                                    vertical
-                                )
-                            );
+    div.textContent = text;
 
+    return div.innerHTML;
 
-                        const credit =
-                            document.getElementById(
-                                "designCredit"
-                            );
+}
 
 
-                        credit.style.transform =
-                            "translate(" +
-                            (horizontal * 0.7) +
-                            "px, " +
-                            (vertical * 0.25) +
-                            "px)";
-
-                    },
-                    {
-                        passive: true
-                    }
-                );
-
-
-                motionEnabled = true;
-
-
-                this.textContent =
-                    "حركة الجهاز مفعلة";
-
-
-                alert(
-                    "تم السماح بحركة الجهاز"
-                );
-
-
-            } catch (error) {
-
-                console.error(error);
-
-
-                alert(
-                    "تعذر تفعيل حركة الجهاز"
-                );
-
-            }
-
-        }
-    );
-
-
-/* =========================================
-   تشغيل التطبيق
-========================================= */
-
-loadData();
+showActivities();
 
 </script>
 
