@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>تطبيق حسب النقاط</title>
+<title>نظام النقاط</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -20,58 +22,25 @@ body{
     min-height:100vh;
 }
 
-/* الهيدر */
-
 header{
     background:#fff;
-    min-height:95px;
-    padding:10px 20px;
+    border-bottom:1px solid #ddd;
+    padding:14px 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid #ddd;
 }
 
-/* شعار المملكة */
-
-.saudi-logo{
-    width:82px;
-    height:82px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-}
-
-.saudi-logo img{
-    width:82px;
-    height:82px;
-    display:block;
-    object-fit:contain;
-}
-
-/* الجهة اليمنى */
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.kr{
+    font-size:27px;
+    font-weight:900;
+    direction:ltr;
 }
 
 .ministry{
     font-size:20px;
     font-weight:bold;
 }
-
-/* KR */
-
-.kr{
-    font-size:25px;
-    font-weight:900;
-    direction:ltr;
-}
-
-/* المحتوى */
 
 .container{
     width:92%;
@@ -93,26 +62,18 @@ header{
     color:#777;
 }
 
-/* البطاقات */
-
 .card{
     background:#fff;
-    border-radius:16px;
-    padding:22px;
+    border-radius:18px;
+    padding:24px;
     margin-bottom:20px;
-    box-shadow:0 3px 15px rgba(0,0,0,.06);
+    box-shadow:0 4px 18px rgba(0,0,0,.06);
 }
 
-.card h2{
-    margin-bottom:18px;
-}
-
-/* الإدخال */
-
-.form{
-    display:grid;
-    grid-template-columns:1fr 1fr 130px;
-    gap:10px;
+label{
+    display:block;
+    margin:13px 0 7px;
+    font-weight:bold;
 }
 
 input{
@@ -129,118 +90,113 @@ input:focus{
 }
 
 button{
+    width:100%;
     border:0;
     border-radius:10px;
+    padding:14px;
+    margin-top:14px;
     background:#111;
     color:#fff;
-    padding:14px;
     font-size:16px;
     cursor:pointer;
 }
 
 button:active{
-    transform:scale(.98);
+    transform:scale(.99);
 }
 
-/* مجموع النقاط */
+.secondary{
+    background:#555;
+}
 
-.total{
+.green{
+    background:#17783a;
+}
+
+.red{
+    background:#b3261e;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#eee;
+    text-align:center;
+}
+
+.points{
     background:#111;
     color:#fff;
     border-radius:16px;
-    text-align:center;
     padding:25px;
+    text-align:center;
     margin-bottom:20px;
 }
 
-.total-title{
-    font-size:17px;
-    margin-bottom:8px;
-}
-
-.total-number{
-    font-size:42px;
+.points-number{
+    font-size:45px;
     font-weight:bold;
+    margin-top:8px;
 }
-
-/* النشاط */
 
 .activity{
     border:1px solid #ddd;
     border-radius:12px;
     padding:15px;
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    gap:15px;
+    margin-top:10px;
 }
 
-.activity-info{
-    flex:1;
+.request{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:12px;
 }
 
-.activity-name{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:6px;
+.request strong{
+    display:block;
+    margin-bottom:8px;
 }
 
-.activity-user{
-    color:#777;
-    font-size:14px;
+.request p{
+    margin:5px 0;
+    color:#555;
 }
 
-.activity-points{
-    font-weight:bold;
-    font-size:18px;
+.request-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
 }
 
-.delete{
-    background:#c62828;
-    padding:9px 13px;
-    font-size:14px;
+.request-actions button{
+    margin:0;
 }
-
-.empty{
-    text-align:center;
-    color:#777;
-    padding:25px;
-}
-
-/* المصمم */
 
 footer{
     text-align:center;
-    color:#666;
-    padding:25px;
-    font-size:14px;
+    color:#777;
+    padding:30px;
 }
-
-/* الجوال */
 
 @media(max-width:600px){
 
     header{
-        min-height:70px;
-        padding:6px 12px;
+        padding:12px 14px;
     }
 
-    .saudi-logo{
-        width:58px;
-        height:58px;
-    }
-
-    .saudi-logo img{
-        width:58px;
-        height:58px;
+    .kr{
+        font-size:22px;
     }
 
     .ministry{
         font-size:16px;
-    }
-
-    .kr{
-        font-size:20px;
     }
 
     .container{
@@ -252,20 +208,8 @@ footer{
         font-size:25px;
     }
 
-    .form{
+    .request-actions{
         grid-template-columns:1fr;
-    }
-
-    .activity{
-        flex-wrap:wrap;
-    }
-
-    .activity-info{
-        width:100%;
-    }
-
-    .activity-points{
-        flex:1;
     }
 }
 </style>
@@ -274,99 +218,198 @@ footer{
 <body>
 
 <header>
-
-    <div class="header-right">
-
-        <div class="saudi-logo">
-            <span style="font-size:38px;">⚔️🌴</span>
-        </div>
-
-        <div class="ministry">
-            وزارة الداخلية
-        </div>
-
-    </div>
-
-    <div class="kr">
-        KR
-    </div>
-
+    <div class="ministry">وزارة الداخلية</div>
+    <div class="kr">KR</div>
 </header>
 
 
-<main class="container">
+<div class="container">
+
+<!-- الصفحة الرئيسية -->
+
+<section id="homePage">
 
     <div class="title">
-        <h1>تطبيق حسب النقاط</h1>
-        <p>نظام حساب وإدارة النقاط</p>
+        <h1>نظام النقاط</h1>
+        <p>أدخل بياناتك لطلب الرمز الخاص</p>
     </div>
-
 
     <div class="card">
 
-        <h2>إضافة نشاط</h2>
+        <label>اسم المستخدم</label>
 
-        <div class="form">
+        <input
+            id="fullName"
+            type="text"
+            placeholder="اكتب اسم المستخدم"
+        >
 
-            <input
-                id="username"
-                type="text"
-                placeholder="اسم المستخدم"
-            >
+        <label>اليونت العسكري</label>
 
-            <input
-                id="activity"
-                type="text"
-                placeholder="اسم النشاط"
-            >
+        <input
+            id="militaryUnit"
+            type="text"
+            placeholder="اكتب اليونت العسكري"
+        >
 
-            <input
-                id="points"
-                type="number"
-                min="0"
-                placeholder="النقاط"
-            >
+        <label>الرقم العسكري</label>
 
-            <button onclick="addActivity()">
-                إضافة النشاط
-            </button>
+        <input
+            id="militaryNumber"
+            type="text"
+            placeholder="اكتب الرقم العسكري"
+        >
 
-        </div>
+        <button onclick="requestCode()">
+            طلب الرمز الخاص
+        </button>
+
+        <button
+            class="secondary"
+            onclick="showCodePage()"
+        >
+            لدي رمز خاص
+        </button>
+
+        <div
+            id="homeMessage"
+            class="message hidden"
+        ></div>
 
     </div>
 
+</section>
 
-    <div class="total">
 
-        <div class="total-title">
+<!-- صفحة إدخال الرمز -->
+
+<section
+    id="codePage"
+    class="hidden"
+>
+
+    <div class="title">
+        <h1>إدخال الرمز الخاص</h1>
+        <p>أدخل الرمز الذي أعطاك إياه المسؤول</p>
+    </div>
+
+    <div class="card">
+
+        <label>الرمز الخاص</label>
+
+        <input
+            id="accessCode"
+            type="text"
+            placeholder="اكتب الرمز الخاص"
+            autocomplete="off"
+        >
+
+        <button onclick="loginWithCode()">
+            دخول
+        </button>
+
+        <button
+            class="secondary"
+            onclick="showHome()"
+        >
+            رجوع
+        </button>
+
+        <div
+            id="codeMessage"
+            class="message hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- صفحة المستخدم -->
+
+<section
+    id="userPage"
+    class="hidden"
+>
+
+    <div class="title">
+
+        <h1 id="welcomeName"></h1>
+
+        <p id="userUnit"></p>
+
+    </div>
+
+    <div class="points">
+
+        <div>
             مجموع النقاط
         </div>
 
         <div
-            class="total-number"
-            id="totalPoints"
+            id="userPoints"
+            class="points-number"
         >
             0
         </div>
 
     </div>
 
-
     <div class="card">
 
         <h2>الأنشطة</h2>
 
-        <div id="activities">
-
-            <div class="empty">
-                لا توجد أنشطة مضافة
-            </div>
-
+        <div id="userActivities">
+            لا توجد أنشطة
         </div>
 
     </div>
 
-</main>
+    <button
+        class="secondary"
+        onclick="logout()"
+    >
+        خروج
+    </button>
+
+</section>
+
+
+<!-- لوحة الإدارة -->
+
+<section
+    id="adminPage"
+    class="hidden"
+>
+
+    <div class="title">
+
+        <h1>إدارة الطلبات</h1>
+
+        <p>
+            طلبات الرمز الخاص
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <button onclick="loadRequests()">
+            تحديث الطلبات
+        </button>
+
+        <div
+            id="requestsList"
+            style="margin-top:20px;"
+        >
+            جاري تحميل الطلبات...
+        </div>
+
+    </div>
+
+</section>
+
+</div>
 
 
 <footer>
@@ -376,163 +419,785 @@ footer{
 
 <script>
 
-let activities =
-    JSON.parse(
-        localStorage.getItem("adel_points") || "[]"
+/* =================================================
+   إعداد Supabase
+   ================================================= */
+
+const SUPABASE_URL =
+    "https://rvgvqooateniymiypraz.supabase.co";
+
+
+/* =================================================
+   ⚠️ حط المفتاح الأخضر هنا فقط
+   ================================================= */
+
+const SUPABASE_KEY =
+    "<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نظام النقاط</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Tahoma,sans-serif;
+    background:#f3f5f7;
+    color:#111;
+    min-height:100vh;
+}
+
+header{
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.kr{
+    font-size:27px;
+    font-weight:900;
+    direction:ltr;
+}
+
+.ministry{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.container{
+    width:92%;
+    max-width:900px;
+    margin:30px auto;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#777;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
+
+label{
+    display:block;
+    margin:13px 0 7px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#111;
+}
+
+button{
+    width:100%;
+    border:0;
+    border-radius:10px;
+    padding:14px;
+    margin-top:14px;
+    background:#111;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.99);
+}
+
+.secondary{
+    background:#555;
+}
+
+.green{
+    background:#17783a;
+}
+
+.red{
+    background:#b3261e;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#eee;
+    text-align:center;
+}
+
+.points{
+    background:#111;
+    color:#fff;
+    border-radius:16px;
+    padding:25px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.points-number{
+    font-size:45px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.activity{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:15px;
+    margin-top:10px;
+}
+
+.request{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:12px;
+}
+
+.request strong{
+    display:block;
+    margin-bottom:8px;
+}
+
+.request p{
+    margin:5px 0;
+    color:#555;
+}
+
+.request-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+
+.request-actions button{
+    margin:0;
+}
+
+footer{
+    text-align:center;
+    color:#777;
+    padding:30px;
+}
+
+@media(max-width:600px){
+
+    header{
+        padding:12px 14px;
+    }
+
+    .kr{
+        font-size:22px;
+    }
+
+    .ministry{
+        font-size:16px;
+    }
+
+    .container{
+        width:94%;
+        margin:20px auto;
+    }
+
+    .title h1{
+        font-size:25px;
+    }
+
+    .request-actions{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="ministry">وزارة الداخلية</div>
+    <div class="kr">KR</div>
+</header>
+
+
+<div class="container">
+
+<!-- الصفحة الرئيسية -->
+
+<section id="homePage">
+
+    <div class="title">
+        <h1>نظام النقاط</h1>
+        <p>أدخل بياناتك لطلب الرمز الخاص</p>
+    </div>
+
+    <div class="card">
+
+        <label>اسم المستخدم</label>
+
+        <input
+            id="fullName"
+            type="text"
+            placeholder="اكتب اسم المستخدم"
+        >
+
+        <label>اليونت العسكري</label>
+
+        <input
+            id="militaryUnit"
+            type="text"
+            placeholder="اكتب اليونت العسكري"
+        >
+
+        <label>الرقم العسكري</label>
+
+        <input
+            id="militaryNumber"
+            type="text"
+            placeholder="اكتب الرقم العسكري"
+        >
+
+        <button onclick="requestCode()">
+            طلب الرمز الخاص
+        </button>
+
+        <button
+            class="secondary"
+            onclick="showCodePage()"
+        >
+            لدي رمز خاص
+        </button>
+
+        <div
+            id="homeMessage"
+            class="message hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- صفحة إدخال الرمز -->
+
+<section
+    id="codePage"
+    class="hidden"
+>
+
+    <div class="title">
+        <h1>إدخال الرمز الخاص</h1>
+        <p>أدخل الرمز الذي أعطاك إياه المسؤول</p>
+    </div>
+
+    <div class="card">
+
+        <label>الرمز الخاص</label>
+
+        <input
+            id="accessCode"
+            type="text"
+            placeholder="اكتب الرمز الخاص"
+            autocomplete="off"
+        >
+
+        <button onclick="loginWithCode()">
+            دخول
+        </button>
+
+        <button
+            class="secondary"
+            onclick="showHome()"
+        >
+            رجوع
+        </button>
+
+        <div
+            id="codeMessage"
+            class="message hidden"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- صفحة المستخدم -->
+
+<section
+    id="userPage"
+    class="hidden"
+>
+
+    <div class="title">
+
+        <h1 id="welcomeName"></h1>
+
+        <p id="userUnit"></p>
+
+    </div>
+
+    <div class="points">
+
+        <div>
+            مجموع النقاط
+        </div>
+
+        <div
+            id="userPoints"
+            class="points-number"
+        >
+            0
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>الأنشطة</h2>
+
+        <div id="userActivities">
+            لا توجد أنشطة
+        </div>
+
+    </div>
+
+    <button
+        class="secondary"
+        onclick="logout()"
+    >
+        خروج
+    </button>
+
+</section>
+
+
+<!-- لوحة الإدارة -->
+
+<section
+    id="adminPage"
+    class="hidden"
+>
+
+    <div class="title">
+
+        <h1>إدارة الطلبات</h1>
+
+        <p>
+            طلبات الرمز الخاص
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <button onclick="loadRequests()">
+            تحديث الطلبات
+        </button>
+
+        <div
+            id="requestsList"
+            style="margin-top:20px;"
+        >
+            جاري تحميل الطلبات...
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<footer>
+    المصمم: عادل الشمري
+</footer>
+
+
+<script>
+
+/* =================================================
+   إعداد Supabase
+   ================================================= */
+
+const SUPABASE_URL =
+    "https://rvgvqooateniymiypraz.supabase.co";
+
+
+/* =================================================
+   ⚠️ حط المفتاح الأخضر هنا فقط
+   ================================================= */
+
+const SUPABASE_KEY =
+    "⬅️ حط المفتاح الأخضر هنا";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
 
-function save(){
+/* =================================================
+   الصفحات
+   ================================================= */
 
-    localStorage.setItem(
-        "adel_points",
-        JSON.stringify(activities)
-    );
+function hideAll(){
+
+    document
+        .querySelectorAll("section")
+        .forEach(section => {
+
+            section.classList.add("hidden");
+
+        });
 
 }
 
 
-function addActivity(){
+function showHome(){
 
-    const username =
-        document.getElementById("username").value.trim();
+    hideAll();
 
-    const activity =
-        document.getElementById("activity").value.trim();
+    document
+        .getElementById("homePage")
+        .classList.remove("hidden");
 
-    const points =
-        Number(
-            document.getElementById("points").value
+}
+
+
+function showCodePage(){
+
+    hideAll();
+
+    document
+        .getElementById("codePage")
+        .classList.remove("hidden");
+
+}
+
+
+function showMessage(id,text){
+
+    const box =
+        document.getElementById(id);
+
+    box.textContent = text;
+
+    box.classList.remove("hidden");
+
+}
+
+
+/* =================================================
+   طلب الرمز
+   ================================================= */
+
+async function requestCode(){
+
+    const fullName =
+        document
+        .getElementById("fullName")
+        .value
+        .trim();
+
+
+    const militaryUnit =
+        document
+        .getElementById("militaryUnit")
+        .value
+        .trim();
+
+
+    const militaryNumber =
+        document
+        .getElementById("militaryNumber")
+        .value
+        .trim();
+
+
+    if(
+        !fullName ||
+        !militaryUnit ||
+        !militaryNumber
+    ){
+
+        showMessage(
+            "homeMessage",
+            "فضلاً أكمل جميع البيانات"
+        );
+
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient
+        .from("registration_requests")
+        .insert({
+
+            full_name:fullName,
+
+            military_unit:militaryUnit,
+
+            access_code:militaryNumber,
+
+            status:"pending"
+
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "homeMessage",
+            "حدث خطأ أثناء إرسال الطلب"
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "homeMessage",
+        "تم إرسال طلبك بنجاح، انتظر حتى يتم إعطاؤك الرمز الخاص."
+    );
+
+
+    document
+        .getElementById("fullName")
+        .value = "";
+
+
+    document
+        .getElementById("militaryUnit")
+        .value = "";
+
+
+    document
+        .getElementById("militaryNumber")
+        .value = "";
+
+}
+
+
+/* =================================================
+   الدخول بالرمز
+   ================================================= */
+
+async function loginWithCode(){
+
+    const code =
+        document
+        .getElementById("accessCode")
+        .value
+        .trim();
+
+
+    if(!code){
+
+        showMessage(
+            "codeMessage",
+            "اكتب الرمز الخاص"
+        );
+
+        return;
+    }
+
+
+    const { data,error } =
+        await supabaseClient
+        .from("users")
+        .select("*")
+        .eq("access_code",code)
+        .eq("approved",true)
+        .limit(1);
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "codeMessage",
+            "حدث خطأ أثناء التحقق من الرمز"
+        );
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        showMessage(
+            "codeMessage",
+            "الرمز غير صحيح أو غير مفعل"
+        );
+
+        return;
+    }
+
+
+    const user = data[0];
+
+
+    localStorage.setItem(
+        "currentUserId",
+        user.id
+    );
+
+
+    showUser(user);
+
+}
+
+
+/* =================================================
+   صفحة المستخدم
+   ================================================= */
+
+async function showUser(user){
+
+    hideAll();
+
+
+    document
+        .getElementById("userPage")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("welcomeName")
+        .textContent =
+            "مرحباً " + user.full_name;
+
+
+    document
+        .getElementById("userUnit")
+        .textContent =
+            "اليونت العسكري: " +
+            user.military_unit;
+
+
+    await loadUserActivities(user.id);
+
+}
+
+
+/* =================================================
+   تحميل نقاط المستخدم
+   ================================================= */
+
+async function loadUserActivities(userId){
+
+    const { data,error } =
+        await supabaseClient
+        .from("activities")
+        .select("*")
+        .eq("user_id",userId)
+        .order(
+            "created_at",
+            {ascending:false}
         );
 
 
-    if(username === ""){
+    if(error){
 
-        alert("اكتب اسم المستخدم");
-
-        return;
-
-    }
-
-
-    if(activity === ""){
-
-        alert("اكتب اسم النشاط");
+        console.error(error);
 
         return;
-
     }
 
-
-    if(points <= 0){
-
-        alert("اكتب عدد النقاط");
-
-        return;
-
-    }
-
-
-    activities.push({
-
-        username:username,
-
-        activity:activity,
-
-        points:points
-
-    });
-
-
-    save();
-
-
-    document.getElementById("username").value = "";
-
-    document.getElementById("activity").value = "";
-
-    document.getElementById("points").value = "";
-
-
-    showActivities();
-
-}
-
-
-function deleteActivity(index){
-
-    activities.splice(index,1);
-
-    save();
-
-    showActivities();
-
-}
-
-
-function showActivities(){
 
     const box =
-        document.getElementById("activities");
-
-    const total =
-        document.getElementById("totalPoints");
-
-
-    if(activities.length === 0){
-
-        box.innerHTML =
-            '<div class="empty">لا توجد أنشطة مضافة</div>';
-
-        total.textContent = "0";
-
-        return;
-
-    }
+        document
+        .getElementById("userActivities");
 
 
     box.innerHTML = "";
 
 
-    let sum = 0;
+    let total = 0;
 
 
-    activities.forEach(function(item,index){
+    if(!data || data.length === 0){
 
-        sum += Number(item.points);
+        box.textContent =
+            "لا توجد أنشطة حتى الآن";
+
+        document
+        .getElementById("userPoints")
+        .textContent = "0";
+
+        return;
+    }
+
+
+    data.forEach(activity => {
+
+        total +=
+            Number(activity.points || 0);
 
 
         const div =
             document.createElement("div");
+
 
         div.className = "activity";
 
 
         div.innerHTML = `
 
-            <div class="activity-info">
+            <strong>
+                ${escapeHtml(
+                    activity.activity_name
+                )}
+            </strong>
 
-                <div class="activity-name">
-                    ${safe(item.activity)}
-                </div>
-
-                <div class="activity-user">
-                    المستخدم:
-                    ${safe(item.username)}
-                </div>
-
+            <div>
+                ${Number(activity.points || 0)}
+                نقطة
             </div>
-
-            <div class="activity-points">
-                ${item.points} نقطة
-            </div>
-
-            <button
-                class="delete"
-                onclick="deleteActivity(${index})"
-            >
-                حذف
-            </button>
 
         `;
 
@@ -542,24 +1207,1021 @@ function showActivities(){
     });
 
 
-    total.textContent = sum;
+    document
+        .getElementById("userPoints")
+        .textContent = total;
 
 }
 
 
-function safe(text){
+/* =================================================
+   لوحة الإدارة
+   ================================================= */
+
+function openAdmin(){
+
+    hideAll();
+
+    document
+        .getElementById("adminPage")
+        .classList.remove("hidden");
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   تحميل الطلبات
+   ================================================= */
+
+async function loadRequests(){
+
+    const box =
+        document
+        .getElementById("requestsList");
+
+
+    box.innerHTML =
+        "جاري تحميل الطلبات...";
+
+
+    const {data,error} =
+        await supabaseClient
+        .from("registration_requests")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        box.innerHTML =
+            "تعذر تحميل الطلبات";
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        box.innerHTML =
+            "لا توجد طلبات حالياً";
+
+        return;
+    }
+
+
+    box.innerHTML = "";
+
+
+    data.forEach(request => {
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "request";
+
+
+        div.innerHTML = `
+
+            <strong>
+                ${escapeHtml(
+                    request.full_name
+                )}
+            </strong>
+
+            <p>
+                اليونت العسكري:
+                ${escapeHtml(
+                    request.military_unit || ""
+                )}
+            </p>
+
+            <p>
+                الرقم العسكري:
+                ${escapeHtml(
+                    request.access_code || ""
+                )}
+            </p>
+
+            <p>
+                الحالة:
+                ${escapeHtml(
+                    request.status || "pending"
+                )}
+            </p>
+
+            <div class="request-actions">
+
+                <button
+                    class="green"
+                    onclick="
+                        approveRequest(
+                            ${request.id}
+                        )
+                    "
+                >
+                    إنشاء الرمز
+                </button>
+
+
+                <button
+                    class="red"
+                    onclick="
+                        deleteRequest(
+                            ${request.id}
+                        )
+                    "
+                >
+                    حذف
+                </button>
+
+            </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =================================================
+   إنشاء الرمز
+   ================================================= */
+
+async function approveRequest(requestId){
+
+    const code =
+        prompt(
+            "اكتب الرمز الخاص للمستخدم:"
+        );
+
+
+    if(!code){
+
+        return;
+    }
+
+
+    const {data:request,error} =
+        await supabaseClient
+        .from("registration_requests")
+        .select("*")
+        .eq("id",requestId)
+        .single();
+
+
+    if(error){
+
+        alert(
+            "تعذر قراءة الطلب"
+        );
+
+        return;
+    }
+
+
+    const {error:userError} =
+        await supabaseClient
+        .from("users")
+        .insert({
+
+            full_name:
+                request.full_name,
+
+            military_unit:
+                request.military_unit,
+
+            access_code:
+                code,
+
+            approved:true
+
+        });
+
+
+    if(userError){
+
+        console.error(userError);
+
+        alert(
+            "تعذر إنشاء الرمز"
+        );
+
+        return;
+    }
+
+
+    await supabaseClient
+        .from("registration_requests")
+        .update({
+
+            status:"approved"
+
+        })
+        .eq(
+            "id",
+            requestId
+        );
+
+
+    alert(
+        "تم إنشاء الرمز:\n\n" +
+        code
+    );
+
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   حذف الطلب
+   ================================================= */
+
+async function deleteRequest(id){
+
+    if(
+        !confirm(
+            "هل تريد حذف هذا الطلب؟"
+        )
+    ){
+
+        return;
+    }
+
+
+    const {error} =
+        await supabaseClient
+        .from("registration_requests")
+        .delete()
+        .eq("id",id);
+
+
+    if(error){
+
+        alert(
+            "تعذر حذف الطلب"
+        );
+
+        return;
+    }
+
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   خروج
+   ================================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "currentUserId"
+    );
+
+    showHome();
+
+}
+
+
+/* =================================================
+   حماية النص
+   ================================================= */
+
+function escapeHtml(text){
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent =
+        text || "";
 
     return div.innerHTML;
 
 }
 
 
-showActivities();
+/* =================================================
+   فتح لوحة الإدارة
+   اضغط KR خمس مرات
+   ================================================= */
+
+let adminClicks = 0;
+
+
+document
+    .querySelector(".kr")
+    .addEventListener(
+        "click",
+        function(){
+
+            adminClicks++;
+
+
+            if(adminClicks >= 5){
+
+                adminClicks = 0;
+
+                openAdmin();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =================================================
+   الصفحات
+   ================================================= */
+
+function hideAll(){
+
+    document
+        .querySelectorAll("section")
+        .forEach(section => {
+
+            section.classList.add("hidden");
+
+        });
+
+}
+
+
+function showHome(){
+
+    hideAll();
+
+    document
+        .getElementById("homePage")
+        .classList.remove("hidden");
+
+}
+
+
+function showCodePage(){
+
+    hideAll();
+
+    document
+        .getElementById("codePage")
+        .classList.remove("hidden");
+
+}
+
+
+function showMessage(id,text){
+
+    const box =
+        document.getElementById(id);
+
+    box.textContent = text;
+
+    box.classList.remove("hidden");
+
+}
+
+
+/* =================================================
+   طلب الرمز
+   ================================================= */
+
+async function requestCode(){
+
+    const fullName =
+        document
+        .getElementById("fullName")
+        .value
+        .trim();
+
+
+    const militaryUnit =
+        document
+        .getElementById("militaryUnit")
+        .value
+        .trim();
+
+
+    const militaryNumber =
+        document
+        .getElementById("militaryNumber")
+        .value
+        .trim();
+
+
+    if(
+        !fullName ||
+        !militaryUnit ||
+        !militaryNumber
+    ){
+
+        showMessage(
+            "homeMessage",
+            "فضلاً أكمل جميع البيانات"
+        );
+
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient
+        .from("registration_requests")
+        .insert({
+
+            full_name:fullName,
+
+            military_unit:militaryUnit,
+
+            access_code:militaryNumber,
+
+            status:"pending"
+
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "homeMessage",
+            "حدث خطأ أثناء إرسال الطلب"
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "homeMessage",
+        "تم إرسال طلبك بنجاح، انتظر حتى يتم إعطاؤك الرمز الخاص."
+    );
+
+
+    document
+        .getElementById("fullName")
+        .value = "";
+
+
+    document
+        .getElementById("militaryUnit")
+        .value = "";
+
+
+    document
+        .getElementById("militaryNumber")
+        .value = "";
+
+}
+
+
+/* =================================================
+   الدخول بالرمز
+   ================================================= */
+
+async function loginWithCode(){
+
+    const code =
+        document
+        .getElementById("accessCode")
+        .value
+        .trim();
+
+
+    if(!code){
+
+        showMessage(
+            "codeMessage",
+            "اكتب الرمز الخاص"
+        );
+
+        return;
+    }
+
+
+    const { data,error } =
+        await supabaseClient
+        .from("users")
+        .select("*")
+        .eq("access_code",code)
+        .eq("approved",true)
+        .limit(1);
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "codeMessage",
+            "حدث خطأ أثناء التحقق من الرمز"
+        );
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        showMessage(
+            "codeMessage",
+            "الرمز غير صحيح أو غير مفعل"
+        );
+
+        return;
+    }
+
+
+    const user = data[0];
+
+
+    localStorage.setItem(
+        "currentUserId",
+        user.id
+    );
+
+
+    showUser(user);
+
+}
+
+
+/* =================================================
+   صفحة المستخدم
+   ================================================= */
+
+async function showUser(user){
+
+    hideAll();
+
+
+    document
+        .getElementById("userPage")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("welcomeName")
+        .textContent =
+            "مرحباً " + user.full_name;
+
+
+    document
+        .getElementById("userUnit")
+        .textContent =
+            "اليونت العسكري: " +
+            user.military_unit;
+
+
+    await loadUserActivities(user.id);
+
+}
+
+
+/* =================================================
+   تحميل نقاط المستخدم
+   ================================================= */
+
+async function loadUserActivities(userId){
+
+    const { data,error } =
+        await supabaseClient
+        .from("activities")
+        .select("*")
+        .eq("user_id",userId)
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const box =
+        document
+        .getElementById("userActivities");
+
+
+    box.innerHTML = "";
+
+
+    let total = 0;
+
+
+    if(!data || data.length === 0){
+
+        box.textContent =
+            "لا توجد أنشطة حتى الآن";
+
+        document
+        .getElementById("userPoints")
+        .textContent = "0";
+
+        return;
+    }
+
+
+    data.forEach(activity => {
+
+        total +=
+            Number(activity.points || 0);
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "activity";
+
+
+        div.innerHTML = `
+
+            <strong>
+                ${escapeHtml(
+                    activity.activity_name
+                )}
+            </strong>
+
+            <div>
+                ${Number(activity.points || 0)}
+                نقطة
+            </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+    });
+
+
+    document
+        .getElementById("userPoints")
+        .textContent = total;
+
+}
+
+
+/* =================================================
+   لوحة الإدارة
+   ================================================= */
+
+function openAdmin(){
+
+    hideAll();
+
+    document
+        .getElementById("adminPage")
+        .classList.remove("hidden");
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   تحميل الطلبات
+   ================================================= */
+
+async function loadRequests(){
+
+    const box =
+        document
+        .getElementById("requestsList");
+
+
+    box.innerHTML =
+        "جاري تحميل الطلبات...";
+
+
+    const {data,error} =
+        await supabaseClient
+        .from("registration_requests")
+        .select("*")
+        .order(
+            "id",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        box.innerHTML =
+            "تعذر تحميل الطلبات";
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        box.innerHTML =
+            "لا توجد طلبات حالياً";
+
+        return;
+    }
+
+
+    box.innerHTML = "";
+
+
+    data.forEach(request => {
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "request";
+
+
+        div.innerHTML = `
+
+            <strong>
+                ${escapeHtml(
+                    request.full_name
+                )}
+            </strong>
+
+            <p>
+                اليونت العسكري:
+                ${escapeHtml(
+                    request.military_unit || ""
+                )}
+            </p>
+
+            <p>
+                الرقم العسكري:
+                ${escapeHtml(
+                    request.access_code || ""
+                )}
+            </p>
+
+            <p>
+                الحالة:
+                ${escapeHtml(
+                    request.status || "pending"
+                )}
+            </p>
+
+            <div class="request-actions">
+
+                <button
+                    class="green"
+                    onclick="
+                        approveRequest(
+                            ${request.id}
+                        )
+                    "
+                >
+                    إنشاء الرمز
+                </button>
+
+
+                <button
+                    class="red"
+                    onclick="
+                        deleteRequest(
+                            ${request.id}
+                        )
+                    "
+                >
+                    حذف
+                </button>
+
+            </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =================================================
+   إنشاء الرمز
+   ================================================= */
+
+async function approveRequest(requestId){
+
+    const code =
+        prompt(
+            "اكتب الرمز الخاص للمستخدم:"
+        );
+
+
+    if(!code){
+
+        return;
+    }
+
+
+    const {data:request,error} =
+        await supabaseClient
+        .from("registration_requests")
+        .select("*")
+        .eq("id",requestId)
+        .single();
+
+
+    if(error){
+
+        alert(
+            "تعذر قراءة الطلب"
+        );
+
+        return;
+    }
+
+
+    const {error:userError} =
+        await supabaseClient
+        .from("users")
+        .insert({
+
+            full_name:
+                request.full_name,
+
+            military_unit:
+                request.military_unit,
+
+            access_code:
+                code,
+
+            approved:true
+
+        });
+
+
+    if(userError){
+
+        console.error(userError);
+
+        alert(
+            "تعذر إنشاء الرمز"
+        );
+
+        return;
+    }
+
+
+    await supabaseClient
+        .from("registration_requests")
+        .update({
+
+            status:"approved"
+
+        })
+        .eq(
+            "id",
+            requestId
+        );
+
+
+    alert(
+        "تم إنشاء الرمز:\n\n" +
+        code
+    );
+
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   حذف الطلب
+   ================================================= */
+
+async function deleteRequest(id){
+
+    if(
+        !confirm(
+            "هل تريد حذف هذا الطلب؟"
+        )
+    ){
+
+        return;
+    }
+
+
+    const {error} =
+        await supabaseClient
+        .from("registration_requests")
+        .delete()
+        .eq("id",id);
+
+
+    if(error){
+
+        alert(
+            "تعذر حذف الطلب"
+        );
+
+        return;
+    }
+
+
+    loadRequests();
+
+}
+
+
+/* =================================================
+   خروج
+   ================================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "currentUserId"
+    );
+
+    showHome();
+
+}
+
+
+/* =================================================
+   حماية النص
+   ================================================= */
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text || "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =================================================
+   فتح لوحة الإدارة
+   اضغط KR خمس مرات
+   ================================================= */
+
+let adminClicks = 0;
+
+
+document
+    .querySelector(".kr")
+    .addEventListener(
+        "click",
+        function(){
+
+            adminClicks++;
+
+
+            if(adminClicks >= 5){
+
+                adminClicks = 0;
+
+                openAdmin();
+
+            }
+
+        }
+    );
 
 </script>
 
