@@ -21,7 +21,7 @@
 
     header {
       background: #111;
-      color: white;
+      color: #fff;
       padding: 18px 15px;
       display: flex;
       align-items: center;
@@ -36,13 +36,12 @@
     #kr {
       font-size: 25px;
       font-weight: bold;
-      user-select: none;
       cursor: pointer;
+      user-select: none;
     }
 
     .header-left {
       font-size: 14px;
-      opacity: .9;
     }
 
     .container {
@@ -52,16 +51,16 @@
     }
 
     .card {
-      background: white;
+      background: #fff;
       border-radius: 18px;
       padding: 22px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
       margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
     }
 
     h2 {
-      margin-top: 0;
       text-align: center;
+      margin-top: 0;
     }
 
     input,
@@ -77,35 +76,42 @@
     input,
     select {
       border: 1px solid #ccc;
-      background: white;
+      background: #fff;
     }
 
     button {
       border: 0;
       background: #111;
-      color: white;
+      color: #fff;
       cursor: pointer;
       font-weight: bold;
     }
 
-    button:hover {
-      opacity: .9;
+    button:disabled {
+      opacity: .6;
     }
 
     .secondary {
       background: #555;
     }
 
-    .danger {
-      background: #b00020;
-    }
-
     .success {
       background: #176b32;
     }
 
+    .danger {
+      background: #b00020;
+    }
+
     .hidden {
       display: none !important;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 22px;
     }
 
     .request {
@@ -118,33 +124,31 @@
 
     .request strong {
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     .points {
       text-align: center;
       font-size: 42px;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 15px 0 0;
     }
 
     .activity {
-      padding: 12px;
+      padding: 12px 0;
       border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
-      gap: 10px;
     }
 
     .activity:last-child {
       border-bottom: 0;
     }
 
-    .message {
-      text-align: center;
-      margin-top: 12px;
-      font-weight: bold;
-      min-height: 22px;
+    .small {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
     }
 
     footer {
@@ -153,16 +157,6 @@
       color: #777;
       font-size: 13px;
     }
-
-    .admin-title {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #666;
-    }
   </style>
 </head>
 
@@ -170,9 +164,7 @@
 
 <header>
   <div class="header-right">وزارة الداخلية</div>
-
   <div id="kr">KR</div>
-
   <div class="header-left">النظام العسكري</div>
 </header>
 
@@ -184,23 +176,11 @@
     <div class="card">
       <h2>تسجيل الدخول</h2>
 
-      <input
-        id="fullName"
-        type="text"
-        placeholder="اسم المستخدم"
-      >
+      <input id="fullName" type="text" placeholder="اسم المستخدم">
 
-      <input
-        id="militaryUnit"
-        type="text"
-        placeholder="اليونت العسكري"
-      >
+      <input id="militaryUnit" type="text" placeholder="اليونت العسكري">
 
-      <input
-        id="militaryNumber"
-        type="text"
-        placeholder="الرقم العسكري"
-      >
+      <input id="militaryNumber" type="text" placeholder="الرقم العسكري">
 
       <button id="requestCodeBtn">
         طلب الرمز الخاص
@@ -214,19 +194,17 @@
     </div>
 
     <div id="codeBox" class="card hidden">
+
       <h2>إدخال الرمز الخاص</h2>
 
-      <input
-        id="specialCode"
-        type="text"
-        placeholder="أدخل الرمز الخاص"
-      >
+      <input id="specialCode" type="text" placeholder="أدخل الرمز الخاص">
 
       <button id="loginBtn">
         تسجيل الدخول
       </button>
 
       <div id="codeMessage" class="message"></div>
+
     </div>
 
   </section>
@@ -236,6 +214,7 @@
   <section id="userPage" class="hidden">
 
     <div class="card">
+
       <h2>الملف العسكري</h2>
 
       <p>
@@ -253,31 +232,36 @@
       </div>
 
       <p style="text-align:center;">النقاط</p>
+
     </div>
 
     <div class="card">
+
       <h2>النشاطات</h2>
 
-      <div id="userActivities"></div>
+      <div id="userActivities">
+        لا توجد نشاطات حتى الآن.
+      </div>
+
     </div>
 
     <div class="card">
+
       <button id="logoutBtn" class="danger">
         تسجيل الخروج
       </button>
+
     </div>
 
   </section>
 
 
-  <!-- صفحة الإدارة -->
+  <!-- لوحة الإدارة -->
   <section id="adminPage" class="hidden">
 
     <div class="card">
 
-      <h2 class="admin-title">
-        لوحة الإدارة
-      </h2>
+      <h2>لوحة الإدارة</h2>
 
       <button id="backBtn" class="secondary">
         العودة
@@ -305,17 +289,9 @@
         <option value="">اختر المستخدم</option>
       </select>
 
-      <input
-        id="activityName"
-        type="text"
-        placeholder="اسم النشاط"
-      >
+      <input id="activityName" type="text" placeholder="اسم النشاط">
 
-      <input
-        id="activityPoints"
-        type="number"
-        placeholder="عدد النقاط"
-      >
+      <input id="activityPoints" type="number" placeholder="عدد النقاط">
 
       <button id="addActivityBtn" class="success">
         إضافة النشاط
@@ -340,7 +316,6 @@
 
 </div>
 
-
 <footer>
   المصمم: عادل الشمري
 </footer>
@@ -349,13 +324,12 @@
 <script>
 "use strict";
 
-/* ================================
-   إعداد Supabase
-================================ */
-
 const SUPABASE_URL =
   "https://rvgvqooateniymiypraz.supabase.co";
 
+/*
+  ضع هنا Publishable Key الأخضر من Supabase
+*/
 const SUPABASE_KEY =
   "<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -380,7 +354,7 @@ const SUPABASE_KEY =
 
     header {
       background: #111;
-      color: white;
+      color: #fff;
       padding: 18px 15px;
       display: flex;
       align-items: center;
@@ -395,13 +369,12 @@ const SUPABASE_KEY =
     #kr {
       font-size: 25px;
       font-weight: bold;
-      user-select: none;
       cursor: pointer;
+      user-select: none;
     }
 
     .header-left {
       font-size: 14px;
-      opacity: .9;
     }
 
     .container {
@@ -411,16 +384,16 @@ const SUPABASE_KEY =
     }
 
     .card {
-      background: white;
+      background: #fff;
       border-radius: 18px;
       padding: 22px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
       margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
     }
 
     h2 {
-      margin-top: 0;
       text-align: center;
+      margin-top: 0;
     }
 
     input,
@@ -436,35 +409,42 @@ const SUPABASE_KEY =
     input,
     select {
       border: 1px solid #ccc;
-      background: white;
+      background: #fff;
     }
 
     button {
       border: 0;
       background: #111;
-      color: white;
+      color: #fff;
       cursor: pointer;
       font-weight: bold;
     }
 
-    button:hover {
-      opacity: .9;
+    button:disabled {
+      opacity: .6;
     }
 
     .secondary {
       background: #555;
     }
 
-    .danger {
-      background: #b00020;
-    }
-
     .success {
       background: #176b32;
     }
 
+    .danger {
+      background: #b00020;
+    }
+
     .hidden {
       display: none !important;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 22px;
     }
 
     .request {
@@ -477,33 +457,31 @@ const SUPABASE_KEY =
 
     .request strong {
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     .points {
       text-align: center;
       font-size: 42px;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 15px 0 0;
     }
 
     .activity {
-      padding: 12px;
+      padding: 12px 0;
       border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
-      gap: 10px;
     }
 
     .activity:last-child {
       border-bottom: 0;
     }
 
-    .message {
-      text-align: center;
-      margin-top: 12px;
-      font-weight: bold;
-      min-height: 22px;
+    .small {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
     }
 
     footer {
@@ -512,16 +490,6 @@ const SUPABASE_KEY =
       color: #777;
       font-size: 13px;
     }
-
-    .admin-title {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #666;
-    }
   </style>
 </head>
 
@@ -529,9 +497,7 @@ const SUPABASE_KEY =
 
 <header>
   <div class="header-right">وزارة الداخلية</div>
-
   <div id="kr">KR</div>
-
   <div class="header-left">النظام العسكري</div>
 </header>
 
@@ -543,23 +509,11 @@ const SUPABASE_KEY =
     <div class="card">
       <h2>تسجيل الدخول</h2>
 
-      <input
-        id="fullName"
-        type="text"
-        placeholder="اسم المستخدم"
-      >
+      <input id="fullName" type="text" placeholder="اسم المستخدم">
 
-      <input
-        id="militaryUnit"
-        type="text"
-        placeholder="اليونت العسكري"
-      >
+      <input id="militaryUnit" type="text" placeholder="اليونت العسكري">
 
-      <input
-        id="militaryNumber"
-        type="text"
-        placeholder="الرقم العسكري"
-      >
+      <input id="militaryNumber" type="text" placeholder="الرقم العسكري">
 
       <button id="requestCodeBtn">
         طلب الرمز الخاص
@@ -573,19 +527,17 @@ const SUPABASE_KEY =
     </div>
 
     <div id="codeBox" class="card hidden">
+
       <h2>إدخال الرمز الخاص</h2>
 
-      <input
-        id="specialCode"
-        type="text"
-        placeholder="أدخل الرمز الخاص"
-      >
+      <input id="specialCode" type="text" placeholder="أدخل الرمز الخاص">
 
       <button id="loginBtn">
         تسجيل الدخول
       </button>
 
       <div id="codeMessage" class="message"></div>
+
     </div>
 
   </section>
@@ -595,6 +547,7 @@ const SUPABASE_KEY =
   <section id="userPage" class="hidden">
 
     <div class="card">
+
       <h2>الملف العسكري</h2>
 
       <p>
@@ -612,31 +565,36 @@ const SUPABASE_KEY =
       </div>
 
       <p style="text-align:center;">النقاط</p>
+
     </div>
 
     <div class="card">
+
       <h2>النشاطات</h2>
 
-      <div id="userActivities"></div>
+      <div id="userActivities">
+        لا توجد نشاطات حتى الآن.
+      </div>
+
     </div>
 
     <div class="card">
+
       <button id="logoutBtn" class="danger">
         تسجيل الخروج
       </button>
+
     </div>
 
   </section>
 
 
-  <!-- صفحة الإدارة -->
+  <!-- لوحة الإدارة -->
   <section id="adminPage" class="hidden">
 
     <div class="card">
 
-      <h2 class="admin-title">
-        لوحة الإدارة
-      </h2>
+      <h2>لوحة الإدارة</h2>
 
       <button id="backBtn" class="secondary">
         العودة
@@ -664,17 +622,9 @@ const SUPABASE_KEY =
         <option value="">اختر المستخدم</option>
       </select>
 
-      <input
-        id="activityName"
-        type="text"
-        placeholder="اسم النشاط"
-      >
+      <input id="activityName" type="text" placeholder="اسم النشاط">
 
-      <input
-        id="activityPoints"
-        type="number"
-        placeholder="عدد النقاط"
-      >
+      <input id="activityPoints" type="number" placeholder="عدد النقاط">
 
       <button id="addActivityBtn" class="success">
         إضافة النشاط
@@ -699,7 +649,6 @@ const SUPABASE_KEY =
 
 </div>
 
-
 <footer>
   المصمم: عادل الشمري
 </footer>
@@ -708,25 +657,22 @@ const SUPABASE_KEY =
 <script>
 "use strict";
 
-/* ================================
-   إعداد Supabase
-================================ */
-
 const SUPABASE_URL =
   "https://rvgvqooateniymiypraz.supabase.co";
 
+/*
+  ضع هنا Publishable Key الأخضر من Supabase
+*/
 const SUPABASE_KEY =
   "حط المفتاح الأخضر هنا";
 
-const db = supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
 
-/* ================================
-   العناصر
-================================ */
+/* العناصر */
 
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
@@ -785,9 +731,7 @@ const logoutBtn =
   document.getElementById("logoutBtn");
 
 
-/* ================================
-   أدوات مساعدة
-================================ */
+/* إظهار صفحة واحدة */
 
 function showOnly(page) {
 
@@ -799,26 +743,28 @@ function showOnly(page) {
 }
 
 
-function message(element, text) {
+/* رسالة */
+
+function setMessage(element, text) {
   element.textContent = text;
 }
 
 
-/* ================================
-   طلب الرمز
-================================ */
+/* طلب الرمز */
 
-requestCodeBtn.addEventListener("click", async () => {
+requestCodeBtn.addEventListener("click", async function () {
 
   const name = fullName.value.trim();
   const unit = militaryUnit.value.trim();
   const number = militaryNumber.value.trim();
 
   if (!name || !unit || !number) {
-    message(
+
+    setMessage(
       loginMessage,
       "⚠️ عبّ جميع البيانات أولاً"
     );
+
     return;
   }
 
@@ -827,27 +773,20 @@ requestCodeBtn.addEventListener("click", async () => {
 
   try {
 
-    const { error } = await db
+    const result = await db
       .from("registration_requests")
       .insert({
         full_name: name,
         military_unit: unit,
-
-        /*
-          حالياً نستخدم access_code
-          لتخزين الرقم العسكري
-          حسب جدولك الحالي.
-        */
         access_code: number,
-
         status: "pending"
       });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    message(
+    setMessage(
       loginMessage,
       "✅ تم إرسال طلب الرمز بنجاح"
     );
@@ -856,7 +795,7 @@ requestCodeBtn.addEventListener("click", async () => {
 
     console.error(error);
 
-    message(
+    setMessage(
       loginMessage,
       "❌ حدث خطأ أثناء إرسال الطلب"
     );
@@ -866,14 +805,13 @@ requestCodeBtn.addEventListener("click", async () => {
     requestCodeBtn.disabled = false;
     requestCodeBtn.textContent = "طلب الرمز الخاص";
   }
+
 });
 
 
-/* ================================
-   إظهار خانة الرمز
-================================ */
+/* إظهار إدخال الرمز */
 
-showCodeBtn.addEventListener("click", () => {
+showCodeBtn.addEventListener("click", function () {
 
   codeBox.classList.toggle("hidden");
 
@@ -884,17 +822,15 @@ showCodeBtn.addEventListener("click", () => {
 });
 
 
-/* ================================
-   تسجيل الدخول
-================================ */
+/* تسجيل الدخول */
 
-loginBtn.addEventListener("click", async () => {
+loginBtn.addEventListener("click", async function () {
 
   const code = specialCode.value.trim();
 
   if (!code) {
 
-    message(
+    setMessage(
       codeMessage,
       "⚠️ أدخل الرمز"
     );
@@ -907,20 +843,20 @@ loginBtn.addEventListener("click", async () => {
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("users")
       .select("*")
       .eq("access_code", code)
       .eq("approved", true)
       .limit(1);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    if (!result.data || result.data.length === 0) {
 
-      message(
+      setMessage(
         codeMessage,
         "❌ الرمز غير صحيح"
       );
@@ -928,7 +864,7 @@ loginBtn.addEventListener("click", async () => {
       return;
     }
 
-    const user = data[0];
+    const user = result.data[0];
 
     localStorage.setItem(
       "currentUserId",
@@ -941,7 +877,7 @@ loginBtn.addEventListener("click", async () => {
 
     console.error(error);
 
-    message(
+    setMessage(
       codeMessage,
       "❌ حدث خطأ أثناء تسجيل الدخول"
     );
@@ -955,9 +891,7 @@ loginBtn.addEventListener("click", async () => {
 });
 
 
-/* ================================
-   فتح صفحة المستخدم
-================================ */
+/* فتح صفحة المستخدم */
 
 async function openUserPage(user) {
 
@@ -973,49 +907,47 @@ async function openUserPage(user) {
 }
 
 
-/* ================================
-   نشاطات المستخدم
-================================ */
+/* تحميل نشاطات المستخدم */
 
 async function loadUserActivities(userId) {
 
-  const activitiesBox =
+  const box =
     document.getElementById("userActivities");
 
-  activitiesBox.innerHTML =
-    "جاري تحميل النشاطات...";
+  box.textContent = "جاري تحميل النشاطات...";
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("activities")
       .select("*")
       .eq("user_id", Number(userId))
       .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
+    const activities = result.data || [];
     let total = 0;
 
-    if (!data || data.length === 0) {
+    box.innerHTML = "";
 
-      activitiesBox.innerHTML =
-        "<p>لا توجد نشاطات حتى الآن.</p>";
+    if (activities.length === 0) {
+
+      box.textContent =
+        "لا توجد نشاطات حتى الآن.";
 
     } else {
 
-      activitiesBox.innerHTML = "";
-
-      data.forEach(activity => {
+      activities.forEach(function (activity) {
 
         total += Number(activity.points || 0);
 
-        const div =
+        const row =
           document.createElement("div");
 
-        div.className = "activity";
+        row.className = "activity";
 
         const name =
           document.createElement("span");
@@ -1029,10 +961,10 @@ async function loadUserActivities(userId) {
         points.textContent =
           "+" + Number(activity.points || 0);
 
-        div.appendChild(name);
-        div.appendChild(points);
+        row.appendChild(name);
+        row.appendChild(points);
 
-        activitiesBox.appendChild(div);
+        box.appendChild(row);
       });
     }
 
@@ -1043,17 +975,15 @@ async function loadUserActivities(userId) {
 
     console.error(error);
 
-    activitiesBox.innerHTML =
-      "<p>حدث خطأ في تحميل النشاطات.</p>";
+    box.textContent =
+      "❌ حدث خطأ في تحميل النشاطات.";
   }
 }
 
 
-/* ================================
-   تسجيل الخروج
-================================ */
+/* تسجيل الخروج */
 
-logoutBtn.addEventListener("click", () => {
+logoutBtn.addEventListener("click", function () {
 
   localStorage.removeItem("currentUserId");
 
@@ -1061,46 +991,42 @@ logoutBtn.addEventListener("click", () => {
 
   specialCode.value = "";
 
-  message(
-    codeMessage,
-    ""
-  );
+  setMessage(codeMessage, "");
+
 });
 
 
-/* ================================
-   فتح لوحة الإدارة
-   13 ضغطة على KR
-================================ */
+/* فتح الإدارة بعد 13 ضغطة على KR */
 
 let krClicks = 0;
 let krTimer = null;
 
-document.getElementById("kr").addEventListener("click", () => {
+document.getElementById("kr").addEventListener(
+  "click",
+  function () {
 
-  krClicks++;
-
-  clearTimeout(krTimer);
-
-  krTimer = setTimeout(() => {
-    krClicks = 0;
-  }, 3000);
-
-  if (krClicks >= 13) {
-
-    krClicks = 0;
+    krClicks++;
 
     clearTimeout(krTimer);
 
-    openAdminPage();
+    krTimer = setTimeout(function () {
+      krClicks = 0;
+    }, 3000);
+
+    if (krClicks >= 13) {
+
+      krClicks = 0;
+
+      clearTimeout(krTimer);
+
+      openAdminPage();
+    }
+
   }
+);
 
-});
 
-
-/* ================================
-   لوحة الإدارة
-================================ */
+/* فتح لوحة الإدارة */
 
 async function openAdminPage() {
 
@@ -1108,50 +1034,51 @@ async function openAdminPage() {
 
   await loadRequests();
   await loadUsers();
+
 }
 
 
-/* ================================
-   تحميل الطلبات
-================================ */
+/* تحميل الطلبات */
 
 async function loadRequests() {
 
-  requestsList.innerHTML =
+  requestsList.textContent =
     "جاري تحميل الطلبات...";
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("registration_requests")
       .select("*")
       .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    const requests = result.data || [];
 
-      requestsList.innerHTML =
-        "<p>لا توجد طلبات حالياً.</p>";
+    requestsList.innerHTML = "";
+
+    if (requests.length === 0) {
+
+      requestsList.textContent =
+        "لا توجد طلبات حالياً.";
 
       return;
     }
 
-    requestsList.innerHTML = "";
-
-    data.forEach(request => {
+    requests.forEach(function (request) {
 
       const box =
         document.createElement("div");
 
       box.className = "request";
 
-      const title =
+      const name =
         document.createElement("strong");
 
-      title.textContent =
+      name.textContent =
         request.full_name || "بدون اسم";
 
       const unit =
@@ -1177,7 +1104,7 @@ async function loadRequests() {
         "الحالة: " +
         (request.status || "pending");
 
-      box.appendChild(title);
+      box.appendChild(name);
       box.appendChild(unit);
       box.appendChild(number);
       box.appendChild(status);
@@ -1185,37 +1112,41 @@ async function loadRequests() {
 
       if (request.status !== "approved") {
 
-        const approveBtn =
+        const approve =
           document.createElement("button");
 
-        approveBtn.className = "success";
+        approve.className = "success";
 
-        approveBtn.textContent =
+        approve.textContent =
           "إنشاء الرمز والموافقة";
 
-        approveBtn.addEventListener(
+        approve.addEventListener(
           "click",
-          () => approveRequest(request)
+          function () {
+            approveRequest(request);
+          }
         );
 
-        box.appendChild(approveBtn);
+        box.appendChild(approve);
       }
 
 
-      const deleteBtn =
+      const remove =
         document.createElement("button");
 
-      deleteBtn.className = "danger";
+      remove.className = "danger";
 
-      deleteBtn.textContent =
+      remove.textContent =
         "حذف الطلب";
 
-      deleteBtn.addEventListener(
+      remove.addEventListener(
         "click",
-        () => deleteRequest(request.id)
+        function () {
+          deleteRequest(request.id);
+        }
       );
 
-      box.appendChild(deleteBtn);
+      box.appendChild(remove);
 
       requestsList.appendChild(box);
 
@@ -1225,55 +1156,53 @@ async function loadRequests() {
 
     console.error(error);
 
-    requestsList.innerHTML =
-      "<p>❌ حدث خطأ في تحميل الطلبات.</p>";
+    requestsList.textContent =
+      "❌ حدث خطأ في تحميل الطلبات.";
   }
 }
 
 
-/* ================================
-   الموافقة على الطلب
-================================ */
+/* الموافقة على الطلب */
 
 async function approveRequest(request) {
 
   const code =
     prompt("اكتب الرمز الخاص للمستخدم:");
 
-  if (!code) {
+  if (!code || !code.trim()) {
     return;
   }
 
   try {
 
-    const { error: userError } =
-      await db
-        .from("users")
-        .insert({
-          full_name: request.full_name,
-          military_unit: request.military_unit,
-          access_code: code,
-          approved: true
-        });
+    const userResult = await db
+      .from("users")
+      .insert({
+        full_name: request.full_name,
+        military_unit: request.military_unit,
+        access_code: code.trim(),
+        approved: true
+      });
 
-    if (userError) {
-      throw userError;
+    if (userResult.error) {
+      throw userResult.error;
     }
 
 
-    const { error: updateError } =
-      await db
-        .from("registration_requests")
-        .update({
-          status: "approved"
-        })
-        .eq("id", request.id);
+    const updateResult = await db
+      .from("registration_requests")
+      .update({
+        status: "approved"
+      })
+      .eq("id", request.id);
 
-    if (updateError) {
-      throw updateError;
+    if (updateResult.error) {
+      throw updateResult.error;
     }
 
-    alert("✅ تم إنشاء الرمز والموافقة على المستخدم");
+    alert(
+      "✅ تم إنشاء الرمز والموافقة على المستخدم"
+    );
 
     await loadRequests();
     await loadUsers();
@@ -1289,9 +1218,7 @@ async function approveRequest(request) {
 }
 
 
-/* ================================
-   حذف طلب
-================================ */
+/* حذف الطلب */
 
 async function deleteRequest(id) {
 
@@ -1301,13 +1228,13 @@ async function deleteRequest(id) {
 
   try {
 
-    const { error } = await db
+    const result = await db
       .from("registration_requests")
       .delete()
       .eq("id", id);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
     await loadRequests();
@@ -1316,20 +1243,16 @@ async function deleteRequest(id) {
 
     console.error(error);
 
-    alert(
-      "❌ لم يتم حذف الطلب"
-    );
+    alert("❌ لم يتم حذف الطلب");
   }
 }
 
 
-/* ================================
-   تحميل المستخدمين
-================================ */
+/* تحميل المستخدمين */
 
 async function loadUsers() {
 
-  usersList.innerHTML =
+  usersList.textContent =
     "جاري تحميل المستخدمين...";
 
   activityUser.innerHTML =
@@ -1337,27 +1260,28 @@ async function loadUsers() {
 
   try {
 
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .order("id", { ascending: false });
+    const result = await db
+      .from("users")
+      .select("*")
+      .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    const users = result.data || [];
 
-      usersList.innerHTML =
-        "<p>لا يوجد مستخدمون.</p>";
+    usersList.innerHTML = "";
+
+    if (users.length === 0) {
+
+      usersList.textContent =
+        "لا يوجد مستخدمون.";
 
       return;
     }
 
-    usersList.innerHTML = "";
-
-    data.forEach(user => {
+    users.forEach(function (user) {
 
       const box =
         document.createElement("div");
@@ -1408,19 +1332,17 @@ async function loadUsers() {
 
     console.error(error);
 
-    usersList.innerHTML =
-      "<p>❌ حدث خطأ في تحميل المستخدمين.</p>";
+    usersList.textContent =
+      "❌ حدث خطأ في تحميل المستخدمين.";
   }
 }
 
 
-/* ================================
-   إضافة نشاط
-================================ */
+/* إضافة نشاط */
 
 addActivityBtn.addEventListener(
   "click",
-  async () => {
+  async function () {
 
     const userId =
       activityUser.value;
@@ -1433,7 +1355,7 @@ addActivityBtn.addEventListener(
 
     if (!userId || !name || !points) {
 
-      message(
+      setMessage(
         activityMessage,
         "⚠️ عبّ جميع البيانات"
       );
@@ -1445,20 +1367,19 @@ addActivityBtn.addEventListener(
 
     try {
 
-      const { error } =
-        await db
-          .from("activities")
-          .insert({
-            user_id: Number(userId),
-            activity_name: name,
-            points: points
-          });
+      const result = await db
+        .from("activities")
+        .insert({
+          user_id: Number(userId),
+          activity_name: name,
+          points: points
+        });
 
-      if (error) {
-        throw error;
+      if (result.error) {
+        throw result.error;
       }
 
-      message(
+      setMessage(
         activityMessage,
         "✅ تمت إضافة النشاط"
       );
@@ -1470,7 +1391,7 @@ addActivityBtn.addEventListener(
 
       console.error(error);
 
-      message(
+      setMessage(
         activityMessage,
         "❌ حدث خطأ أثناء إضافة النشاط"
       );
@@ -1484,18 +1405,14 @@ addActivityBtn.addEventListener(
 );
 
 
-/* ================================
-   زر العودة
-================================ */
+/* العودة */
 
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click", function () {
   showOnly(loginPage);
 });
 
 
-/* ================================
-   تحديث الطلبات مباشرة
-================================ */
+/* تحديث الطلبات مباشرة إذا كانت لوحة الإدارة مفتوحة */
 
 db.channel("registration_requests_live")
   .on(
@@ -1505,7 +1422,7 @@ db.channel("registration_requests_live")
       schema: "public",
       table: "registration_requests"
     },
-    async () => {
+    async function () {
 
       if (!adminPage.classList.contains("hidden")) {
 
@@ -1519,9 +1436,7 @@ db.channel("registration_requests_live")
   .subscribe();
 
 
-/* ================================
-   استرجاع المستخدم
-================================ */
+/* استرجاع تسجيل الدخول */
 
 async function restoreLogin() {
 
@@ -1534,43 +1449,36 @@ async function restoreLogin() {
 
   try {
 
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .eq("id", Number(savedId))
-        .eq("approved", true)
-        .limit(1);
+    const result = await db
+      .from("users")
+      .select("*")
+      .eq("id", Number(savedId))
+      .eq("approved", true)
+      .limit(1);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (data && data.length > 0) {
+    if (result.data && result.data.length > 0) {
 
-      await openUserPage(data[0]);
+      await openUserPage(result.data[0]);
 
     } else {
 
-      localStorage.removeItem(
-        "currentUserId"
-      );
+      localStorage.removeItem("currentUserId");
     }
 
   } catch (error) {
 
     console.error(error);
 
-    localStorage.removeItem(
-      "currentUserId"
-    );
+    localStorage.removeItem("currentUserId");
   }
 }
 
 
-/* ================================
-   تشغيل التطبيق
-================================ */
+/* تشغيل */
 
 restoreLogin();
 
@@ -1579,15 +1487,13 @@ restoreLogin();
 </body>
 </html>";
 
-const db = supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
 
-/* ================================
-   العناصر
-================================ */
+/* العناصر */
 
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
@@ -1646,9 +1552,7 @@ const logoutBtn =
   document.getElementById("logoutBtn");
 
 
-/* ================================
-   أدوات مساعدة
-================================ */
+/* إظهار صفحة واحدة */
 
 function showOnly(page) {
 
@@ -1660,26 +1564,28 @@ function showOnly(page) {
 }
 
 
-function message(element, text) {
+/* رسالة */
+
+function setMessage(element, text) {
   element.textContent = text;
 }
 
 
-/* ================================
-   طلب الرمز
-================================ */
+/* طلب الرمز */
 
-requestCodeBtn.addEventListener("click", async () => {
+requestCodeBtn.addEventListener("click", async function () {
 
   const name = fullName.value.trim();
   const unit = militaryUnit.value.trim();
   const number = militaryNumber.value.trim();
 
   if (!name || !unit || !number) {
-    message(
+
+    setMessage(
       loginMessage,
       "⚠️ عبّ جميع البيانات أولاً"
     );
+
     return;
   }
 
@@ -1688,27 +1594,20 @@ requestCodeBtn.addEventListener("click", async () => {
 
   try {
 
-    const { error } = await db
+    const result = await db
       .from("registration_requests")
       .insert({
         full_name: name,
         military_unit: unit,
-
-        /*
-          حالياً نستخدم access_code
-          لتخزين الرقم العسكري
-          حسب جدولك الحالي.
-        */
         access_code: number,
-
         status: "pending"
       });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    message(
+    setMessage(
       loginMessage,
       "✅ تم إرسال طلب الرمز بنجاح"
     );
@@ -1717,7 +1616,7 @@ requestCodeBtn.addEventListener("click", async () => {
 
     console.error(error);
 
-    message(
+    setMessage(
       loginMessage,
       "❌ حدث خطأ أثناء إرسال الطلب"
     );
@@ -1727,14 +1626,13 @@ requestCodeBtn.addEventListener("click", async () => {
     requestCodeBtn.disabled = false;
     requestCodeBtn.textContent = "طلب الرمز الخاص";
   }
+
 });
 
 
-/* ================================
-   إظهار خانة الرمز
-================================ */
+/* إظهار إدخال الرمز */
 
-showCodeBtn.addEventListener("click", () => {
+showCodeBtn.addEventListener("click", function () {
 
   codeBox.classList.toggle("hidden");
 
@@ -1745,17 +1643,15 @@ showCodeBtn.addEventListener("click", () => {
 });
 
 
-/* ================================
-   تسجيل الدخول
-================================ */
+/* تسجيل الدخول */
 
-loginBtn.addEventListener("click", async () => {
+loginBtn.addEventListener("click", async function () {
 
   const code = specialCode.value.trim();
 
   if (!code) {
 
-    message(
+    setMessage(
       codeMessage,
       "⚠️ أدخل الرمز"
     );
@@ -1768,20 +1664,20 @@ loginBtn.addEventListener("click", async () => {
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("users")
       .select("*")
       .eq("access_code", code)
       .eq("approved", true)
       .limit(1);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    if (!result.data || result.data.length === 0) {
 
-      message(
+      setMessage(
         codeMessage,
         "❌ الرمز غير صحيح"
       );
@@ -1789,7 +1685,7 @@ loginBtn.addEventListener("click", async () => {
       return;
     }
 
-    const user = data[0];
+    const user = result.data[0];
 
     localStorage.setItem(
       "currentUserId",
@@ -1802,7 +1698,7 @@ loginBtn.addEventListener("click", async () => {
 
     console.error(error);
 
-    message(
+    setMessage(
       codeMessage,
       "❌ حدث خطأ أثناء تسجيل الدخول"
     );
@@ -1816,9 +1712,7 @@ loginBtn.addEventListener("click", async () => {
 });
 
 
-/* ================================
-   فتح صفحة المستخدم
-================================ */
+/* فتح صفحة المستخدم */
 
 async function openUserPage(user) {
 
@@ -1834,49 +1728,47 @@ async function openUserPage(user) {
 }
 
 
-/* ================================
-   نشاطات المستخدم
-================================ */
+/* تحميل نشاطات المستخدم */
 
 async function loadUserActivities(userId) {
 
-  const activitiesBox =
+  const box =
     document.getElementById("userActivities");
 
-  activitiesBox.innerHTML =
-    "جاري تحميل النشاطات...";
+  box.textContent = "جاري تحميل النشاطات...";
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("activities")
       .select("*")
       .eq("user_id", Number(userId))
       .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
+    const activities = result.data || [];
     let total = 0;
 
-    if (!data || data.length === 0) {
+    box.innerHTML = "";
 
-      activitiesBox.innerHTML =
-        "<p>لا توجد نشاطات حتى الآن.</p>";
+    if (activities.length === 0) {
+
+      box.textContent =
+        "لا توجد نشاطات حتى الآن.";
 
     } else {
 
-      activitiesBox.innerHTML = "";
-
-      data.forEach(activity => {
+      activities.forEach(function (activity) {
 
         total += Number(activity.points || 0);
 
-        const div =
+        const row =
           document.createElement("div");
 
-        div.className = "activity";
+        row.className = "activity";
 
         const name =
           document.createElement("span");
@@ -1890,10 +1782,10 @@ async function loadUserActivities(userId) {
         points.textContent =
           "+" + Number(activity.points || 0);
 
-        div.appendChild(name);
-        div.appendChild(points);
+        row.appendChild(name);
+        row.appendChild(points);
 
-        activitiesBox.appendChild(div);
+        box.appendChild(row);
       });
     }
 
@@ -1904,17 +1796,15 @@ async function loadUserActivities(userId) {
 
     console.error(error);
 
-    activitiesBox.innerHTML =
-      "<p>حدث خطأ في تحميل النشاطات.</p>";
+    box.textContent =
+      "❌ حدث خطأ في تحميل النشاطات.";
   }
 }
 
 
-/* ================================
-   تسجيل الخروج
-================================ */
+/* تسجيل الخروج */
 
-logoutBtn.addEventListener("click", () => {
+logoutBtn.addEventListener("click", function () {
 
   localStorage.removeItem("currentUserId");
 
@@ -1922,46 +1812,42 @@ logoutBtn.addEventListener("click", () => {
 
   specialCode.value = "";
 
-  message(
-    codeMessage,
-    ""
-  );
+  setMessage(codeMessage, "");
+
 });
 
 
-/* ================================
-   فتح لوحة الإدارة
-   13 ضغطة على KR
-================================ */
+/* فتح الإدارة بعد 13 ضغطة على KR */
 
 let krClicks = 0;
 let krTimer = null;
 
-document.getElementById("kr").addEventListener("click", () => {
+document.getElementById("kr").addEventListener(
+  "click",
+  function () {
 
-  krClicks++;
-
-  clearTimeout(krTimer);
-
-  krTimer = setTimeout(() => {
-    krClicks = 0;
-  }, 3000);
-
-  if (krClicks >= 13) {
-
-    krClicks = 0;
+    krClicks++;
 
     clearTimeout(krTimer);
 
-    openAdminPage();
+    krTimer = setTimeout(function () {
+      krClicks = 0;
+    }, 3000);
+
+    if (krClicks >= 13) {
+
+      krClicks = 0;
+
+      clearTimeout(krTimer);
+
+      openAdminPage();
+    }
+
   }
+);
 
-});
 
-
-/* ================================
-   لوحة الإدارة
-================================ */
+/* فتح لوحة الإدارة */
 
 async function openAdminPage() {
 
@@ -1969,50 +1855,51 @@ async function openAdminPage() {
 
   await loadRequests();
   await loadUsers();
+
 }
 
 
-/* ================================
-   تحميل الطلبات
-================================ */
+/* تحميل الطلبات */
 
 async function loadRequests() {
 
-  requestsList.innerHTML =
+  requestsList.textContent =
     "جاري تحميل الطلبات...";
 
   try {
 
-    const { data, error } = await db
+    const result = await db
       .from("registration_requests")
       .select("*")
       .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    const requests = result.data || [];
 
-      requestsList.innerHTML =
-        "<p>لا توجد طلبات حالياً.</p>";
+    requestsList.innerHTML = "";
+
+    if (requests.length === 0) {
+
+      requestsList.textContent =
+        "لا توجد طلبات حالياً.";
 
       return;
     }
 
-    requestsList.innerHTML = "";
-
-    data.forEach(request => {
+    requests.forEach(function (request) {
 
       const box =
         document.createElement("div");
 
       box.className = "request";
 
-      const title =
+      const name =
         document.createElement("strong");
 
-      title.textContent =
+      name.textContent =
         request.full_name || "بدون اسم";
 
       const unit =
@@ -2038,7 +1925,7 @@ async function loadRequests() {
         "الحالة: " +
         (request.status || "pending");
 
-      box.appendChild(title);
+      box.appendChild(name);
       box.appendChild(unit);
       box.appendChild(number);
       box.appendChild(status);
@@ -2046,37 +1933,41 @@ async function loadRequests() {
 
       if (request.status !== "approved") {
 
-        const approveBtn =
+        const approve =
           document.createElement("button");
 
-        approveBtn.className = "success";
+        approve.className = "success";
 
-        approveBtn.textContent =
+        approve.textContent =
           "إنشاء الرمز والموافقة";
 
-        approveBtn.addEventListener(
+        approve.addEventListener(
           "click",
-          () => approveRequest(request)
+          function () {
+            approveRequest(request);
+          }
         );
 
-        box.appendChild(approveBtn);
+        box.appendChild(approve);
       }
 
 
-      const deleteBtn =
+      const remove =
         document.createElement("button");
 
-      deleteBtn.className = "danger";
+      remove.className = "danger";
 
-      deleteBtn.textContent =
+      remove.textContent =
         "حذف الطلب";
 
-      deleteBtn.addEventListener(
+      remove.addEventListener(
         "click",
-        () => deleteRequest(request.id)
+        function () {
+          deleteRequest(request.id);
+        }
       );
 
-      box.appendChild(deleteBtn);
+      box.appendChild(remove);
 
       requestsList.appendChild(box);
 
@@ -2086,55 +1977,53 @@ async function loadRequests() {
 
     console.error(error);
 
-    requestsList.innerHTML =
-      "<p>❌ حدث خطأ في تحميل الطلبات.</p>";
+    requestsList.textContent =
+      "❌ حدث خطأ في تحميل الطلبات.";
   }
 }
 
 
-/* ================================
-   الموافقة على الطلب
-================================ */
+/* الموافقة على الطلب */
 
 async function approveRequest(request) {
 
   const code =
     prompt("اكتب الرمز الخاص للمستخدم:");
 
-  if (!code) {
+  if (!code || !code.trim()) {
     return;
   }
 
   try {
 
-    const { error: userError } =
-      await db
-        .from("users")
-        .insert({
-          full_name: request.full_name,
-          military_unit: request.military_unit,
-          access_code: code,
-          approved: true
-        });
+    const userResult = await db
+      .from("users")
+      .insert({
+        full_name: request.full_name,
+        military_unit: request.military_unit,
+        access_code: code.trim(),
+        approved: true
+      });
 
-    if (userError) {
-      throw userError;
+    if (userResult.error) {
+      throw userResult.error;
     }
 
 
-    const { error: updateError } =
-      await db
-        .from("registration_requests")
-        .update({
-          status: "approved"
-        })
-        .eq("id", request.id);
+    const updateResult = await db
+      .from("registration_requests")
+      .update({
+        status: "approved"
+      })
+      .eq("id", request.id);
 
-    if (updateError) {
-      throw updateError;
+    if (updateResult.error) {
+      throw updateResult.error;
     }
 
-    alert("✅ تم إنشاء الرمز والموافقة على المستخدم");
+    alert(
+      "✅ تم إنشاء الرمز والموافقة على المستخدم"
+    );
 
     await loadRequests();
     await loadUsers();
@@ -2150,9 +2039,7 @@ async function approveRequest(request) {
 }
 
 
-/* ================================
-   حذف طلب
-================================ */
+/* حذف الطلب */
 
 async function deleteRequest(id) {
 
@@ -2162,13 +2049,13 @@ async function deleteRequest(id) {
 
   try {
 
-    const { error } = await db
+    const result = await db
       .from("registration_requests")
       .delete()
       .eq("id", id);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
     await loadRequests();
@@ -2177,20 +2064,16 @@ async function deleteRequest(id) {
 
     console.error(error);
 
-    alert(
-      "❌ لم يتم حذف الطلب"
-    );
+    alert("❌ لم يتم حذف الطلب");
   }
 }
 
 
-/* ================================
-   تحميل المستخدمين
-================================ */
+/* تحميل المستخدمين */
 
 async function loadUsers() {
 
-  usersList.innerHTML =
+  usersList.textContent =
     "جاري تحميل المستخدمين...";
 
   activityUser.innerHTML =
@@ -2198,27 +2081,28 @@ async function loadUsers() {
 
   try {
 
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .order("id", { ascending: false });
+    const result = await db
+      .from("users")
+      .select("*")
+      .order("id", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (!data || data.length === 0) {
+    const users = result.data || [];
 
-      usersList.innerHTML =
-        "<p>لا يوجد مستخدمون.</p>";
+    usersList.innerHTML = "";
+
+    if (users.length === 0) {
+
+      usersList.textContent =
+        "لا يوجد مستخدمون.";
 
       return;
     }
 
-    usersList.innerHTML = "";
-
-    data.forEach(user => {
+    users.forEach(function (user) {
 
       const box =
         document.createElement("div");
@@ -2269,19 +2153,17 @@ async function loadUsers() {
 
     console.error(error);
 
-    usersList.innerHTML =
-      "<p>❌ حدث خطأ في تحميل المستخدمين.</p>";
+    usersList.textContent =
+      "❌ حدث خطأ في تحميل المستخدمين.";
   }
 }
 
 
-/* ================================
-   إضافة نشاط
-================================ */
+/* إضافة نشاط */
 
 addActivityBtn.addEventListener(
   "click",
-  async () => {
+  async function () {
 
     const userId =
       activityUser.value;
@@ -2294,7 +2176,7 @@ addActivityBtn.addEventListener(
 
     if (!userId || !name || !points) {
 
-      message(
+      setMessage(
         activityMessage,
         "⚠️ عبّ جميع البيانات"
       );
@@ -2306,20 +2188,19 @@ addActivityBtn.addEventListener(
 
     try {
 
-      const { error } =
-        await db
-          .from("activities")
-          .insert({
-            user_id: Number(userId),
-            activity_name: name,
-            points: points
-          });
+      const result = await db
+        .from("activities")
+        .insert({
+          user_id: Number(userId),
+          activity_name: name,
+          points: points
+        });
 
-      if (error) {
-        throw error;
+      if (result.error) {
+        throw result.error;
       }
 
-      message(
+      setMessage(
         activityMessage,
         "✅ تمت إضافة النشاط"
       );
@@ -2331,7 +2212,7 @@ addActivityBtn.addEventListener(
 
       console.error(error);
 
-      message(
+      setMessage(
         activityMessage,
         "❌ حدث خطأ أثناء إضافة النشاط"
       );
@@ -2345,18 +2226,14 @@ addActivityBtn.addEventListener(
 );
 
 
-/* ================================
-   زر العودة
-================================ */
+/* العودة */
 
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click", function () {
   showOnly(loginPage);
 });
 
 
-/* ================================
-   تحديث الطلبات مباشرة
-================================ */
+/* تحديث الطلبات مباشرة إذا كانت لوحة الإدارة مفتوحة */
 
 db.channel("registration_requests_live")
   .on(
@@ -2366,7 +2243,7 @@ db.channel("registration_requests_live")
       schema: "public",
       table: "registration_requests"
     },
-    async () => {
+    async function () {
 
       if (!adminPage.classList.contains("hidden")) {
 
@@ -2380,9 +2257,7 @@ db.channel("registration_requests_live")
   .subscribe();
 
 
-/* ================================
-   استرجاع المستخدم
-================================ */
+/* استرجاع تسجيل الدخول */
 
 async function restoreLogin() {
 
@@ -2395,43 +2270,36 @@ async function restoreLogin() {
 
   try {
 
-    const { data, error } =
-      await db
-        .from("users")
-        .select("*")
-        .eq("id", Number(savedId))
-        .eq("approved", true)
-        .limit(1);
+    const result = await db
+      .from("users")
+      .select("*")
+      .eq("id", Number(savedId))
+      .eq("approved", true)
+      .limit(1);
 
-    if (error) {
-      throw error;
+    if (result.error) {
+      throw result.error;
     }
 
-    if (data && data.length > 0) {
+    if (result.data && result.data.length > 0) {
 
-      await openUserPage(data[0]);
+      await openUserPage(result.data[0]);
 
     } else {
 
-      localStorage.removeItem(
-        "currentUserId"
-      );
+      localStorage.removeItem("currentUserId");
     }
 
   } catch (error) {
 
     console.error(error);
 
-    localStorage.removeItem(
-      "currentUserId"
-    );
+    localStorage.removeItem("currentUserId");
   }
 }
 
 
-/* ================================
-   تشغيل التطبيق
-================================ */
+/* تشغيل */
 
 restoreLogin();
 
